@@ -1,6 +1,7 @@
 import mongoose from 'mongoose'
 
-const UserSchema = new mongoose.Schema({
+const Schema = mongoose.Schema
+const UserSchema = new Schema({
     username: {
         type: String,
         required: [true, "Please provide a username"],
@@ -13,8 +14,7 @@ const UserSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: [true, "Please provide a password"],
-        unique: true
+        required: [true, "Please provide a password"]
     },
     active: {
         type: Boolean,
@@ -22,7 +22,11 @@ const UserSchema = new mongoose.Schema({
     date: {
         type: Date,
         default: Date.now
-    }
+    },
+    link: [{
+        type: Schema.Types.ObjectId,
+        ref: 'links'
+    }]
 })
 
 const User = mongoose.models.users || mongoose.model('users', UserSchema)

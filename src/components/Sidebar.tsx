@@ -1,8 +1,15 @@
-import React from 'react'
+'use client'
+
+import { motion } from 'framer-motion'
 
 export default function Sidebar() {
     return (
-        <div className='h-screen w-full md:max-w-xs md:fixed md:left-0 top-0'>
+        <motion.div
+            initial={{ opacity: 0, translateX: -100}}
+            animate={{ opacity: 1, translateX: 1}}
+            transition={{ duration: .5}}
+            className='h-screen w-full md:max-w-xs md:fixed md:left-0 top-0'
+        >
             <nav className='bg-white transition-all duration-[250ms] ease-in-out md:opacity-0 fixed top-0 left-0 w-full md:hidden block opacity-100' aria-label='mobile navigation' data-testid="ReactNavigation mobile">
                 <div className='flex flex-col-reverse w-full fixed bg-white items-stretch border-b'>
                     <section className='w-full flex flex-auto'>
@@ -20,7 +27,7 @@ export default function Sidebar() {
                     </section>
                 </div>
             </nav>
-            <nav className='size-full bg-transparent hidden md:block md:p-2' aria-label='desktop navigation' tabIndex={-1} data-testid="ReactNavigation">
+            <nav className='size-full bg-transparent hidden md:block md:p-2 shadow-lg' aria-label='desktop navigation' tabIndex={-1} data-testid="ReactNavigation">
                 <div className='flex flex-col size-full bg-white md:rounded-3xl'>
                     <section className='w-full flex'>
                         <h1 className='w-full px-3 my-2 h-12 flex items-center'>Sharetree</h1>
@@ -62,6 +69,6 @@ export default function Sidebar() {
                     </section>
                 </div>
             </nav>
-        </div>
+        </motion.div>
     )
 }

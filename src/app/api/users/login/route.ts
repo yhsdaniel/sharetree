@@ -3,7 +3,6 @@ import User from '@/lib/user'
 import { NextRequest, NextResponse } from 'next/server'
 import bcrypt, { hash } from 'bcryptjs'
 import jwt from 'jsonwebtoken'
-import { NextApiResponse } from 'next'
 
 connect()
 

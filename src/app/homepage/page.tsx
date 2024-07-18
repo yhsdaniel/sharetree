@@ -1,15 +1,22 @@
+'use client'
+
 import Navbar from '@/components/Navbar'
 import Link from 'next/link'
-import React from 'react'
+import { motion } from 'framer-motion'
 
 export default function HomePage() {
   return (
     <div className='h-screen relative overflow-y-auto overflow-x-hidden'>
       <Navbar />
-      <div className="lg:size-full bg-blue-800 pt-[5rem]">
-        <div className="sm:pt-24">
-          <div className="relative mx-auto max-w-7xl w-full px-4 sm:static sm:px-6 lg:px-8">
-            <div className="sm:w-full lg:max-w-xl">
+      <div className="lg:size-full bg-blue-800 pt-[8rem]">
+        <div className="sm:p-10">
+          <div className="relative mx-auto w-full sm:static sm:px-6 lg:px-8 flex md:gap-x-12">
+            <motion.div 
+              initial={{ opacity: 0, translateX: -100}}
+              animate={{ opacity: 1, translateX: 1}}
+              transition={{ duration: .5}}
+              className="sm:w-full lg:w-6/12 flex flex-col justify-start items-start"
+            >
               <h1 className="text-4xl font-bold tracking-tight text-blue-100 sm:text-6xl">
                 Everything what you want. All in one in simple link for bio
               </h1>
@@ -22,24 +29,30 @@ export default function HomePage() {
               >
                 Get Started for free
               </Link>
-            </div>
-            <div className="mt-10">
-              {/* Decorative image grid */}
+            </motion.div>
+            
+            {/* Image Grid */}
+            <motion.div 
+              initial={{ opacity: 0, translateX: 100}}
+              animate={{ opacity: 1, translateX: 1}}
+              transition={{ duration: .5}}
+              className="md:mt-0 mt-10 md:w-6/12 flex flex-col justify-center items-center"
+            >
               <div
                 aria-hidden="true"
-                className="pointer-events-none lg:absolute lg:inset-y-0 lg:mx-auto lg:w-full lg:max-w-7xl"
+                className="w-9/12 pointer-events-none lg:mx-auto"
               >
-                <div className="lg:absolute relative mt-16 transform left-0 sm:top-0 translate-x-0 lg:left-1/2 lg:top-1/2 lg:-translate-y-1/2 lg:translate-x-8">
-                  <div className="flex items-center justify-center space-x-6 lg:space-x-8">
-                    <div className="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
-                      <div className="h-64 w-44 overflow-hidden rounded-lg lg:opacity-100">
+                <div className="relative transform top-0">
+                  <div className="flex items-center justify-center space-x-6 lg:space-x-4">
+                    <div className="grid grid-cols-1 gap-y-2 lg:gap-y-3">
+                      <div className="overflow-hidden rounded-lg lg:opacity-100">
                         <img
                           alt=""
                           src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-01.jpg"
                           className="h-full w-full object-cover object-center"
                         />
                       </div>
-                      <div className="h-64 w-44 overflow-hidden rounded-lg">
+                      <div className="overflow-hidden rounded-lg">
                         <img
                           alt=""
                           src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-02.jpg"
@@ -47,31 +60,24 @@ export default function HomePage() {
                         />
                       </div>
                     </div>
-                    <div className="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
-                      <div className="h-64 w-44 overflow-hidden rounded-lg">
+                    <div className="grid grid-cols-1 gap-y-2 lg:gap-y-3">
+                      <div className="overflow-hidden rounded-lg">
                         <img
                           alt=""
                           src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-03.jpg"
                           className="h-full w-full object-cover object-center"
                         />
                       </div>
-                      <div className="h-64 w-44 overflow-hidden rounded-lg">
-                        <img
-                          alt=""
-                          src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-05.jpg"
-                          className="h-full w-full object-cover object-center"
-                        />
-                      </div>
                     </div>
-                    <div className="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
-                      <div className="h-64 w-44 overflow-hidden rounded-lg">
+                    <div className="grid grid-cols-1 gap-y-2 lg:gap-y-3">
+                      <div className="overflow-hidden rounded-lg">
                         <img
                           alt=""
                           src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-06.jpg"
                           className="h-full w-full object-cover object-center"
                         />
                       </div>
-                      <div className="h-64 w-44 overflow-hidden rounded-lg">
+                      <div className="overflow-hidden rounded-lg">
                         <img
                           alt=""
                           src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-07.jpg"
@@ -82,7 +88,7 @@ export default function HomePage() {
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </div>
