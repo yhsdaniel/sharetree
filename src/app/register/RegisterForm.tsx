@@ -1,3 +1,5 @@
+'use client'
+
 import GoogleButton from "@/components/GoogleButton";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
@@ -19,10 +21,19 @@ export default function RegisterForm() {
         password: '',
     })
     const router = useRouter()
-    const handleSubmit = () => {
-        axios.post('api/users/register', register)
-        toast.success('Registered successfully')
-        router.push('/login')
+
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault()
+        try {
+            axios.post('api/users/register', register).then((response) => {
+                if( response.status === 200 ) {
+                    toast.success('Registered successfully')
+                    router.push('/login')
+                }
+            })
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -41,7 +52,7 @@ export default function RegisterForm() {
                 <span className="text-md">Sign up for free</span>
             </div>
 
-            <form onSubmit={handleSubmit} autoComplete="off" className="mt-10">
+            <form onSubmit={handleSubmit} className="mt-10">
                 <div className='mb-4'>
                     <Input
                         required
@@ -57,7 +68,7 @@ export default function RegisterForm() {
                 <div className='mb-4'>
                     <Input
                         required
-                        type='text'
+                        type='email'
                         name='email'
                         autoComplete="off"
                         className="rounded-lg border-none h-12 bg-white p-4 shadow-sm"
@@ -72,6 +83,7 @@ export default function RegisterForm() {
                         type='password'
                         name='password'
                         autoComplete="off"
+                        autoCorrect="off"
                         className="rounded-lg border-none h-12 bg-white p-4 shadow-sm"
                         value={register?.password}
                         placeholder="Password"

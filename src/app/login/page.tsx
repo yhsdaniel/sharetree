@@ -1,9 +1,22 @@
-import React from 'react'
+'use client'
+
+import React, { useEffect } from 'react'
 import LoginForm from './LoginForm'
 import bgLogin from '../../../public/images/bg-login.jpg'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react'
 
 export default function LoginPage() {
+  const { status } = useSession()
+  const router = useRouter()
+
+  useEffect(() => {
+    if(status === 'authenticated'){
+      router.push('/admin')
+    }
+  }, [status])
+
   return (
     <div className='w-auto h-full my-auto relative flex-center'>
       <div className='z-5 circle-bg'></div>

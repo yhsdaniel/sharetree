@@ -1,5 +1,3 @@
-'use client'
-
 import { AnimatePresence, motion } from 'framer-motion'
 import { Input } from './ui/input'
 import { Button } from './ui/button'
@@ -22,7 +20,7 @@ const Modal: React.FC<ModalProps> = ({ setShowModal }) => {
         name: ''
     })
 
-    const handleChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         e.preventDefault()
         const { name, value } = e.target
 
@@ -34,7 +32,13 @@ const Modal: React.FC<ModalProps> = ({ setShowModal }) => {
     
     const handleSubmit = () => {
         axios.post('api/links', fillLink)
-        toast.success('Your link has been added')
+            .then((response) => {
+                if(response){
+                    toast.success('Your link has been added')
+                }
+            }).catch((err) => {
+                toast.error('Something went wrong')
+            })
     }
 
     return (
@@ -47,7 +51,8 @@ const Modal: React.FC<ModalProps> = ({ setShowModal }) => {
             >
                 <button onClick={() => setShowModal(false)} className='relative inline float-right cursor-pointer hover:font-bold transition duration-150'>X</button>
                 <div>Enter URL</div>
-                <Input 
+                <Input
+                    required
                     type='text'
                     name='url'
                     className='my-4' 
@@ -57,6 +62,7 @@ const Modal: React.FC<ModalProps> = ({ setShowModal }) => {
                     onChange={handleChange}
                 />
                 <Input 
+                    required
                     type='text'
                     name='name'
                     className='my-4' 

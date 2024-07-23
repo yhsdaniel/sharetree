@@ -3,8 +3,20 @@
 import Navbar from '@/components/Navbar'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
+import { useRouter } from 'next/navigation'
+import { useSession } from 'next-auth/react'
+import { useEffect } from 'react'
 
 export default function HomePage() {
+  const { data: session, status } = useSession()
+  const router = useRouter()
+
+  useEffect(() => {
+    if(status === 'authenticated'){
+      router.push('/admin')
+    }
+  }, [status, session])
+  
   return (
     <div className='h-screen relative overflow-y-auto overflow-x-hidden'>
       <Navbar />

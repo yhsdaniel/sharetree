@@ -3,8 +3,19 @@
 import bgLogin from '../../../public/images/bg-login.jpg'
 import Image from 'next/image'
 import RegisterForm from './RegisterForm'
+import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
 
 export default function RegisterPage() {
+  const { status } = useSession()
+  const router = useRouter()
+
+  useEffect(() => {
+    if(status === 'authenticated'){
+      router.push('/admin')
+    }
+  }, [status])
   return (
     <div className='w-auto h-full my-auto relative flex-center'>
       <div className='z-5 circle-bg'></div>

@@ -1,7 +1,5 @@
-'use client'
-
 import { motion } from 'framer-motion'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import Modal from './Modal'
 import CardURL from './CardURL'
 
@@ -43,8 +41,8 @@ export default function MainWrapper() {
             </motion.button>
           </div>
           <section className='mt-16'>
-            {resultURL.map((value) => (
-              <CardURL name={value.name} url={value.url}/>
+            {resultURL.map((value, index) => (
+              <CardURL key={index} name={value.name} url={value.url}/>
             ))}
           </section>
         </div>

@@ -1,5 +1,5 @@
 import { connect } from '@/lib/mongodb'
-import User from '@/lib/user'
+import User from '@/utils/user'
 import { NextRequest, NextResponse } from 'next/server'
 import bcrypt, { hash } from 'bcryptjs'
 import jwt from 'jsonwebtoken'

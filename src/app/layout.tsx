@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Provider from "@/components/Provider";
+import AuthProvider from "@/utils/SessionProvider";
 import { Toaster } from "react-hot-toast";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -11,16 +11,19 @@ export const metadata: Metadata = {
   description: "Share your social links",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang="en">
       <body className={'h-screen'}>
-        {children}
-        <Toaster 
+        <AuthProvider>
+            {children}
+        </AuthProvider>
+        <Toaster
           position="top-center"
         />
       </body>

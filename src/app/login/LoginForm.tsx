@@ -3,49 +3,42 @@
 import GoogleButton from '@/components/GoogleButton'
 import { Input } from '@/components/ui/input'
 import Link from 'next/link'
-import { ChangeEvent, useState } from 'react'
-import axios from 'axios'
+import { FormEvent, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
-import Cookie from 'js-cookie'
-
-type User = {
-    email: string,
-    password: string
-}
+import { signIn, useSession } from 'next-auth/react'
 
 export default function LoginForm() {
-    const [login, setLogin] = useState<User>({
-        email: '',
-        password: ''
-    })
     const router = useRouter()
+    const { status } = useSession()
 
-    const handleChange = async (e: ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target
+    useEffect(() => {
+        if (status === 'authenticated') {
+            router.push('/admin')
+        }
+    }, [status, router])
 
-        setLogin((preValues) => ({
-            ...login,
-            [name]: value
-        }))
-    }
-
-    const handleSubmit = async (e: any) => {
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        try {
-            const response = await axios.post('api/users/login', login)
-            const { token } = response.data
-            
-            if(response.status == 200){
+        const formData = new FormData(e.currentTarget)
+        const email = formData.get('email') as string
+        const password = formData.get('password') as string
+        signIn("credentials", {
+            email,
+            password,
+            redirect: false
+        }).then((res) => {
+            if (res?.ok) {
                 toast.success('Login successful')
-                Cookie.set('access_token', token, { expires: 7 })
                 router.push('/admin')
             } else {
-                throw new Error('Invalid email and password')
+                toast.error('Invalid Email or Password')
+                router.push('/login')
             }
-        } catch (error) {
-            console.error(error)
-        }
+        }).catch((err) => {
+            toast.error('Invalid Email or Password')
+            router.push('/login')
+        })
     }
     return (
         <div className="lg:flex-col lg:flex w-full">
@@ -58,13 +51,13 @@ export default function LoginForm() {
                 <div className='mb-4'>
                     <Input
                         required
-                        type='text'
+                        type='email'
                         name='email'
                         autoComplete="off"
                         className="rounded-lg border-none h-12 bg-white p-4 shadow-sm"
-                        value={login?.email}
+                        // value={login?.email}
                         placeholder="Enter email address"
-                        onChange={handleChange}
+                    // onChange={handleChange}
                     />
                 </div>
                 <div className='mb-6'>
@@ -74,9 +67,9 @@ export default function LoginForm() {
                         name='password'
                         autoComplete="off"
                         className="rounded-lg border-none h-12 bg-white p-4 shadow-sm"
-                        value={login?.password}
+                        // value={login?.password}
                         placeholder="Password"
-                        onChange={handleChange}
+                    // onChange={handleChange}
                     />
                 </div>
                 <button type='submit' className='w-full border rounded-[50px] px-4 h-12 bg-[#7dd9f8] hover:bg-[#47bde4]/70 duration-150 ease-in-out text-[#393646] font-bold'>Login</button>
@@ -87,7 +80,7 @@ export default function LoginForm() {
                 <span className="text-xs text-gray-500 px-2 flex-center flex-1">or login with</span>
                 <span className="border border-gray-300 w-2/6 inline-block"></span>
             </div>
-            {/* <GoogleButton /> */}
+            <GoogleButton />
             <div className='mt-10'>
                 <p className='text-xs text-center'>This site is protected by reCAPTCHA and the <span className='italic'>Google Privacy Policy</span> and <span className='italic'>Terms of Service</span> apply.</p>
             </div>
