@@ -1,18 +1,26 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useSession } from 'next-auth/react'
+import { signOut, useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
+import { Button } from './ui/button'
+import { useRouter } from 'next/navigation'
 
 export default function Sidebar() {
     const [showSession, setShowSession] = useState('')
     const { data: session } = useSession()
+    const router = useRouter()
 
     useEffect(() => {
         if(session) {
             setShowSession(session.user?.username)
         }
     }, [session])
+
+    const handleSignOut = () => {
+        signOut()
+        router.push('/login')
+    }
     
     return (
         <motion.div
@@ -80,14 +88,14 @@ export default function Sidebar() {
                         </span>
                     </div>
                     <section className='w-full flex'>
-                        <a href="/" className='flex focus:outline-none outline-transparent group items-center h-12 w-[inherit] [&>div]:w-full flex-1 my-4 md:flex-none hover:bg-gray-100 rounded-xl duration-300 ease-in-out text-start'>
+                        <Button onClick={handleSignOut} className='flex focus:outline-none outline-transparent group items-center h-12 w-[inherit] [&>div]:w-full flex-1 my-4 p-0 md:flex-none text-gray-700 bg-white hover:bg-gray-100 rounded-xl duration-300 ease-in-out text-start'>
                             <span className='h-12 w-full flex items-center px-3'>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 mx-4">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M5.636 5.636a9 9 0 1 0 12.728 0M12 3v9" />
                                 </svg>
                                 <span>Log out</span>
                             </span>
-                        </a>
+                        </Button>
                     </section>
                 </div>
             </nav>

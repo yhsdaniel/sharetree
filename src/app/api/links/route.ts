@@ -1,21 +1,41 @@
 import { connect } from '@/lib/mongodb'
 import Link from '@/utils/links'
+import User from '@/utils/user'
 import { NextRequest, NextResponse } from 'next/server'
 
 connect()
 
-export async function POST(req: NextRequest){
+export async function POST(req: NextRequest) {
     try {
         const reqBody = await req.json()
-        const { name, url } = reqBody
+        const { name, url, owner } = reqBody
+        let user = await User.findOne({ email: owner })
+        if (!user) {
+            return NextResponse.json({ error: 'User not found' }, { status: 404 })
+        }
+
         const newLinks = new Link({
             name,
-            url
+            url,
+            owner: user._id
         })
-        newLinks.save()
-            .then((link: any) => NextResponse.json(link))
-            .catch((err: any) => console.log(err))
+        await newLinks.save()
+
+        // Add and update link to user
+        user.link.push(newLinks._id)
+        await user.save()
+        return NextResponse.json(newLinks, { status: 200 })
     } catch (error) {
+        return NextResponse.json({ error }, { status: 500 })
+    }
+}
+
+export async function GET() {
+    try {
+        const findLink = await Link.find()
+        return NextResponse.json(findLink, { status: 200 })
+    } catch (error) {
+        console.log(error)
         return NextResponse.json({ error }, { status: 500 })
     }
 }

@@ -1,21 +1,30 @@
+'use client'
+
 import { motion } from 'framer-motion'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Modal from './Modal'
 import CardURL from './CardURL'
-
-const resultURL = [
-  {
-    name: 'Linkedin',
-    url: 'https://www.linkedin.com/in/daniel-kristiawan-939a3b169/'
-  },
-  {
-    name: 'instagram',
-    url: 'https://www.instagram.com/yhskris'
-  }
-]
+import axios from 'axios'
+import { useRouter } from 'next/navigation'
 
 export default function MainWrapper() {
   const [showModal, setShowModal] = useState<boolean>(false)
+  const [listLinks, setListLinks] = useState([])
+  const router = useRouter()
+  
+  useEffect(() => {
+    const resp = async () => {
+      try {
+        const { data: response } = await axios.get('api/links')
+        setListLinks(response)
+        router.refresh()
+      } catch (error) {
+        console.error(error)
+      }
+    }  
+
+    resp()
+  }, [])
 
   return (
     <>
@@ -41,7 +50,7 @@ export default function MainWrapper() {
             </motion.button>
           </div>
           <section className='mt-16'>
-            {resultURL.map((value, index) => (
+            {listLinks.map((value, index) => (
               <CardURL key={index} name={value.name} url={value.url}/>
             ))}
           </section>

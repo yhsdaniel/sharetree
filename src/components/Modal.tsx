@@ -1,9 +1,12 @@
+'use client'
+
 import { AnimatePresence, motion } from 'framer-motion'
 import { Input } from './ui/input'
 import { Button } from './ui/button'
 import { ChangeEvent, useState } from 'react'
 import axios from 'axios'
 import toast from 'react-hot-toast'
+import { useSession } from 'next-auth/react'
 
 interface ModalProps {
     setShowModal: (showModal: boolean) => void
@@ -11,13 +14,16 @@ interface ModalProps {
 
 type URLForm = {
     url: string,
-    name: string
+    name: string,
+    owner: string
 }
 
 const Modal: React.FC<ModalProps> = ({ setShowModal }) => {
+    const session = useSession()
     const [fillLink, setFillLink] = useState<URLForm>({
         url: '',
-        name: ''
+        name: '',
+        owner: session.data?.user?.email || ''
     })
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -31,12 +37,15 @@ const Modal: React.FC<ModalProps> = ({ setShowModal }) => {
     }
     
     const handleSubmit = () => {
-        axios.post('api/links', fillLink)
+        axios.post('api/links', fillLink )
             .then((response) => {
                 if(response){
                     toast.success('Your link has been added')
+                    setShowModal(false)
+                    window.location.reload()
                 }
             }).catch((err) => {
+                console.log(err)
                 toast.error('Something went wrong')
             })
     }
