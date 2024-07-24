@@ -29,6 +29,7 @@ export default function LoginForm() {
             redirect: false
         }).then((res) => {
             if (res?.ok) {
+                router.refresh()
                 toast.success('Login successful')
                 router.push('/admin')
             } else {
