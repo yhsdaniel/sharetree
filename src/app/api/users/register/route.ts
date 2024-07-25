@@ -31,24 +31,4 @@ export async function POST(req: NextRequest) {
         console.log(error)
         return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
     }
-    // await User.findOne({ email }).then(user => {
-    //     if (user) {
-    //         return NextResponse.json({ email: "Email already exists" }, { status: 400 })
-    //     } else {
-    //         const newUser = new User({
-    //             username,
-    //             email,
-    //             password
-    //         })
-
-    //         bcryptjs.genSalt(10, (err, salt) => {
-    //             bcryptjs.hash(newUser.password, salt, (err, hash) => {
-    //                 if (err) throw err;
-    //                 newUser.password = hash;
-    //                 newUser.save()
-    //                 return NextResponse.json(user, { status: 200 })
-    //             });
-    //         });
-    //     }
-    // })
 }

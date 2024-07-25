@@ -30,10 +30,17 @@ export async function POST(req: NextRequest) {
     }
 }
 
-export async function GET() {
+export async function GET(req: NextRequest) {
     try {
-        const findLink = await Link.find()
-        return NextResponse.json(findLink, { status: 200 })
+        const { searchParams } = new URL(req.url);
+        const id = searchParams.get('id');
+        
+        if (!id) {
+            return NextResponse.json({ error: 'ID is required' }, { status: 400 });
+        }
+
+        const user = await User.findById(id).populate('link').exec();
+        return NextResponse.json(user.link, { status: 200 });
     } catch (error) {
         console.log(error)
         return NextResponse.json({ error }, { status: 500 })

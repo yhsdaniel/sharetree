@@ -6,25 +6,34 @@ import Modal from './Modal'
 import CardURL from './CardURL'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
+import { useSession } from 'next-auth/react'
 
 export default function MainWrapper() {
   const [showModal, setShowModal] = useState<boolean>(false)
   const [listLinks, setListLinks] = useState([])
   const router = useRouter()
+  const session = useSession()
+  const [idSession, setIdSession] = useState(() => {
+    return{
+      id: session.data?.user?.id || null
+    }
+  })
   
   useEffect(() => {
-    const resp = async () => {
-      try {
-        const { data: response } = await axios.get('api/links')
-        setListLinks(response)
-        router.refresh()
-      } catch (error) {
-        console.error(error)
+    if(idSession.id){
+      const resp = async () => {
+        try {
+          const { data: response } = await axios.get('api/links', { params: { id: idSession.id }})
+          setListLinks(response)
+          router.refresh()
+        } catch (error) {
+          console.error(error)
+        }
       }
-    }  
-
-    resp()
-  }, [])
+  
+      resp()
+    }
+  }, [idSession.id])
 
   return (
     <>
@@ -38,7 +47,7 @@ export default function MainWrapper() {
           <div className='h-14 w-full bg-blue-200 flex justify-center items-center rounded-xl'>
             <span className='text-sm'>Your sharetree link is: <a href="#" className='underline italic hover:text-blue-500 transition duration-150'> sharetree/daniel</a></span>
           </div>
-          {showModal && <Modal setShowModal={setShowModal}/>}
+          {showModal && <Modal setShowModal={setShowModal} />}
           <div className='md:px-16 md:mt-10 relative'>
             <motion.button
               whileHover={{ scale: 1 }}
@@ -51,7 +60,7 @@ export default function MainWrapper() {
           </div>
           <section className='mt-16'>
             {listLinks.map((value, index) => (
-              <CardURL key={index} name={value.name} url={value.url}/>
+              <CardURL key={index} name={value.name} url={value.url} />
             ))}
           </section>
         </div>

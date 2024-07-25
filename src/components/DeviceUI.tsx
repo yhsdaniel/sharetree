@@ -2,23 +2,35 @@
 
 import axios from 'axios'
 import { motion } from 'framer-motion'
+import { useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
 
 export default function DeviceUI() {
   const [listLinks, setListLinks] = useState([])
+  const session = useSession()
+
+  const [idSession, setIdSession] = useState(() => {
+    return {
+      id: session.data?.user?.id || null
+    }
+  })
 
   useEffect(() => {
-    const resp = async () => {
-      try {
-        const { data: response } = await axios.get('api/links')
-        setListLinks(response)
-      } catch (error) {
-        console.error(error)
+    if(idSession.id){
+      const resp = async () => {
+        try {
+          const { data: response } = await axios.get('api/links', { params: { id: idSession.id }})
+          setListLinks(response)
+        } catch (error) {
+          console.error(error)
+        }
       }
-    }  
 
-    resp()
-  }, [])
+      resp()
+    }
+
+  }, [idSession.id])
+
   return (
     <motion.div 
       initial={{ opacity: 0, translateX: 100}}

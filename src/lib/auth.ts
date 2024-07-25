@@ -54,16 +54,18 @@ export const authOptions: NextAuthOptions = {
         async jwt({ token, user }) {
             if (user && 'username' in user) {
                 const existingUser = await User.findOne({ email: user.email })
-                if (!existingUser) {
-                    const newUser = new User({
-                        username: user.username,
-                        email: user.email,
-                    })
-                    await newUser.save()
-                }
-                return {
-                    ...token,
-                    username: user.username
+                // if (!existingUser) {
+                //     const newUser = new User({
+                //         username: user.username,
+                //         email: user.email,
+                //     })
+                //     await newUser.save()
+                // }
+                if(existingUser){
+                    return {
+                        ...token,
+                        username: user.username
+                    }
                 }
             }
             return token
@@ -73,7 +75,8 @@ export const authOptions: NextAuthOptions = {
                 ...session,
                 user: {
                     ...session.user,
-                    username: token.username
+                    username: token.username,
+                    id: token.sub
                 }
             }
         },
