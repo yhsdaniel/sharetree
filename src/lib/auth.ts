@@ -4,6 +4,7 @@ import User from '../utils/user'
 import { compare } from 'bcryptjs'
 import { NextAuthOptions } from "next-auth";
 import { connect } from './mongodb';
+import { getSession } from 'next-auth/react';
 
 export const authOptions: NextAuthOptions = {
     secret: process.env.AUTH_SECRET,
@@ -54,13 +55,6 @@ export const authOptions: NextAuthOptions = {
         async jwt({ token, user }) {
             if (user && 'username' in user) {
                 const existingUser = await User.findOne({ email: user.email })
-                // if (!existingUser) {
-                //     const newUser = new User({
-                //         username: user.username,
-                //         email: user.email,
-                //     })
-                //     await newUser.save()
-                // }
                 if(existingUser){
                     return {
                         ...token,
@@ -81,7 +75,12 @@ export const authOptions: NextAuthOptions = {
             }
         },
         async redirect({ url, baseUrl }) {
-            if( url.startsWith('/')) return `${baseUrl}${url}`
+            const session = await getSession()
+            // if(session?.user.username){
+            //     return `${baseUrl}/${session.user.username}`
+            // }
+            // return baseUrl
+            if( url.startsWith('/')) return `${baseUrl}/${url}`
             else if ( new URL(url).origin === baseUrl ) return url
             return baseUrl
         }

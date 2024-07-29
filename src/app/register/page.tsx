@@ -8,12 +8,12 @@ import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 
 export default function RegisterPage() {
-  const { status } = useSession()
+  const { data: session, status } = useSession()
   const router = useRouter()
 
   useEffect(() => {
     if(status === 'authenticated'){
-      router.push('/admin')
+      router.push(`${session.user.username}`)
     }
   }, [status])
   return (

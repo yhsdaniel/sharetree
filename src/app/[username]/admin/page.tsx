@@ -1,10 +1,10 @@
 'use client'
 
-import DeviceUI from '@/components/DeviceUI'
-import MainWrapper from '@/components/MainWrapper'
+import DeviceUI from '@/app/[username]/admin/DeviceUI'
+import MainWrapper from '@/app/[username]/admin/MainWrapper'
 import Sidebar from '@/components/Sidebar'
 import React, { useEffect } from 'react'
-import LoginPage from '../login/page'
+import LoginPage from '../../login/page'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 

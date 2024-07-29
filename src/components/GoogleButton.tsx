@@ -6,12 +6,12 @@ import toast from "react-hot-toast";
 
 const GoogleButton = () => {
     const router = useRouter()
-    const { status } = useSession()
+    const { data: session, status } = useSession()
 
     if(status === 'authenticated'){
         router.refresh()
         toast.success('Log in successful')
-        router.push('/admin')
+        router.push({`${session?.user.username}/admin`})
     }
     return (
         <button

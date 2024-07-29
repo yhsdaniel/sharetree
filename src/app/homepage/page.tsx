@@ -13,7 +13,7 @@ export default function HomePage() {
 
   useEffect(() => {
     if(status === 'authenticated'){
-      router.push('/admin')
+      router.push(`${session?.user.username}/admin`)
     }
   }, [status, session])
   
@@ -36,7 +36,7 @@ export default function HomePage() {
                 Join people using Sharetree for their link in bio. One link to help you share everything you create and sell from your Instagram, TikTok, Twitter, YouTube and other social media profiles.
               </p>
               <Link
-                href="/admin"
+                href={`${session?.user.username}/admin`}
                 className="inline-block rounded-md border border-transparent mt-10 bg-pink-300 px-8 py-3 text-center font-medium text-black hover:bg-pink-200"
               >
                 Get Started for free

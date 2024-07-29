@@ -10,11 +10,11 @@ import { signIn, useSession } from 'next-auth/react'
 
 export default function LoginForm() {
     const router = useRouter()
-    const { status } = useSession()
+    const { data: session, status } = useSession()
 
     useEffect(() => {
         if (status === 'authenticated') {
-            router.push('/admin')
+            router.push(`/${session.user.username}/admin`)
         }
     }, [status, router])
 
@@ -31,7 +31,7 @@ export default function LoginForm() {
             if (res?.ok) {
                 router.refresh()
                 toast.success('Login successful')
-                router.push('/admin')
+                router.push(`/${session.user.username}/admin`)
             } else {
                 toast.error('Invalid Email or Password')
                 router.push('/login')

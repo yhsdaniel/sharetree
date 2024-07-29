@@ -2,35 +2,40 @@
 
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
-import Modal from './Modal'
-import CardURL from './CardURL'
+import Modal from '../../../components/Modal'
+import CardURL from '../../../components/CardURL'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 
+type LinkType = {
+  url: string,
+  name: string
+}
+
 export default function MainWrapper() {
   const [showModal, setShowModal] = useState<boolean>(false)
-  const [listLinks, setListLinks] = useState([])
+  const [listLinks, setListLinks] = useState<LinkType[]>([])
   const router = useRouter()
-  const session = useSession()
+  const { data: session } = useSession()
   const [idSession, setIdSession] = useState(() => {
-    return{
-      id: session.data?.user?.id || null
+    return {
+      id: session?.user?.id || null
     }
   })
-  
+
   useEffect(() => {
-    if(idSession.id){
+    if (idSession.id) {
       const resp = async () => {
         try {
-          const { data: response } = await axios.get('api/links', { params: { id: idSession.id }})
+          const { data: response } = await axios.get(`/api/${session?.user?.username}/links`, { params: { id: idSession.id } })
           setListLinks(response)
           router.refresh()
         } catch (error) {
           console.error(error)
         }
       }
-  
+
       resp()
     }
   }, [idSession.id])

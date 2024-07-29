@@ -19,11 +19,11 @@ type URLForm = {
 }
 
 const Modal: React.FC<ModalProps> = ({ setShowModal }) => {
-    const session = useSession()
+    const { data: session } = useSession()
     const [fillLink, setFillLink] = useState<URLForm>({
         url: '',
         name: '',
-        owner: session.data?.user?.email || ''
+        owner: session?.user?.email || ''
     })
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -35,11 +35,11 @@ const Modal: React.FC<ModalProps> = ({ setShowModal }) => {
             [name]: value
         }))
     }
-    
+
     const handleSubmit = () => {
-        axios.post('api/links', fillLink )
+        axios.post(`/api/${session?.user.username}/links`, fillLink)
             .then((response) => {
-                if(response){
+                if (response) {
                     toast.success('Your link has been added')
                     setShowModal(false)
                     window.location.reload()
@@ -64,18 +64,18 @@ const Modal: React.FC<ModalProps> = ({ setShowModal }) => {
                     required
                     type='text'
                     name='url'
-                    className='my-4' 
+                    className='my-4'
                     placeholder='URL'
                     autoComplete='off'
                     value={fillLink.url}
                     onChange={handleChange}
                 />
-                <Input 
+                <Input
                     required
                     type='text'
                     name='name'
-                    className='my-4' 
-                    placeholder='Link name' 
+                    className='my-4'
+                    placeholder='Link name'
                     autoComplete='off'
                     value={fillLink.name}
                     onChange={handleChange}

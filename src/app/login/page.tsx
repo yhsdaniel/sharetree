@@ -5,15 +5,18 @@ import LoginForm from './LoginForm'
 import bgLogin from '../../../public/images/bg-login.jpg'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation';
-import { useSession } from 'next-auth/react'
+import { useSession } from 'next-auth/react';
+import dynamic from 'next/dynamic'
+
+const Loginform = dynamic(() => import('@/app/login/LoginForm'), { ssr: false })
 
 export default function LoginPage() {
-  const { status } = useSession()
+  const { data: session, status } = useSession()
   const router = useRouter()
 
   useEffect(() => {
     if(status === 'authenticated'){
-      router.push('/admin')
+      router.push(`/${session.user.username}/admin`)
     }
   }, [status])
 
@@ -25,7 +28,13 @@ export default function LoginPage() {
           <LoginForm />
         </div>
         <div className='w-6/12 h-full flex-center max-md:hidden max-md:w-0'>
-          <Image src={bgLogin} alt="background-login" className='w-full h-full object-cover max-md:hidden' loading='lazy' />
+          <Image 
+            src={bgLogin} 
+            alt="background-login" 
+            className='w-full h-full object-cover max-md:hidden' 
+            width={500}
+            height={800}
+            priority />
         </div>
       </div>
     </div>
