@@ -3,7 +3,7 @@
 import GoogleButton from '@/components/GoogleButton'
 import { Input } from '@/components/ui/input'
 import Link from 'next/link'
-import { FormEvent, useEffect } from 'react'
+import React, { FormEvent, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
 import { signIn, useSession } from 'next-auth/react'
@@ -11,12 +11,13 @@ import { signIn, useSession } from 'next-auth/react'
 export default function LoginForm() {
     const router = useRouter()
     const { data: session, status } = useSession()
+    const username = session?.user?.username
 
     useEffect(() => {
         if (status === 'authenticated') {
-            router.push(`/${session.user.username}/admin`)
+            router.push(`/${username}/admin`)
         }
-    }, [status, router])
+    }, [session, status, router])
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -31,7 +32,7 @@ export default function LoginForm() {
             if (res?.ok) {
                 router.refresh()
                 toast.success('Login successful')
-                router.push(`/${session.user.username}/admin`)
+                router.push(`/${username}/admin`)
             } else {
                 toast.error('Invalid Email or Password')
                 router.push('/login')

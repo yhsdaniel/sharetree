@@ -2,7 +2,7 @@
 
 import DeviceUI from '@/app/[username]/admin/DeviceUI'
 import MainWrapper from '@/app/[username]/admin/MainWrapper'
-import Sidebar from '@/components/Sidebar'
+import Sidebar from '@/app/[username]/admin/Sidebar'
 import React, { useEffect } from 'react'
 import LoginPage from '../../login/page'
 import { useSession } from 'next-auth/react'

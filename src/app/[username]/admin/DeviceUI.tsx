@@ -4,7 +4,9 @@ import axios from 'axios'
 import { motion } from 'framer-motion'
 import { useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
-import LinkDeviceComponent from '@/components/LinkComponent'
+import dynamic from 'next/dynamic'
+
+const LinkComponent = dynamic(() => import('@/components/LinkComponent'), { ssr: false })
 
 type LinkType = {
   url: string,
@@ -49,7 +51,7 @@ export default function DeviceUI() {
           <div className='w-[17.5rem] h-[35rem] bg-black rounded-3xl absolute flex flex-col justify-start items-center -top-2 p-4'>
             <div className='text-white'><h1>Sharetree</h1></div>
             {listLinks.map((value, index) => (
-              <LinkDeviceComponent key={index} url={value.url} name={value.name}/>
+              <LinkComponent key={index} url={value.url} name={value.name}/>
             ))}
           </div>
         </div>

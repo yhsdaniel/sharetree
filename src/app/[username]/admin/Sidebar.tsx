@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion'
 import { signOut, useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
-import { Button } from './ui/button'
+import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
 
 export default function Sidebar() {
@@ -13,7 +13,7 @@ export default function Sidebar() {
 
     useEffect(() => {
         if(session) {
-            setShowSession(session.user?.username)
+            setShowSession(session?.user?.username)
         }
     }, [session])
 

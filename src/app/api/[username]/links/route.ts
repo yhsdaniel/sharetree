@@ -34,13 +34,26 @@ export async function GET(req: NextRequest) {
     try {
         const { searchParams } = new URL(req.url);
         const id = searchParams.get('id');
-        
+
         if (!id) {
             return NextResponse.json({ error: 'ID is required' }, { status: 400 });
         }
 
         const user = await User.findById(id).populate('link').exec();
         return NextResponse.json(user.link, { status: 200 });
+    } catch (error) {
+        console.log(error)
+        return NextResponse.json({ error }, { status: 500 })
+    }
+}
+
+export async function DELETE(req: NextRequest) {
+    const reqBody = await req.json()
+    const { id } = reqBody
+
+    try {
+        const deleteLink = await Link.deleteOne({ _id: id })
+        return NextResponse.json(deleteLink, { status: 200 })
     } catch (error) {
         console.log(error)
         return NextResponse.json({ error }, { status: 500 })

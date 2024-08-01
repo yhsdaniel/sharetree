@@ -13,7 +13,7 @@ export default function RegisterPage() {
 
   useEffect(() => {
     if(status === 'authenticated'){
-      router.push(`${session.user.username}`)
+      router.push(`${session?.user?.username}/admin`)
     }
   }, [status])
   return (

@@ -16,7 +16,7 @@ export default function LoginPage() {
 
   useEffect(() => {
     if(status === 'authenticated'){
-      router.push(`/${session.user.username}/admin`)
+      router.push(`/${session?.user?.username}/admin`)
     }
   }, [status])
 
@@ -25,7 +25,7 @@ export default function LoginPage() {
       <div className='z-5 circle-bg'></div>
       <div className='size-full flex-center lg:gap-x-12 z-10'>
         <div className='bg-ct-blue-600 flex-center flex-col flex-1 z-10 mt-10 px-5 xl:px-[8rem]'>
-          <LoginForm />
+          <Loginform />
         </div>
         <div className='w-6/12 h-full flex-center max-md:hidden max-md:w-0'>
           <Image 
