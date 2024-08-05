@@ -11,7 +11,7 @@ import dynamic from 'next/dynamic'
 const CardUrl = dynamic(() => import('@/components/CardURL'), { ssr: false })
 
 type LinkType = {
-  id: string,
+  _id: string,
   url: string,
   name: string
 }

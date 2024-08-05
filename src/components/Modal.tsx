@@ -53,9 +53,6 @@ const Modal: React.FC<ModalProps> = ({ setShowModal, type, name, id }) => {
             })
     }
 
-    const handleSubmitEdit = () => {
-    }
-
     const handleSubmitDelete = () => {
         axios.delete(`/api/${session?.user?.username}/links`, { data: { id: id } })
             .then((response) => {
@@ -106,7 +103,7 @@ const Modal: React.FC<ModalProps> = ({ setShowModal, type, name, id }) => {
                     </motion.div>
                 )}
 
-                {type === 'edit' && (
+                {/* {type === 'edit' && (
                     <motion.div
                         className='md:ml-[320px] md:mr-[230px] lg:mr-[316px] xl:mr-[460px] bg-white border border-gray-300 bottom-0 shadow-inner shadow-gray-300 rounded-3xl z-30 p-6 pb-20'
                         initial={{ opacity: 0, translateY: 1 }}
@@ -137,7 +134,7 @@ const Modal: React.FC<ModalProps> = ({ setShowModal, type, name, id }) => {
                         />
                         <Button className='my-4 flex justify-end float-right' onClick={handleSubmitEdit}>Submit</Button>
                     </motion.div>
-                )}
+                )} */}
 
                 {type === 'delete' && (
                     <motion.div
