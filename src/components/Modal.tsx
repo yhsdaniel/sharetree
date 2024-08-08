@@ -23,6 +23,8 @@ type URLForm = {
 
 const Modal: React.FC<ModalProps> = ({ setShowModal, type, name, id }) => {
     const { data: session } = useSession()
+    const user = session?.user
+    const username = (user && 'username' in user ? user?.username : undefined) || session?.user?.name
     const [fillLink, setFillLink] = useState<URLForm>({
         url: '',
         name: '',
@@ -40,7 +42,7 @@ const Modal: React.FC<ModalProps> = ({ setShowModal, type, name, id }) => {
     }
 
     const handleSubmitAdd = () => {
-        axios.post(`/api/${session?.user?.username}/links`, fillLink)
+        axios.post(`/api/${username}/links`, fillLink)
             .then((response) => {
                 if (response) {
                     toast.success('Your link has been added')
@@ -54,7 +56,7 @@ const Modal: React.FC<ModalProps> = ({ setShowModal, type, name, id }) => {
     }
 
     const handleSubmitDelete = () => {
-        axios.delete(`/api/${session?.user?.username}/links`, { data: { id: id } })
+        axios.delete(`/api/${username}/links`, { data: { id: id } })
             .then((response) => {
                 if (response) {
                     toast.success(`Deleted link successfully`)
@@ -82,59 +84,26 @@ const Modal: React.FC<ModalProps> = ({ setShowModal, type, name, id }) => {
                         <Input
                             required
                             type='text'
-                            name='url'
-                            className='my-4'
-                            placeholder='URL'
-                            autoComplete='off'
-                            value={fillLink.url}
-                            onChange={handleChange}
-                        />
-                        <Input
-                            required
-                            type='text'
                             name='name'
                             className='my-4'
                             placeholder='Link name'
                             autoComplete='off'
                             value={fillLink.name}
+                            onChange={handleChange}
+                        />
+                        <Input
+                            required
+                            type='text'
+                            name='url'
+                            className='my-4'
+                            placeholder='URL'
+                            autoComplete='off'
+                            value={fillLink.url}
                             onChange={handleChange}
                         />
                         <Button className='my-4 float-right' onClick={handleSubmitAdd}>Add</Button>
                     </motion.div>
                 )}
-
-                {/* {type === 'edit' && (
-                    <motion.div
-                        className='md:ml-[320px] md:mr-[230px] lg:mr-[316px] xl:mr-[460px] bg-white border border-gray-300 bottom-0 shadow-inner shadow-gray-300 rounded-3xl z-30 p-6 pb-20'
-                        initial={{ opacity: 0, translateY: 1 }}
-                        animate={{ opacity: 1, translateY: 100 }}
-                        transition={{ duration: .3 }}
-                    >
-                        <button onClick={() => setShowModal(false)} className='relative inline float-right cursor-pointer hover:font-bold transition duration-150'>X</button>
-                        <p>Edit your link</p>
-                        <Input
-                            required
-                            type='text'
-                            name='url'
-                            className='my-4'
-                            placeholder='URL'
-                            autoComplete='off'
-                            value={fillLink.url}
-                            onChange={handleChange}
-                        />
-                        <Input
-                            required
-                            type='text'
-                            name='name'
-                            className='my-4'
-                            placeholder='Link name'
-                            autoComplete='off'
-                            value={fillLink.name}
-                            onChange={handleChange}
-                        />
-                        <Button className='my-4 flex justify-end float-right' onClick={handleSubmitEdit}>Submit</Button>
-                    </motion.div>
-                )} */}
 
                 {type === 'delete' && (
                     <motion.div

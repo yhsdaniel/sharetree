@@ -1,6 +1,7 @@
 import { connect } from '@/lib/mongodb'
 import Link from '@/utils/links'
 import User from '@/utils/user'
+import mongoose from 'mongoose'
 import { NextRequest, NextResponse } from 'next/server'
 
 connect()
@@ -37,6 +38,10 @@ export async function GET(req: NextRequest) {
 
         if (!id) {
             return NextResponse.json({ error: 'ID is required' }, { status: 400 });
+        }
+
+        if (!mongoose.isValidObjectId(id)) {
+            return NextResponse.json({ error: 'Invalid ID format' }, { status: 400 });
         }
 
         const user = await User.findById(id).populate('link').exec();

@@ -4,7 +4,7 @@ import User from '../utils/user'
 import { compare } from 'bcryptjs'
 import { NextAuthOptions } from "next-auth";
 import { connect } from './mongodb';
-import { getSession } from 'next-auth/react';
+import { ObjectId } from 'mongodb'
 
 export const authOptions: NextAuthOptions = {
     secret: process.env.AUTH_SECRET,
@@ -18,8 +18,8 @@ export const authOptions: NextAuthOptions = {
     },
     providers: [
         GoogleProvider({
-            clientId: process.env.GOOGLE_ID as string,
-            clientSecret: process.env.GOOGLE_SECRET as string
+            clientId: process.env.GOOGLE_ID!,
+            clientSecret: process.env.GOOGLE_SECRET!,
         }),
         CredentialsProvider({
             name: 'Credentials',
@@ -58,28 +58,41 @@ export const authOptions: NextAuthOptions = {
                 if(existingUser){
                     return {
                         ...token,
-                        username: user.username
+                        username: user.username || user.name
                     }
                 }
             }
             return token
         },
         async session({ session, token }) {
+            const existingUser = await User.findOne({ email: token.email })
             return {
                 ...session,
                 user: {
                     ...session.user,
-                    username: token.username,
-                    id: token.sub
+                    username: token.username || token.name,
+                    id: existingUser._id
                 }
             }
         },
+        async signIn({ profile, account }) {
+            await connect()
+
+            if(account?.provider === 'google'){
+                const emailData = await User.findOne({ email: profile?.email })
+                if(!emailData){
+                    const newUser = new User({
+                        _id: new ObjectId(),
+                        email: profile?.email,
+                        username: profile?.name,
+                        password: ''
+                    })
+                    await newUser.save()
+                }
+            }
+            return true
+        },
         async redirect({ url, baseUrl }) {
-            const session = await getSession()
-            // if(session?.user.username){
-            //     return `${baseUrl}/${session.user.username}`
-            // }
-            // return baseUrl
             if( url.startsWith('/')) return `${baseUrl}/${url}`
             else if ( new URL(url).origin === baseUrl ) return url
             return baseUrl

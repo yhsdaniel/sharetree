@@ -5,14 +5,14 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
 const GoogleButton = () => {
-    const router = useRouter()
-    const { data: session, status } = useSession()
+    // const router = useRouter()
+    // const { data: session, status } = useSession()
 
-    if(status === 'authenticated'){
-        router.refresh()
-        toast.success('Log in successful')
-        router.push({`${session?.user.username}/admin`})
-    }
+    // if(status === 'authenticated'){
+    //     toast.success('Login successful')
+    //     router.push(`/${session?.user?.username}/admin`)
+    // }
+
     return (
         <button
             className="flex w-full justify-center gap-5 rounded-2xl border-gray-300 border bg-white mt-6 py-3 px-3 text-sm font-bold hover:bg-gray-100 transition-all"
@@ -20,8 +20,8 @@ const GoogleButton = () => {
             <GoogleLogo />
             <div>Continue with Google</div>
         </button>
-    );
-};
+    )
+}
 
 export default GoogleButton;
 

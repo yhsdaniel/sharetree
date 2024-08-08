@@ -98,7 +98,7 @@ export default function RegisterForm() {
                 <span className="text-xs text-gray-500 flex-center flex-1">or sign up with</span>
                 <span className="border border-gray-300 w-2/6 inline-block"></span>
             </div>
-            {/* <GoogleButton /> */}
+            <GoogleButton />
             <div className='mt-10 text-sm'>
                 <span>Already have an account? <Link href={'/login'} className='text-blue-600 hover:text-blue-800 transition-all'>Login</Link></span>
             </div>

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { motion } from 'framer-motion'
 import Modal from "./Modal"
 import { Input } from "./ui/input"
@@ -12,21 +12,25 @@ import toast from "react-hot-toast"
 interface AppProps {
     id: string,
     name: string,
-    url: string
+    url: string,
+    username: string | null
 }
 
 export default function CardURL({ id, name, url }: AppProps) {
     const [showModal, setShowModal] = useState<boolean>(false)
     const [editName, setEditName] = useState(false)
     const [editUrl, setEditUrl] = useState(false)
+    const [type, setType] = useState('')
+    const [loading, setLoading] = useState(true)
     const [isEdit, setIsEdit] = useState({
         name: name || '',
         url: url || ''
     })
-    const [type, setType] = useState('')
-
+    
     const { data: session } = useSession()
-
+    const user = session?.user
+    const username = (user && 'username' in user ? user?.username : undefined) || session?.user?.name
+    
     const handleEdit = {
         EditName: () => {
             setEditName(true)
@@ -53,17 +57,19 @@ export default function CardURL({ id, name, url }: AppProps) {
     }
 
     const handleSave = () => {
-        axios.put(`/api/${session?.user?.username}/links`, { id: id, name: isEdit.name, url: isEdit.url })
+        setLoading(true)
+        axios.put(`/api/${username}/links`, { id: id, name: isEdit.name, url: isEdit.url })
             .then((response) => {
                 if (response) {
                     setEditName(false)
                     setEditUrl(false)
                     toast.success('Updated successfully')
-                    window.location.reload()
+                    setLoading(false)
                 }
             }).catch((err) => {
                 console.log(err)
                 toast.error('Something went wrong')
+                setLoading(false)
             })
     };
 

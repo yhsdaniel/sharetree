@@ -17,7 +17,7 @@ export default function LoginForm() {
         if (status === 'authenticated') {
             router.push(`/${username}/admin`)
         }
-    }, [session, status, router])
+    }, [session])
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -30,7 +30,6 @@ export default function LoginForm() {
             redirect: false
         }).then((res) => {
             if (res?.ok) {
-                router.refresh()
                 toast.success('Login successful')
                 router.push(`/${username}/admin`)
             } else {
@@ -38,6 +37,7 @@ export default function LoginForm() {
                 router.push('/login')
             }
         }).catch((err) => {
+            console.log(err)
             toast.error('Invalid Email or Password')
             router.push('/login')
         })
@@ -82,7 +82,7 @@ export default function LoginForm() {
                 <span className="text-xs text-gray-500 px-2 flex-center flex-1">or login with</span>
                 <span className="border border-gray-300 w-2/6 inline-block"></span>
             </div>
-            {/* <GoogleButton /> */}
+            <GoogleButton />
             <div className='mt-10'>
                 <p className='text-xs text-center'>This site is protected by reCAPTCHA and the <span className='italic'>Google Privacy Policy</span> and <span className='italic'>Terms of Service</span> apply.</p>
             </div>
