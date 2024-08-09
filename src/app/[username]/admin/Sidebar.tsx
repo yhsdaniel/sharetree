@@ -19,7 +19,6 @@ export default function Sidebar() {
 
     const handleSignOut = () => {
         signOut()
-        router.refresh()
         router.push('/login')
     }
     

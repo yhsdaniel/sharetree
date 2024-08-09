@@ -7,7 +7,6 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import dynamic from 'next/dynamic'
-
 const Loginform = dynamic(() => import('@/app/login/LoginForm'), { ssr: false })
 
 export default function LoginPage() {

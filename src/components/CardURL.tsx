@@ -12,8 +12,7 @@ import toast from "react-hot-toast"
 interface AppProps {
     id: string,
     name: string,
-    url: string,
-    username: string | null
+    url: string
 }
 
 export default function CardURL({ id, name, url }: AppProps) {
@@ -21,7 +20,6 @@ export default function CardURL({ id, name, url }: AppProps) {
     const [editName, setEditName] = useState(false)
     const [editUrl, setEditUrl] = useState(false)
     const [type, setType] = useState('')
-    const [loading, setLoading] = useState(true)
     const [isEdit, setIsEdit] = useState({
         name: name || '',
         url: url || ''
@@ -57,19 +55,17 @@ export default function CardURL({ id, name, url }: AppProps) {
     }
 
     const handleSave = () => {
-        setLoading(true)
         axios.put(`/api/${username}/links`, { id: id, name: isEdit.name, url: isEdit.url })
             .then((response) => {
                 if (response) {
                     setEditName(false)
                     setEditUrl(false)
                     toast.success('Updated successfully')
-                    setLoading(false)
+                    window.location.reload()
                 }
             }).catch((err) => {
                 console.log(err)
                 toast.error('Something went wrong')
-                setLoading(false)
             })
     };
 

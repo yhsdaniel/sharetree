@@ -1,6 +1,5 @@
 'use client'
 
-import Navbar from '@/components/Navbar'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { useRouter } from 'next/navigation'
@@ -9,6 +8,8 @@ import { useEffect } from 'react'
 import Image from 'next/image'
 import Tiktok from '../../../public/images/Tiktok.png'
 import Instagram from '../../../public/images/Instagram.png'
+import dynamic from 'next/dynamic'
+const Navbar = dynamic(() => import('@/components/Navbar'), { ssr: false })
 
 export default function HomePage() {
   const { data: session, status } = useSession()
@@ -23,6 +24,7 @@ export default function HomePage() {
   return (
     <div className='h-full md:h-screen relative overflow-y-auto overflow-x-hidden flex justify-center items-start'>
       <Navbar />
+      
       <div className="h-full bg-green-800 flex justify-center items-center lg:pt-[6rem] xl:pt-[8rem]">
         <motion.div
           initial={{ opacity: 0, translateX: -100 }}
@@ -67,35 +69,9 @@ export default function HomePage() {
                 Get Started for free
               </Link>
             </motion.div>
-            {/* Image Grid */}
-            {/* <motion.div 
-              initial={{ opacity: 0, translateX: 100}}
-              animate={{ opacity: 1, translateX: 1}}
-              transition={{ duration: .5}}
-              className="md:mt-0 mt-10 md:w-6/12 hidden lg:flex flex-col justify-center items-center"
-            >
-              <div
-                aria-hidden="true"
-                className="w-9/12 pointer-events-none lg:mx-auto"
-              >
-                <div className="relative transform top-0">
-                  <div className="flex items-center justify-center space-x-6 lg:space-x-4">
-                    <Image 
-                      src={bgHome} 
-                      width={500}
-                      height={500}
-                      alt='Home'
-                      className='size-full'                 />
-                  </div>
-                </div>
-              </div>
-            </motion.div> */}
           </div>
         </div>
       </div>
-      <section>
-
-      </section>
     </div>
   )
 }
