@@ -6,7 +6,7 @@ import jwt from 'jsonwebtoken'
 
 connect()
 
-export async function POST(req: NextRequest, res: NextResponse) {
+export async function POST(req: NextRequest) {
     const reqBody = await req.json()
     const { email, password } = reqBody;
 
