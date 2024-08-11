@@ -12,10 +12,12 @@ const Loginform = dynamic(() => import('@/app/login/LoginForm'), { ssr: false })
 export default function LoginPage() {
   const { data: session, status } = useSession()
   const router = useRouter()
+  const user = session?.user
+  const username = (user && 'username' in user ? user?.username : undefined) || session?.user?.name
 
   useEffect(() => {
     if(status === 'authenticated'){
-      router.push(`/${session?.user?.username}/admin`)
+      router.push(`/${username}/admin`)
     }
   }, [status])
 
