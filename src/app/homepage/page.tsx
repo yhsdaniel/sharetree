@@ -65,7 +65,7 @@ export default function HomePage() {
                 Join people using Sharetree for their link in bio. One link to help you share everything you create and sell from your Instagram, TikTok, Twitter, YouTube and other social media profiles.
               </p>
               <Link
-                href={`${session?.user?.username}/admin`}
+                href={`${username}/admin`}
                 className="inline-block rounded-md border border-transparent mt-10 bg-blue-300 px-8 py-3 text-center font-medium text-black hover:bg-blue-400 duration-150 ease-in-out"
               >
                 Get Started for free
