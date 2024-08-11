@@ -17,7 +17,7 @@ export default function RegisterPage() {
     if(status === 'authenticated'){
       router.push(`${username}/admin`)
     }
-  }, [status])
+  }, [router, status])
   return (
     <div className='w-auto h-full my-auto relative flex-center'>
       <div className='z-5 circle-bg'></div>

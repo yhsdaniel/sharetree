@@ -19,7 +19,7 @@ export default function LoginPage() {
     if(status === 'authenticated'){
       router.push(`/${username}/admin`)
     }
-  }, [status])
+  }, [router, status])
 
   return (
     <div className='w-auto h-full my-auto relative flex-center'>

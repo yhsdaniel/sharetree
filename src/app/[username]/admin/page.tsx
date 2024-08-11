@@ -16,7 +16,7 @@ export default function AdminPage() {
         if(status === 'unauthenticated'){
             router.push('/login')
         }
-    }, [status])
+    }, [router, status])
 
     if(status === 'authenticated'){
         return(

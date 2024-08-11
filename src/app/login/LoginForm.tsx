@@ -11,13 +11,14 @@ import { signIn, useSession } from 'next-auth/react'
 export default function LoginForm() {
     const router = useRouter()
     const { data: session, status } = useSession()
-    const username = session?.user?.username
+    const user = session?.user
+    const username = (user && 'username' in user ? user?.username : undefined) || session?.user?.name
 
     useEffect(() => {
         if (status === 'authenticated') {
             router.push(`/${username}/admin`)
         }
-    }, [session])
+    }, [router, session])
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()

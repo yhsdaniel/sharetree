@@ -15,7 +15,7 @@ export default function Sidebar() {
         if(session) {
             setShowSession(session?.user?.username)
         }
-    }, [session])
+    }, [router, session])
 
     const handleSignOut = () => {
         signOut()
