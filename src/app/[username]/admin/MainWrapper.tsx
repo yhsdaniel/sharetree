@@ -42,7 +42,7 @@ export default function MainWrapper() {
 
       resp()
     }
-  }, [idSession.id])
+  }, [idSession.id, username])
 
   return (
     <>

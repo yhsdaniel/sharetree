@@ -16,7 +16,6 @@ type LinkType = {
 export default function DeviceUI() {
   const [listLinks, setListLinks] = useState<LinkType[]>([])
   const { data: session } = useSession()
-
   const [idSession, setIdSession] = useState(() => {
     return {
       id: session?.user?.id || null

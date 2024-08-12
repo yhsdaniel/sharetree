@@ -21,7 +21,7 @@ export default function HomePage() {
     if (status === 'authenticated') {
       router.push(`${username}/admin`)
     }
-  }, [router, status, session])
+  }, [router, status, username])
 
   return (
     <div className='h-full md:h-screen relative overflow-y-auto overflow-x-hidden flex justify-center items-start'>

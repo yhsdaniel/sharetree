@@ -1,10 +1,9 @@
 'use client'
 
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { motion } from 'framer-motion'
 import Modal from "./Modal"
 import { Input } from "./ui/input"
-import { Button } from "./ui/button"
 import axios from "axios"
 import { useSession } from "next-auth/react"
 import toast from "react-hot-toast"
