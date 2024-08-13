@@ -7,10 +7,7 @@ export async function connect() {
         const connection = mongoose.connection;
         mongoose.set('strictPopulate', false)
         if(process.env.MONGODB_URI){
-            mongoose.connect(process.env.MONGODB_URI, {
-                useNewUrlParser: true,
-                useUnifiedTopology: true
-            } as ConnectOptions);
+            mongoose.connect(process.env.MONGODB_URI);
             connection.on('connected', () => {
                 console.log("MongoDB connected successfully")
             })
