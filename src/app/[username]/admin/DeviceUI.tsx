@@ -13,20 +13,26 @@ type LinkType = {
   name: string
 }
 
+type SessionUser = {
+  id?: string | null
+}
+
 export default function DeviceUI() {
   const [listLinks, setListLinks] = useState<LinkType[]>([])
   const { data: session } = useSession()
   const [idSession, setIdSession] = useState(() => {
     return {
-      id: session?.user?.id || null
+      id: (session?.user as SessionUser)?.id || null
     }
   })
+  const user = session?.user
+  const username = (user && 'username' in user ? user?.username : undefined) || session?.user?.name
 
   useEffect(() => {
     if (idSession.id) {
       const resp = async () => {
         try {
-          const { data: response } = await axios.get(`/api/${session?.user?.username}/links`, { params: { id: idSession.id } })
+          const { data: response } = await axios.get(`/api/${username}/links`, { params: { id: idSession.id } })
           setListLinks(response)
         } catch (error) {
           console.error(error)
@@ -36,7 +42,7 @@ export default function DeviceUI() {
       resp()
     }
 
-  }, [idSession.id])
+  }, [idSession.id, username])
 
   return (
     <motion.div

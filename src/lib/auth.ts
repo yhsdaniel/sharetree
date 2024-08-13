@@ -1,6 +1,6 @@
 import GoogleProvider from 'next-auth/providers/google'
 import CredentialsProvider from 'next-auth/providers/credentials'
-import User from '../utils/user'
+import User from '../utils/db/user'
 import { compare } from 'bcryptjs'
 import { NextAuthOptions } from "next-auth";
 import { connect } from './mongodb';

@@ -18,7 +18,7 @@ export default function LoginForm() {
         if (status === 'authenticated') {
             router.push(`/${username}/admin`)
         }
-    }, [router, session, username])
+    }, [router, session, status, username])
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -77,7 +77,7 @@ export default function LoginForm() {
                 </div>
                 <button type='submit' className='w-full border rounded-[50px] px-4 h-12 bg-[#7dd9f8] hover:bg-[#47bde4]/70 duration-150 ease-in-out text-[#393646] font-bold'>Login</button>
             </form>
-            <span className="text-sm mt-10 text-right">Don't have an account? <Link href='/register' className='text-blue-600 hover:text-blue-700'>Register</Link></span>
+            <span className="text-sm mt-10 text-right">Don&apos;t have an account? <Link href='/register' className='text-blue-600 hover:text-blue-700'>Register</Link></span>
             <div className="flex justify-center items-center mt-6">
                 <span className="border border-gray-300 w-2/6 inline-block"></span>
                 <span className="text-xs text-gray-500 px-2 flex-center flex-1">or login with</span>

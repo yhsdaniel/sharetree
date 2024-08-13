@@ -35,7 +35,7 @@ export default function Sidebar() {
             className='h-screen w-full md:max-w-xs md:fixed md:left-0 top-0'
         >
             {/* MOBILE version */}
-            <nav className='bg-white transition-all duration-[250ms] ease-in-out md:opacity-0 fixed top-0 left-0 w-full md:hidden block opacity-100' aria-label='mobile navigation' data-testid="ReactNavigation mobile">
+            <nav className='bg-white transition-all duration-200 ease-in-out md:opacity-0 fixed top-0 left-0 w-full md:hidden block opacity-100' aria-label='mobile navigation' data-testid="ReactNavigation mobile">
                 <div className='flex flex-col-reverse w-full fixed bg-white items-stretch border-b'>
                     <section className='w-full flex flex-auto'>
                         <ul>

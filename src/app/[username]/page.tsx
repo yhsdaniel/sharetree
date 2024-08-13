@@ -19,7 +19,8 @@ export default function CardUser() {
     const [pathLink, setPathLink] = useState(() => ({
         username: path
     }))
-    const [listLinks, setListLinks] = useState<LinkType[][]>([])
+    const [listLinks, setListLinks] = useState<LinkType[]>([])
+    console.log(listLinks)
 
     useEffect(() => {
         const resp = async () => {
@@ -46,7 +47,7 @@ export default function CardUser() {
                 <div className='size-full overflow-hidden flex justify-center items-center'>
                     <div className='w-[20rem] h-[90%] bg-black/60 shadow-xl shadow-gray-400 px-4 rounded-3xl relative flex flex-col justify-start items-center'>
                         <div className='text-white'><h1>Sharetree</h1></div>
-                        {listLinks[0]?.map((value, index) => (
+                        {listLinks.map((value, index) => (
                             <ListDeviceComponent key={index} url={value.url} name={value.name} />
                         ))}
                     </div>

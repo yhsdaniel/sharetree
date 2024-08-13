@@ -25,7 +25,7 @@ export default function RegisterForm() {
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         try {
-            axios.post('api/users/register', register).then((response) => {
+            axios.post('/api/users/register', register).then((response) => {
                 if( response.status === 200 ) {
                     toast.success('Registered successfully')
                     router.push('/login')
@@ -92,7 +92,7 @@ export default function RegisterForm() {
                 </div>
                 <button type='submit' className='w-full border rounded-[50px] px-4 h-12 bg-[#7dd9f8] hover:bg-[#47bde4]/70 duration-150 ease-in-out text-[#393646] font-bold'>Sign Up</button>
             </form>
-            <p className="text-sm mt-10 text-center text-gray-500">By clicking <b>Create account</b>, you agree to Linktree's <span className="italic">Terms and Conditions</span> and confirm you have read our <span className="italic">Privacy Notice.</span> You may receive offers, news and updates from us.</p>
+            <p className="text-sm mt-10 text-center text-gray-500">By clicking <b>Create account</b>, you agree to Linktree&apos;s <span className="italic">Terms and Conditions</span> and confirm you have read our <span className="italic">Privacy Notice.</span> You may receive offers, news and updates from us.</p>
             <div className="flex justify-center items-center mt-6">
                 <span className="border border-gray-300 w-2/6 inline-block"></span>
                 <span className="text-xs text-gray-500 flex-center flex-1">or sign up with</span>

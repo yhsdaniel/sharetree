@@ -1,5 +1,5 @@
 import { connect } from '@/lib/mongodb'
-import User from '@/utils/user'
+import User from '@/utils/db/user'
 import { NextRequest, NextResponse } from 'next/server'
 import bcryptjs from 'bcryptjs'
 
