@@ -26,6 +26,7 @@
     "next": "^14.2.5",
     "next-auth": "^4.24.7",
     "nodemailer": "^6.9.14",
+    "nookies": "^2.5.2",
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.52.2",

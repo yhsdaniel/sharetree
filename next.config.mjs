@@ -3,6 +3,7 @@ const nextConfig = {
     experimental: {
         instrumentationHook: true
     },
+    reactStrictMode: true,
     images: {
         remotePatterns: [
             {

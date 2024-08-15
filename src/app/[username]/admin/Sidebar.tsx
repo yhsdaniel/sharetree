@@ -21,10 +21,14 @@ export default function Sidebar() {
         }
     }, [router, session, username])
 
-    const handleSignOut = () => {
-        signOut()
-        router.refresh()
-        router.push('/login')
+    const handleSignOut = async () => {
+        try {
+            await signOut({ redirect: false })
+            router.refresh()
+            router.push('/login')
+        } catch (error) {
+            console.error("Error Signing out", error)
+        }
     }
     
     return (

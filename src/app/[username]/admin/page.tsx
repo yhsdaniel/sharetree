@@ -4,19 +4,18 @@ import DeviceUI from '@/app/[username]/admin/DeviceUI'
 import MainWrapper from '@/app/[username]/admin/MainWrapper'
 import Sidebar from '@/app/[username]/admin/Sidebar'
 import React, { useEffect } from 'react'
-import LoginPage from '../../login/page'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 
 export default function AdminPage() {
-    const { status } = useSession()
+    const { data: session, status } = useSession()
     const router = useRouter()
 
     useEffect(() => {
-        if(status === 'unauthenticated'){
+        if(status === 'unauthenticated' || !session){
             router.push('/login')
         }
-    }, [router, status])
+    }, [router, session, status])
 
     if(status === 'authenticated'){
         return(

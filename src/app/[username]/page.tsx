@@ -20,7 +20,6 @@ export default function CardUser() {
         username: path
     }))
     const [listLinks, setListLinks] = useState<LinkType[]>([])
-    console.log(listLinks)
 
     useEffect(() => {
         const resp = async () => {

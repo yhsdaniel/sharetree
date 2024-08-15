@@ -14,10 +14,10 @@ export default function RegisterPage() {
   const username = (user && 'username' in user ? user?.username : undefined) || session?.user?.name
 
   useEffect(() => {
-    if(status === 'authenticated'){
+    if(status === 'authenticated' || session){
       router.push(`${username}/admin`)
     }
-  }, [router, status, username])
+  }, [router, status, username, session])
   return (
     <div className='w-auto h-full my-auto relative flex-center'>
       <div className='z-5 circle-bg'></div>
@@ -26,7 +26,12 @@ export default function RegisterPage() {
           <RegisterForm />
         </div>
         <div className='w-6/12 h-full flex-center max-md:hidden max-md:w-0'>
-          <Image src={bgLogin} alt="background-login" className='w-full h-full object-cover max-md:hidden' loading='lazy' />
+          <Image 
+            src={bgLogin} 
+            alt="background-login" 
+            className='w-full h-full object-cover max-md:hidden'
+            priority={true}
+          />
         </div>
       </div>
     </div>
