@@ -27,7 +27,7 @@ export default function HomePage() {
   return (
     <div className='size-full relative overflow-y-auto overflow-x-hidden scroll-smooth'>
       <Navbar />
-      <div id='home' className="sm:p-10 min-h-screen bg-green-800 md:pt-[6rem] xl:pt-[8rem]">
+      <div id='home' className="sm:p-10 min-h-screen bg-green-800 flex justify-center items-center md:pt-[6rem] xl:pt-[8rem]">
         <motion.div
           initial={{ opacity: 0, translateX: -100 }}
           animate={{ opacity: 1, translateX: 1 }}
@@ -78,9 +78,9 @@ export default function HomePage() {
             initial={{ opacity: 0, translateY: -100 }}
             animate={{ opacity: 1, translateY: 1 }}
             transition={{ duration: .5 }}
-            className="text-center flex justify-center items-center text-purple-800"
+            className="text-center flex flex-col md:flex-row justify-center items-center text-purple-800"
           >
-            <div className='w-6/12 text-left'>
+            <div className='md:w-6/12 w-full text-left'>
               <h1 className='text-4xl sm:text-5xl'>Create, Customize and Share your Sharetree in bio</h1>
               <p className='text-md lg:text-xl'>Connect your Instagram, Tiktok, Facebook, Blog, Website store and even more. It all come together in one simple link in your bio.</p>
               <Link
@@ -90,7 +90,7 @@ export default function HomePage() {
                 Get Started for free
               </Link>
             </div>
-            <div className='w-6/12 flex justify-center items-center'>
+            <div className='w-6/12 mt-8 flex justify-center items-center'>
               <video controls={false} autoPlay muted loop playsInline width={350} height={'100%'} className='rounded-3xl'>
                 <source src='/videos/social.mp4' type='video/mp4' />
               </video>

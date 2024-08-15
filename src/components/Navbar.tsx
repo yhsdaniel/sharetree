@@ -18,6 +18,7 @@ export default function Navbar() {
 
   return (
     <header className="bg-white fixed w-[95%] left-0 translate-x-[2%] rounded-full mt-4 z-50">
+      {/* Desktop Responsive */}
       <nav aria-label="Global" className="mx-auto flex max-w-7xl items-center justify-between p-4 lg:p-6 lg:px-8">
         <div className="flex lg:flex-1">
           <a href="#home" className="-m-1.5 p-1.5">
@@ -61,9 +62,11 @@ export default function Navbar() {
           </Link>
         </div>
       </nav>
+
+      {/* Mobile Responsive */}
       <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">
         <div className="fixed inset-0 z-10" />
-        <DialogPanel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+        <DialogPanel className="fixed inset-y-0 right-0 z-50 w-1/2 overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
           <div className="flex items-center justify-between">
             <a href="#home" className="-m-1.5 p-1.5">
               <span className="sr-only">Sharetree</span>
