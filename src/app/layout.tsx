@@ -18,7 +18,7 @@ export default async function RootLayout({
 }>) {
 
   return (
-    <html lang="en">
+    <html lang="en" className="scroll-smooth">
       <body className={'h-screen'}>
         <AuthProvider>
             {children}

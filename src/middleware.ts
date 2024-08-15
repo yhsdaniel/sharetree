@@ -4,7 +4,6 @@ import { NextResponse, NextRequest } from 'next/server'
 // This function can be marked `async` if using `await` inside
 export async function middleware(req: NextRequest) {
     const token = await getToken({ req });
-    console.log('middleware', token)
 
     // Get the pathname from the URL
     const { pathname } = req.nextUrl;
