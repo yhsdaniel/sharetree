@@ -60,13 +60,13 @@ export default function MainWrapper() {
             <motion.button
               whileHover={{ scale: 1 }}
               whileTap={{ scale: 0.9 }}
-              className='w-full h-12 rounded-2xl bg-primary text-primary-foreground hover:bg-primary/90'
+              className='w-full h-12 rounded-2xl bg-primary text-primary-foreground hover:bg-primary/90 mt-4 md:mt-0'
               onClick={() => { setShowModal(true); setType('add') }}
             >
               Add Link
             </motion.button>
           </div>
-          <section className='mt-16'>
+          <section className='mt-6 md:mt-16'>
             {listLinks.map((value, index) => (
               <CardUrl key={index} id={value._id} name={value.name} url={value.url} />
             ))}

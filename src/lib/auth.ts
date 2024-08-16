@@ -7,7 +7,7 @@ import { connect } from './mongodb';
 import { ObjectId } from 'mongodb'
 
 export const authOptions: NextAuthOptions = {
-    secret: process.env.AUTH_SECRET,
+    secret: process.env.NEXTAUTH_SECRET,
     session: {
         strategy: 'jwt',
         maxAge: 1 * 60 * 60 * 24,

@@ -91,7 +91,7 @@ export default function HomePage() {
               </Link>
             </div>
             <div className='w-6/12 mt-8 flex justify-center items-center'>
-              <video controls={false} autoPlay muted loop playsInline width={350} height={'100%'} className='rounded-3xl'>
+              <video controls={false} autoPlay muted loop playsInline width={250} height={'100%'} className='rounded-3xl'>
                 <source src='/videos/social.mp4' type='video/mp4' />
               </video>
             </div>
