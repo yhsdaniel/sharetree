@@ -73,7 +73,7 @@ export default function HomePage() {
         </div>
       </div>
       <div id='features' className="sm:p-10 min-h-screen bg-pink-200 flex justify-center items-center md:pt-[6rem] xl:pt-[8rem]">
-        <div className="relative mx-auto w-full sm:static px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row">
+        <div className="relative mx-auto sm:static px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row">
           <motion.div
             initial={{ opacity: 0, translateY: -100 }}
             animate={{ opacity: 1, translateY: 1 }}
@@ -91,7 +91,7 @@ export default function HomePage() {
               </Link>
             </div>
             <div className='w-6/12 mt-8 flex justify-center items-center'>
-              <video controls={false} autoPlay muted loop playsInline width={250} height={'100%'} className='rounded-3xl'>
+              <video controls={false} autoPlay muted loop playsInline width={250} height={'100%'} className='rounded-3xl md:w-[50%] lg:w-[40%] aspect-auto'>
                 <source src='/videos/social.mp4' type='video/mp4' />
               </video>
             </div>

@@ -5,6 +5,8 @@ import { signOut, useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
+import Image from 'next/image'
+import logo from '../../../../public/images/logo.png'
 
 export default function Sidebar() {
     const [showSession, setShowSession] = useState('')
@@ -73,8 +75,17 @@ export default function Sidebar() {
             >
                 <nav className='size-full bg-transparent hidden md:block md:p-2 shadow-lg' aria-label='desktop navigation' tabIndex={-1} data-testid="ReactNavigation">
                     <div className='flex flex-col size-full bg-white md:rounded-3xl'>
-                        <section className='w-full flex'>
-                            <h1 className='w-full px-3 my-2 h-12 flex items-center'>Sharetree</h1>
+                        <section className='w-full flex justify-start items-center p-4'>
+                            <a href="#home" className="-m-1.5 p-1.5">
+                                <Image
+                                    alt="Logo"
+                                    width={200}
+                                    height={200}
+                                    src={logo}
+                                    className="h-8 w-auto"
+                                />
+                            </a>
+                            <span className='ml-2 text-2xl text-green-700 font-bold'>Sharetree</span>
                         </section>
                         <section className='w-full flex flex-col flex-auto h-0 my-3'>
                             <ul className='w-full'>

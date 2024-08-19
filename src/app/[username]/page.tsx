@@ -5,6 +5,9 @@ import { motion } from 'framer-motion'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
+import logo from '../../../public/images/logo.png'
+import Link from 'next/link'
+import Image from 'next/image'
 
 const ListDeviceComponent = dynamic(() => import('@/components/LinkComponent'), { ssr: false })
 
@@ -44,11 +47,28 @@ export default function CardUser() {
                 className='size-full'
             >
                 <div className='size-full overflow-hidden flex justify-center items-center'>
-                    <div className='w-[20rem] h-[90%] bg-black/60 shadow-xl shadow-gray-400 px-4 rounded-3xl relative flex flex-col justify-start items-center'>
-                        <div className='text-white'><h1>Sharetree</h1></div>
+                    <div className='w-[20rem] h-[90%] bg-black/70 shadow-xl shadow-gray-400 px-4 rounded-3xl relative flex flex-col justify-start items-center'>
+                        <div className='text-white p-4 flex justify-center items-center'>
+                            <div className='rounded-full bg-white w-20 h-20 flex justify-center items-center'>
+                                <h1 className='text-black'>{pathLink.username.split('')[0].toUpperCase()}</h1>
+                            </div>
+                        </div>
                         {listLinks.map((value, index) => (
                             <ListDeviceComponent key={index} url={value.url} name={value.name} />
                         ))}
+                        <Link 
+                            href={'/'}
+                            className='absolute bottom-0 m-4 p-3 text-sm bg-white/70 hover:bg-white w-11/12 rounded-3xl flex justify-center items-center duration-150 ease-in-out'
+                        >
+                            <Image
+                                alt='Logo'
+                                src={logo}
+                                width={25}
+                                height={25}
+                                className='mx-2'
+                            />
+                            Join on Sharetree
+                        </Link>
                     </div>
                 </div>
             </motion.div>

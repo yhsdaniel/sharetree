@@ -7,7 +7,6 @@ import { Input } from "./ui/input"
 import axios from "axios"
 import { useSession } from "next-auth/react"
 import toast from "react-hot-toast"
-import { useRouter } from "next/navigation"
 
 interface AppProps {
     id: string,
@@ -24,7 +23,6 @@ export default function CardURL({ id, name, url }: AppProps) {
         name: name || '',
         url: url || ''
     })
-    const router = useRouter()
 
     const { data: session } = useSession()
     const user = session?.user
@@ -51,19 +49,29 @@ export default function CardURL({ id, name, url }: AppProps) {
 
     const handleKeyDown = (event: any) => {
         if (event.key === 'Enter') {
-            handleSave(event);
+            if(isEdit.name !== name || isEdit.url !== url) {
+                handleSave(event);
+            } else {
+                setEditName(false)
+                setEditUrl(false)
+            }
         }
     }
 
-    const handleSave = (e: any) => {
+    const handleLosesFocus = () => {
+        setEditName(false)
+        setEditUrl(false)
+    }
+
+    const handleSave = async (e: any) => {
         e.preventDefault()
-        axios.put(`/api/${username}/links`, { id: id, name: isEdit.name, url: isEdit.url })
+        await axios.put(`/api/${username}/links`, { id: id, name: isEdit.name, url: isEdit.url })
             .then((response) => {
                 if (response) {
                     setEditName(false)
                     setEditUrl(false)
                     toast.success('Updated successfully')
-                    router.refresh()
+                    window.location.reload()
                 }
             }).catch((err) => {
                 console.log(err)
@@ -83,6 +91,7 @@ export default function CardURL({ id, name, url }: AppProps) {
                         value={isEdit.name}
                         autoFocus
                         onKeyDown={handleKeyDown}
+                        onBlur={handleLosesFocus}
                         onSubmit={handleSave}
                         onChange={handleChange}
                     />
@@ -106,6 +115,8 @@ export default function CardURL({ id, name, url }: AppProps) {
                         value={isEdit.url}
                         autoFocus
                         onKeyDown={handleKeyDown}
+                        onBlur={handleLosesFocus}
+                        onSubmit={handleSave}
                         onChange={handleChange}
                     />
                 ) : (

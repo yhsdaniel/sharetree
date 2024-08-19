@@ -53,7 +53,7 @@ export default function MainWrapper() {
         className='h-full md:ml-[320px] md:mr-[230px] lg:mr-[316px] xl:mr-[460px] p-2 overflow-y-auto flex justify-center'
       >
         <div className='size-full bg-white p-4 rounded-2xl shadow-lg relative'>
-          <div className='h-14 w-full bg-blue-200 flex justify-center items-center rounded-xl'>
+          <div className='h-14 w-full bg-green-700 text-white flex justify-center items-center rounded-xl'>
             <span className='text-sm'>Your sharetree link is: <a href={`https://sharetree.vercel.app/${username}`} className='underline italic hover:text-blue-500 transition duration-150'>{`sharetree.vercel.app/${username}`}</a></span>
           </div>
           <div className='md:px-16 md:mt-10 relative'>
