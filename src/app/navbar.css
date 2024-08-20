@@ -1,0 +1,8 @@
+li .active::before {
+    content: '';
+    background-color: #f9a8d4;
+    width: 5px;
+    height: 3rem;
+    position: absolute;
+    transition: .2s ease-in-out;
+}

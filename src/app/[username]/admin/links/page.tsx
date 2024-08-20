@@ -1,13 +1,12 @@
 'use client'
 
-import DeviceUI from '@/app/[username]/admin/DeviceUI'
-import MainWrapper from '@/app/[username]/admin/MainWrapper'
-import Sidebar from '@/app/[username]/admin/Sidebar'
+import LinkWrapper from '@/app/[username]/admin/links/LinkWrapper'
 import React, { useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
+import Layout from '@/components/Layout'
 
-export default function AdminPage() {
+export default function LinksPage() {
     const { data: session, status } = useSession()
     const router = useRouter()
 
@@ -19,10 +18,10 @@ export default function AdminPage() {
 
     if(status === 'authenticated'){
         return(
-            <div className='size-full bg-gray-200'>
-                <Sidebar />
-                <MainWrapper />
-                <DeviceUI />
+            <div>
+                <Layout>
+                    <LinkWrapper />
+                </Layout>
             </div>
         )
     }

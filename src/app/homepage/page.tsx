@@ -20,7 +20,7 @@ export default function HomePage() {
 
   useEffect(() => {
     if (status === 'authenticated') {
-      router.push(`${username}/admin`)
+      router.push(`/${username}/admin/links`)
     }
   }, [router, status, username])
 
@@ -64,7 +64,7 @@ export default function HomePage() {
               Join people using Sharetree for their link in bio. One link to help you share everything you create and sell from your Instagram, TikTok, Twitter, YouTube and other social media profiles.
             </p>
             <Link
-              href={`${username}/admin`}
+              href={`${username}/admin/links`}
               className="inline-block rounded-3xl border border-transparent mt-10 bg-blue-300 px-8 py-3 text-center font-medium text-black hover:bg-blue-400 duration-150 ease-in-out"
             >
               Get Started for free
@@ -84,7 +84,7 @@ export default function HomePage() {
               <h1 className='text-4xl sm:text-5xl'>Create, Customize and Share your Sharetree in bio</h1>
               <p className='text-md lg:text-xl'>Connect your Instagram, Tiktok, Facebook, Blog, Website store and even more. It all come together in one simple link in your bio.</p>
               <Link
-                href={`${username}/admin`}
+                href={`${username}/admin/links`}
                 className="inline-block rounded-3xl border border-transparent mt-10 bg-purple-800 px-8 py-3 text-center font-medium text-white hover:bg-purple-700 duration-150 ease-in-out"
               >
                 Get Started for free
