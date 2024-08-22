@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react'
-import Sidebar from '@/components/Sidebar'
-import DeviceUI from '@/components/DeviceUI'
+import dynamic from 'next/dynamic'
+const Sidebar = dynamic(() => import('@/components/Sidebar'), { ssr: false })
+const DeviceUI = dynamic(() => import('@/components/DeviceUI'), { ssr: false })
 
 type LayoutProps = {
     children: ReactNode

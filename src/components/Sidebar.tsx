@@ -1,6 +1,5 @@
 'use client'
 
-import React from 'react'
 import { signOut, useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
@@ -10,7 +9,7 @@ import logo from '../../public/images/logo.png'
 import Link from 'next/link'
 import '@/app/navbar.css'
 
-const Sidebar = React.memo(() => {
+const Sidebar = () => {
     const [showSession, setShowSession] = useState('')
     const { data: session } = useSession()
     const router = useRouter()
@@ -139,6 +138,6 @@ const Sidebar = React.memo(() => {
             </nav>
         </>
     )
-})
+}
 
 export default Sidebar
