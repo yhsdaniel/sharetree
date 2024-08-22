@@ -24,25 +24,24 @@ export default function LinkWrapper() {
   const user = session?.user
   const username = (user && 'username' in user ? user?.username : undefined) || session?.user?.name
   const [idSession, setIdSession] = useState(() => {
-    console.log('state render')
     return {
       id: user && 'id' in user ? user?.id : undefined
     }
   })
-  
-  const resp = async () => {
-    try {
-      const { data: response } = await axios.get(`/api/${username}/links`, { params: { id: idSession.id } })
-      setListLinks(response)
-    } catch (error) {
-      console.error(error)
-    }
-  }
-  
+
+
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data: response } = await axios.get(`/api/${username}/links`, { params: { id: idSession.id } })
+        setListLinks(response)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    
     if (idSession.id) {
-      console.log('useeffect render')
-      resp()
+      fetchData()
     }
   }, [idSession.id, username])
 

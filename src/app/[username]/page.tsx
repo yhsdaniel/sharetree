@@ -25,7 +25,7 @@ export default function CardUser() {
 
 
     useEffect(() => {
-        const resp = async () => {
+        const fetchData = async () => {
             try {
                 const { data: response } = await axios.get(`/api/listlinks`, { params: { username: pathLink.username } })
                 setListLinks(response)
@@ -34,7 +34,7 @@ export default function CardUser() {
             }
         }
 
-        resp()
+        fetchData()
     }, [pathLink.username])
 
     return (

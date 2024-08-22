@@ -9,7 +9,7 @@ connect()
 export async function GET(req: NextRequest) {
     try {
 
-        const { searchParams } = new URL(req.url);
+        const { searchParams } = req.nextUrl;
         const username = searchParams.get('username');
 
         if (!username) {
