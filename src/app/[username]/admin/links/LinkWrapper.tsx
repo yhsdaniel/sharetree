@@ -24,22 +24,24 @@ export default function LinkWrapper() {
   const user = session?.user
   const username = (user && 'username' in user ? user?.username : undefined) || session?.user?.name
   const [idSession, setIdSession] = useState(() => {
+    console.log('state render')
     return {
       id: user && 'id' in user ? user?.id : undefined
     }
   })
-
+  
+  const resp = async () => {
+    try {
+      const { data: response } = await axios.get(`/api/${username}/links`, { params: { id: idSession.id } })
+      setListLinks(response)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+  
   useEffect(() => {
     if (idSession.id) {
-      const resp = async () => {
-        try {
-          const { data: response } = await axios.get(`/api/${username}/links`, { params: { id: idSession.id } })
-          setListLinks(response)
-        } catch (error) {
-          console.error(error)
-        }
-      }
-
+      console.log('useeffect render')
       resp()
     }
   }, [idSession.id, username])
@@ -50,9 +52,9 @@ export default function LinkWrapper() {
         initial={{ opacity: 0, scale: 0.5 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: .3 }}
-        className='h-full md:ml-[320px] md:mr-[230px] lg:mr-[316px] xl:mr-[460px] p-2 overflow-y-auto flex justify-center'
+        className='h-full overflow-hidden md:ml-[320px] md:mr-[230px] lg:mr-[316px] xl:mr-[460px] p-2 overflow-y-auto flex justify-center'
       >
-        <div className='w-full bg-white p-4 rounded-2xl shadow-lg relative'>
+        <div className='size-full overflow-auto bg-white p-4 rounded-2xl shadow-lg relative'>
           <div className='h-14 bg-green-700 text-white flex justify-center items-center rounded-xl'>
             <span className='text-sm'>Your sharetree link is: <a href={`https://sharetree.vercel.app/${username}`} className='underline italic hover:text-blue-500 transition duration-150'>{`sharetree.vercel.app/${username}`}</a></span>
           </div>

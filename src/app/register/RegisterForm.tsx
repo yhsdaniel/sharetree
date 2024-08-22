@@ -22,10 +22,10 @@ export default function RegisterForm() {
     })
     const router = useRouter()
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         try {
-            axios.post('/api/users/register', register).then((response) => {
+            await axios.post('/api/users/register', register).then((response) => {
                 if( response.status === 200 ) {
                     toast.success('Registered successfully')
                     router.push('/login')

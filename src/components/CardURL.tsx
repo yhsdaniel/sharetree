@@ -80,7 +80,7 @@ export default function CardURL({ id, name, url }: AppProps) {
     };
 
     return (
-        <div className='w-full border border-gray-300 shadow-lg rounded-3xl mt-4 p-2 px-6 md:px-16'>
+        <div className='size-full border overflow-auto border-gray-300 shadow-lg rounded-3xl mt-4 p-2 px-6 md:px-16'>
             <div className="flex justify-start items-center cursor-pointer" onClick={handleEdit.EditName}>
                 {editName ? (
                     <Input
