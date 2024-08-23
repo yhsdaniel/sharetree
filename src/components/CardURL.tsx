@@ -71,7 +71,6 @@ export default function CardURL({ id, name, url }: AppProps) {
                     setEditName(false)
                     setEditUrl(false)
                     toast.success('Updated successfully')
-                    window.location.reload()
                 }
             }).catch((err) => {
                 console.log(err)
