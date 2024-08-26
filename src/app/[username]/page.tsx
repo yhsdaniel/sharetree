@@ -23,7 +23,6 @@ export default function CardUser() {
     }))
     const [listLinks, setListLinks] = useState<LinkType[]>([])
 
-
     useEffect(() => {
         const fetchData = async () => {
             try {

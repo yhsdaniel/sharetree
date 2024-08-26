@@ -1,6 +1,6 @@
 import { connect } from "@/lib/mongodb";
-import User from "@/utils/db/user";
 import Link from '@/utils/db/links';
+import User from '@/utils/db/user';
 import { NextRequest, NextResponse } from "next/server";
 import mongoose from "mongoose";
 

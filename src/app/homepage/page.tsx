@@ -28,6 +28,8 @@ export default function HomePage() {
     return (
       <div className='size-full relative overflow-y-auto overflow-x-hidden scroll-smooth'>
         <Navbar />
+
+        {/* First Banner */}
         <div id='home' className="sm:p-10 min-h-screen bg-green-800 flex justify-center items-center md:pt-[6rem] xl:pt-[8rem]">
           <motion.div
             initial={{ opacity: 0, translateX: -100 }}
@@ -38,6 +40,7 @@ export default function HomePage() {
             <Image
               src={Tiktok}
               alt='Tiktok Logo'
+              priority
             />
           </motion.div>
           <motion.div
@@ -49,6 +52,7 @@ export default function HomePage() {
             <Image
               src={Instagram}
               alt='Instagram Logo'
+              priority
             />
           </motion.div>
           <div className="relative mx-auto size-full sm:static px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row">
@@ -73,6 +77,8 @@ export default function HomePage() {
             </motion.div>
           </div>
         </div>
+
+        {/* Second Banner */}
         <div id='features' className="sm:p-10 min-h-screen bg-pink-200 flex justify-center items-center md:pt-[6rem] xl:pt-[8rem]">
           <div className="relative mx-auto sm:static px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row">
             <motion.div
@@ -92,7 +98,16 @@ export default function HomePage() {
                 </Link>
               </div>
               <div className='w-6/12 mt-8 flex justify-center items-center'>
-                <video controls={false} autoPlay muted loop playsInline width={250} height={'100%'} className='rounded-3xl md:w-[50%] lg:w-[40%] aspect-auto'>
+                <video
+                  controls={false}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  width={250}
+                  height={'100%'} 
+                  className='rounded-3xl md:w-[50%] lg:w-[40%] aspect-auto'
+                >
                   <source src='/videos/social.mp4' type='video/mp4' />
                 </video>
               </div>

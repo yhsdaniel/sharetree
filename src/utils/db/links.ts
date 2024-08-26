@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import User from './user'
 
 const Schema = mongoose.Schema
 const LinkSchema = new Schema({

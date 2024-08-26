@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import Link from './links'
 
 const Schema = mongoose.Schema
 const UserSchema = new Schema({
@@ -23,10 +24,6 @@ const UserSchema = new Schema({
     active: {
         type: Boolean,
     },
-    // date: {
-    //     type: Date,
-    //     default: Date.now
-    // },
     link: [{
         type: Schema.Types.ObjectId,
         ref: 'links'
@@ -34,5 +31,4 @@ const UserSchema = new Schema({
 }, { timestamps: true })
 
 const User = mongoose.models.users || mongoose.model('users', UserSchema)
-
 export default User
