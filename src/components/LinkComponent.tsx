@@ -8,12 +8,15 @@ interface AppProps {
     name: string
 }
 
-const LinkDeviceComponent = React.memo(({ url, name }: AppProps) => {
+const LinkDeviceComponent = ({ url, name }: AppProps) => {
     const { data: session } = useSession()
     const pathName = usePathname()
-    console.log(pathName)
     const user = session?.user
     const username = (user && 'username' in user ? user?.username : undefined) || session?.user?.name
+
+    if(!url){
+        return <div>No Link available</div>
+    }
 
     return (
         <>
@@ -25,7 +28,7 @@ const LinkDeviceComponent = React.memo(({ url, name }: AppProps) => {
             </Link>
         </>
     )
-})
+}
 
 LinkDeviceComponent.displayName = 'LinkDeviceComponent'
 

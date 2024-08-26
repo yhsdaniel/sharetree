@@ -8,7 +8,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import logo from '../../../public/images/logo.png'
 
-const ListDeviceComponent = dynamic(() => import('@/components/LinkComponent'), { ssr: false })
+const ListDeviceComponent = dynamic(() => import('@/components/LinkComponent'), { ssr: true })
 
 type LinkType = {
     url: string,
@@ -45,7 +45,7 @@ export default function CardUser() {
                             <h1 className='text-black'>{pathLink.username.split('')[0].toUpperCase()}</h1>
                         </div>
                     </div>
-                    {listLinks.map((value, index) => (
+                    {listLinks && listLinks.map((value, index) => (
                         <ListDeviceComponent key={index} url={value.url} name={value.name} />
                     ))}
                     <Link

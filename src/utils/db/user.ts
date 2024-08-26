@@ -26,9 +26,9 @@ const UserSchema = new Schema({
     },
     link: [{
         type: Schema.Types.ObjectId,
-        ref: 'links'
+        ref: 'Link'
     }]
 }, { timestamps: true })
 
-const User = mongoose.models.users || mongoose.model('users', UserSchema)
+const User = mongoose.models.Users || mongoose.model('Users', UserSchema)
 export default User

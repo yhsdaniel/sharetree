@@ -13,9 +13,9 @@ const LinkSchema = new Schema({
     },
     owner: [{
         type: Schema.Types.ObjectId,
-        ref: 'users'
+        ref: 'Users'
     }]
 })
 
-const Link = mongoose.models.links || mongoose.model('links', LinkSchema)
+const Link = mongoose.models.Link || mongoose.model('Link', LinkSchema)
 export default Link
