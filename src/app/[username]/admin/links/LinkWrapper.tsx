@@ -19,6 +19,7 @@ export default function LinkWrapper() {
   const [showModal, setShowModal] = useState<boolean>(false)
   const [type, setType] = useState('')
   const [listLinks, setListLinks] = useState<LinkType[]>([])
+  const [userState, setUserState] = useState('')
 
   const { data: session } = useSession()
   const user = session?.user
@@ -29,21 +30,19 @@ export default function LinkWrapper() {
     }
   })
 
+  const fetchData = async () => {
+    try {
+      const { data: response } = await axios.get(`/api/links`, { params: { id: idSession.id } })
+      setUserState(response.username)
+      setListLinks(response.link)
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const { data: response } = await axios.get(`/api/${username}/links`, { params: { id: idSession.id } })
-        setListLinks(response)
-      } catch (error) {
-        console.error(error)
-      }
-    }
-    
-    if (idSession.id) {
-      fetchData()
-    }
-  }, [idSession.id, username])
+    fetchData()
+  }, [idSession.id])
 
   return (
     <>
@@ -55,7 +54,7 @@ export default function LinkWrapper() {
       >
         <div className='size-full overflow-auto bg-white p-4 rounded-2xl shadow-lg relative'>
           <div className='h-14 bg-green-700 text-white flex justify-center items-center rounded-xl'>
-            <span className='text-sm p-4'>Your sharetree link is: <a href={`https://sharetree.vercel.app/${username}`} className='underline italic hover:text-blue-500 transition duration-150'>{`sharetree.vercel.app/${username}`}</a></span>
+            <span className='text-sm p-4'>Your sharetree link is: <a href={`https://sharetree.vercel.app/${userState}`} className='underline italic hover:text-blue-500 transition duration-150'>{`sharetree.vercel.app/${userState}`}</a></span>
           </div>
           <div className='md:px-16 md:mt-10 relative'>
             <motion.button

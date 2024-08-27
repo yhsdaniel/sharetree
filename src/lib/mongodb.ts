@@ -1,7 +1,5 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv'
-import User from '@/utils/db/user'
-import Link from '@/utils/db/links'
 dotenv.config()
 
 export async function connect() {

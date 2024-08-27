@@ -1,8 +1,9 @@
 'use client'
 
 import LinkWrapper from '@/app/[username]/admin/links/LinkWrapper'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react'
+import axios from 'axios'
 import Layout from '@/components/Layout'
 
 export default function LinksPage() {
@@ -10,11 +11,9 @@ export default function LinksPage() {
 
     if (status === 'authenticated') {
         return (
-            <div>
-                <Layout>
-                    <LinkWrapper />
-                </Layout>
-            </div>
+            <Layout>
+                <LinkWrapper />
+            </Layout>
         )
     }
 }

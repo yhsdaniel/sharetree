@@ -8,9 +8,10 @@ import Link from 'next/link'
 import Image from 'next/image'
 import logo from '../../../public/images/logo.png'
 
-const ListDeviceComponent = dynamic(() => import('@/components/LinkComponent'), { ssr: true })
+const ListDeviceComponent = dynamic(() => import('@/components/LinkComponent'), { ssr: false })
 
 type LinkType = {
+    id: string,
     url: string,
     name: string
 }
@@ -18,9 +19,7 @@ type LinkType = {
 export default function CardUser() {
     const pathname = usePathname()
     const path = pathname.split('/')[1]
-    const [pathLink, setPathLink] = useState(() => ({
-        username: path
-    }))
+    const [pathLink, setPathLink] = useState(() => ({ username: path }))
     const [listLinks, setListLinks] = useState<LinkType[]>([])
 
     useEffect(() => {
@@ -45,8 +44,8 @@ export default function CardUser() {
                             <h1 className='text-black'>{pathLink.username.split('')[0].toUpperCase()}</h1>
                         </div>
                     </div>
-                    {listLinks && listLinks.map((value, index) => (
-                        <ListDeviceComponent key={index} url={value.url} name={value.name} />
+                    {listLinks?.map((value) => (
+                        <ListDeviceComponent key={value.id} url={value.url} name={value.name} />
                     ))}
                     <Link
                         href={'/'}

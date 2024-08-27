@@ -25,15 +25,13 @@ export default function DeviceUI() {
       id: (session?.user as SessionUser)?.id || null
     }
   })
-  const user = session?.user
-  const username = (user && 'username' in user ? user?.username : undefined) || session?.user?.name
 
   useEffect(() => {
     if (idSession.id) {
       const resp = async () => {
         try {
-          const { data: response } = await axios.get(`/api/${username}/links`, { params: { id: idSession.id } })
-          setListLinks(response)
+          const { data: response } = await axios.get(`/api/links`, { params: { id: idSession.id } })
+          setListLinks(response.link)
         } catch (error) {
           console.error(error)
         }
@@ -42,7 +40,7 @@ export default function DeviceUI() {
       resp()
     }
 
-  }, [idSession.id, username])
+  }, [idSession.id])
 
   return (
     <div className='h-screen w-full hidden md:block md:max-w-[230px] lg:max-w-[316px] xl:max-w-[460px] p-2 md:fixed md:right-0 top-0'>

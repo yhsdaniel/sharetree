@@ -8,7 +8,7 @@ interface AppProps {
     name: string
 }
 
-const LinkDeviceComponent = ({ url, name }: AppProps) => {
+const LinkDeviceComponent = React.memo(({ url, name }: AppProps) => {
     const { data: session } = useSession()
     const pathName = usePathname()
     const user = session?.user
@@ -28,7 +28,7 @@ const LinkDeviceComponent = ({ url, name }: AppProps) => {
             </Link>
         </>
     )
-}
+})
 
 LinkDeviceComponent.displayName = 'LinkDeviceComponent'
 

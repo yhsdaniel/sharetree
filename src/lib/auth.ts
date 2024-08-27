@@ -58,7 +58,7 @@ export const authOptions: NextAuthOptions = {
                 if(existingUser){
                     return {
                         ...token,
-                        username: user.username || user.name
+                        username: user.username
                     }
                 }
             }
@@ -80,13 +80,15 @@ export const authOptions: NextAuthOptions = {
 
             if(account?.provider === 'google'){
                 const emailData = await User.findOne({ email: profile?.email })
+                let uniqueId = Math.floor(Math.random() * 90000 + 10000)
                 if(!emailData){
                     const newUser = new User({
                         _id: new ObjectId(),
                         email: profile?.email,
-                        username: profile?.name,
+                        username: `${profile?.name?.toLowerCase()}${uniqueId}`,
                         password: ''
                     })
+                    console.log(newUser)
                     await newUser.save()
                 }
             }

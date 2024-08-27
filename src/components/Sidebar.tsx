@@ -10,20 +10,11 @@ import Link from 'next/link'
 import '@/app/navbar.css'
 
 const Sidebar = () => {
-    const [showSession, setShowSession] = useState('')
-    const { data: session } = useSession()
-    const router = useRouter()
-    const pathName = usePathname()
+    const {data: session} = useSession()
     const user = session?.user
     const username = (user && 'username' in user ? user?.username : undefined) || session?.user?.name
-
-    useEffect(() => {
-        if (session && username) {
-            setShowSession(username as string)
-        } else {
-            setShowSession('')
-        }
-    }, [router, session, username])
+    const router = useRouter()
+    const pathName = usePathname()
 
     const handleSignOut = async () => {
         try {
@@ -121,7 +112,7 @@ const Sidebar = () => {
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 mx-4">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
                             </svg>
-                            {showSession}
+                            {username}
                         </span>
                     </div>
                     <section className='w-full flex'>

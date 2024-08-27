@@ -10,11 +10,9 @@ export default function SettingPage() {
 
     if (status === 'authenticated') {
         return (
-            <div>
-                <Layout>
-                    <SettingsWrapper />
-                </Layout>
-            </div>
+            <Layout>
+                <SettingsWrapper />
+            </Layout>
         )
     }
 }
