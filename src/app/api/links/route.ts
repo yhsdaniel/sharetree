@@ -4,9 +4,9 @@ import User from '@/utils/db/user'
 import mongoose from 'mongoose'
 import { NextRequest, NextResponse } from 'next/server'
 
+connect()
 
 export async function POST(req: NextRequest) {
-    await connect()
     try {
         const reqBody = await req.json()
         const { name, url, owner } = reqBody
@@ -32,7 +32,6 @@ export async function POST(req: NextRequest) {
 }
 
 export async function GET(req: NextRequest) {
-    await connect()
     try {
         const { searchParams } = new URL(req.url);
         const id = searchParams.get('id');
@@ -54,7 +53,6 @@ export async function GET(req: NextRequest) {
 }
 
 export async function PUT(req: NextRequest) {
-    await connect()
     const reqBody = await req.json()
     const { id, name, url } = reqBody
 
@@ -73,7 +71,6 @@ export async function PUT(req: NextRequest) {
 }
 
 export async function DELETE(req: NextRequest) {
-    await connect()
     const reqBody = await req.json()
     const { id } = reqBody
 

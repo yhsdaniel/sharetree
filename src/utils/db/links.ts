@@ -1,5 +1,7 @@
+import { connect } from '@/lib/mongodb'
 import mongoose from 'mongoose'
-import User from './user'
+
+connect()
 
 const Schema = mongoose.Schema
 const LinkSchema = new Schema({
@@ -13,9 +15,9 @@ const LinkSchema = new Schema({
     },
     owner: [{
         type: Schema.Types.ObjectId,
-        ref: 'Users'
+        ref: 'users'
     }]
 })
 
-const Link = mongoose.models.Link || mongoose.model('Link', LinkSchema)
+const Link = mongoose.models.link || mongoose.model('link', LinkSchema)
 export default Link

@@ -16,16 +16,13 @@ type LinkType = {
     name: string
 }
 
-export default function CardUser() {
-    const pathname = usePathname()
-    const path = pathname.split('/')[1]
-    const [pathLink, setPathLink] = useState(() => ({ username: path }))
+export default function CardUser({ params }: { params: { username: string } }) {
     const [listLinks, setListLinks] = useState<LinkType[]>([])
-
+    
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const { data: response } = await axios.get(`/api/listlinks`, { params: { username: pathLink.username } })
+                const { data: response } = await axios.get(`/api/listlinks`, { params: { username: params.username } })
                 setListLinks(response)
             } catch (error) {
                 console.error(error)
@@ -33,7 +30,7 @@ export default function CardUser() {
         }
 
         fetchData()
-    }, [pathLink.username])
+    }, [])
 
     return (
         <div className='w-full h-screen overflow-hidden bg-black/70 flex justify-center items-center'>
@@ -41,7 +38,7 @@ export default function CardUser() {
                 <div className='size-full overflow-auto pb-20 md:pb-0 shadow-xl shadow-gray-400 relative flex flex-col justify-start items-center'>
                     <div className='text-white p-4 flex justify-center items-center'>
                         <div className='rounded-full bg-white w-20 h-20 flex justify-center items-center'>
-                            <h1 className='text-black'>{pathLink.username.split('')[0].toUpperCase()}</h1>
+                            <h1 className='text-black'>{params.username.split('')[0].toUpperCase()}</h1>
                         </div>
                     </div>
                     {listLinks?.map((value) => (
