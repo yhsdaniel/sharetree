@@ -1,5 +1,4 @@
 import { connect } from "@/lib/mongodb";
-import Link from '@/utils/db/links';
 import User from '@/utils/db/user';
 import { NextRequest, NextResponse } from "next/server";
 import mongoose from "mongoose";
@@ -26,6 +25,6 @@ export async function GET(req: NextRequest) {
         
     } catch (error) {
         console.log(error)
-        return NextResponse.json({ error }, { status: 500 })
+        return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
     }
 }

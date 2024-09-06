@@ -41,8 +41,8 @@ export default function CardUser({ params }: { params: { username: string } }) {
                             <h1 className='text-black'>{params.username.split('')[0].toUpperCase()}</h1>
                         </div>
                     </div>
-                    {listLinks?.map((value) => (
-                        <ListDeviceComponent key={value.id} url={value.url} name={value.name} />
+                    {listLinks?.map((value, index) => (
+                        <ListDeviceComponent key={index} url={value.url} name={value.name} />
                     ))}
                     <Link
                         href={'/'}
