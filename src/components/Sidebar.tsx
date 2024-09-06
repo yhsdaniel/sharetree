@@ -74,8 +74,8 @@ const Sidebar = () => {
                     </ul>
                 </div>
                 <ul className='size-full flex justify-center items-center'>
-                    {items.map(item => (
-                        <li className={pathName === item.url ? 'active-mobile' : 'relative flex flex-col justify-center items-center p-2 mx-2'}>
+                    {items.map((item, index) => (
+                        <li key={index} className={pathName === item.url ? 'active-mobile' : 'relative flex flex-col justify-center items-center p-2 mx-2'}>
                             <Link href={item.url}>
                                 <span className='h-12 w-full flex items-center'>
                                     {item.icon}
@@ -105,8 +105,8 @@ const Sidebar = () => {
                     </section>
                     <section className='w-full flex flex-col flex-auto h-0 my-3'>
                         <ul className='w-full'>
-                            {items.map(item => (
-                                <li className='relative my-4'>
+                            {items.map((item, index) => (
+                                <li key={index} className='relative my-4'>
                                     <Link href={item.url} className={pathName === item.url ? 'active' : 'flex focus:outline-none outline-transparent group items-center h-12 w-[inherit] [&>div]:w-full flex-1 md:flex-none duration-200 ease-in-out rounded-xl text-start justify-start hover:bg-gray-100'}>
                                         <span className='h-12 w-full flex items-center'>
                                             {item.icon}

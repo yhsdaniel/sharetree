@@ -42,7 +42,7 @@ const Modal: React.FC<ModalProps> = ({ setShowModal, type, name, id }) => {
     }
 
     const handleSubmitAdd = async () => {
-        await axios.post(`/api/links`, fillLink)
+        await axios.post(`/api/linkadmin`, fillLink)
             .then((response) => {
                 if (response) {
                     toast.success('Your link has been added')
@@ -56,7 +56,7 @@ const Modal: React.FC<ModalProps> = ({ setShowModal, type, name, id }) => {
     }
 
     const handleSubmitDelete = async () => {
-        await axios.delete(`/api/links`, { data: { id: id } })
+        await axios.delete(`/api/linkadmin`, { data: { id: id } })
             .then((response) => {
                 if (response) {
                     toast.success(`Deleted link successfully`)

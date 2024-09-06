@@ -30,7 +30,7 @@ export default function DeviceUI() {
     if (idSession.id) {
       const resp = async () => {
         try {
-          const { data: response } = await axios.get(`/api/links`, { params: { id: idSession.id } })
+          const { data: response } = await axios.get(`/api/linkadmin`, { params: { id: idSession.id } })
           setListLinks(response.link)
         } catch (error) {
           console.error(error)

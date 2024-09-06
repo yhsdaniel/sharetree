@@ -22,7 +22,7 @@ export default function CardUser({ params }: { params: { username: string } }) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const { data: response } = await axios.get(`/api/listlinks`, { params: { username: params.username } })
+                const { data: response } = await axios.get(`/api/linkuser`, { params: { username: params.username } })
                 setListLinks(response)
             } catch (error) {
                 console.error(error)

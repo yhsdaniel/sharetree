@@ -65,7 +65,7 @@ export default function CardURL({ id, name, url }: AppProps) {
 
     const handleSave = async (e: any) => {
         e.preventDefault()
-        await axios.put(`/api/links`, { id: id, name: isEdit.name, url: isEdit.url })
+        await axios.put(`/api/linkadmin`, { id: id, name: isEdit.name, url: isEdit.url })
             .then((response) => {
                 if (response) {
                     setEditName(false)

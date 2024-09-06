@@ -1,79 +1,47 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import Modal from '@/components/Modal'
 import axios from 'axios'
 import { useSession } from 'next-auth/react'
 import dynamic from 'next/dynamic'
+import { Button } from '@/components/ui/button'
+import LayoutLinkWrapper from '../LayoutLinkWrapper'
 
 const CardUrl = dynamic(() => import('@/components/CardURL'), { ssr: false })
 
 type LinkType = {
   _id: string,
   url: string,
-  name: string
+  name: string,
 }
 
-export default function LinkWrapper() {
+interface LinkWrapperProps {
+  linkWrapper: LinkType[]
+}
+
+const LinkWrapper: React.FC<LinkWrapperProps> = ({linkWrapper}) => {
   const [showModal, setShowModal] = useState<boolean>(false)
   const [type, setType] = useState('')
-  const [listLinks, setListLinks] = useState<LinkType[]>([])
-  const [userState, setUserState] = useState('')
-
-  const { data: session } = useSession()
-  const user = session?.user
-  const username = (user && 'username' in user ? user?.username : undefined) || session?.user?.name
-  const [idSession, setIdSession] = useState(() => {
-    return {
-      id: user && 'id' in user ? user?.id : undefined
-    }
-  })
-
-  const fetchData = async () => {
-    try {
-      const { data: response } = await axios.get(`/api/links`, { params: { id: idSession.id } })
-      setUserState(response.username)
-      setListLinks(response.link)
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
-  useEffect(() => {
-    fetchData()
-  }, [idSession.id])
 
   return (
     <>
-      <motion.div
-        initial={{ opacity: 0, scale: 0.5 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: .3 }}
-        className='h-full overflow-hidden md:ml-[320px] md:mr-[230px] lg:mr-[316px] xl:mr-[460px] p-2 overflow-y-auto flex justify-center'
-      >
-        <div className='size-full overflow-auto bg-white p-4 rounded-2xl shadow-lg relative'>
-          <div className='h-14 bg-green-700 text-white flex justify-center items-center rounded-xl'>
-            <span className='text-sm p-4'>Your sharetree link is: <a href={`https://sharetree.vercel.app/${userState}`} className='underline italic hover:text-blue-500 transition duration-150'>{`sharetree.vercel.app/${userState}`}</a></span>
-          </div>
-          <div className='md:px-16 md:mt-10 relative'>
-            <motion.button
-              whileHover={{ scale: 1 }}
-              whileTap={{ scale: 0.9 }}
-              className='w-full h-12 rounded-2xl bg-primary text-primary-foreground hover:bg-primary/90 mt-4 md:mt-0'
-              onClick={() => { setShowModal(true); setType('add') }}
-            >
-              Add Link
-            </motion.button>
-          </div>
-          <section className='mt-6 md:mt-16'>
-            {listLinks.map((value, index) => (
-              <CardUrl key={index} id={value._id} name={value.name} url={value.url} />
-            ))}
-          </section>
-        </div>
-      </motion.div>
+      <div className='md:px-16 relative'>
+        <Button
+          className='w-full h-12 rounded-2xl bg-primary text-primary-foreground hover:bg-primary/90 mt-4 md:mt-0'
+          onClick={() => { setShowModal(true); setType('add') }}
+        >
+          Add Link
+        </Button>
+      </div>
+      <section className='mt-6 md:mt-10'>
+        {linkWrapper.map((value, index) => (
+          <CardUrl key={index} id={value._id} name={value.name} url={value.url} />
+        ))}
+      </section>
       {showModal && <Modal type={type} setShowModal={setShowModal} id='' name='' />}
     </>
   )
 }
+
+export default LinkWrapper
