@@ -3,11 +3,10 @@ import User from '@/utils/db/user';
 import { NextRequest, NextResponse } from "next/server";
 import mongoose from "mongoose";
 
-connect()
 
 export async function GET(req: NextRequest) {
+    await connect()
     try {
-
         const { searchParams } = new URL(req.url);
         const username = searchParams.get('username');
 
