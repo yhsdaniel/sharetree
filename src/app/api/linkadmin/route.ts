@@ -37,7 +37,7 @@ export async function GET(req: NextRequest) {
         const id = searchParams.get('id');
 
         if (!id) {
-            return NextResponse.json({ error: 'ID is required' }, { status: 400 });
+            return NextResponse.json({ error: 'ID not found' }, { status: 400 });
         }
 
         if (!mongoose.isValidObjectId(id)) {

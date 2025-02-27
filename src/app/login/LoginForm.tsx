@@ -16,7 +16,7 @@ export default function LoginForm() {
 
     useEffect(() => {
         if (status === 'authenticated') {
-            router.push(`/${username}/admin/links`)
+            router.push(`/admin/${username}/links`)
         }
     }, [router, session, status, username])
 
@@ -32,7 +32,7 @@ export default function LoginForm() {
         }).then((res) => {
             if (res?.ok) {
                 toast.success('Login successful')
-                router.push(`/${username}/admin/links`)
+                router.push(`/admin/${username}/links`)
             } else {
                 toast.error('Invalid Email or Password')
                 router.push('/login')

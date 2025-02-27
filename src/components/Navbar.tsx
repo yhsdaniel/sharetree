@@ -4,7 +4,6 @@ import { useState } from 'react'
 import {
   Dialog,
   DialogPanel,
-  PopoverGroup,
 } from '@headlessui/react'
 import {
   Bars3Icon,
@@ -14,7 +13,12 @@ import logo from '../../public/images/logo.png'
 import Link from 'next/link'
 import Image from 'next/image'
 
-export default function Navbar() {
+type StatusProps = {
+  status: string,
+  username: string
+}
+
+export default function Navbar({ status, username }: StatusProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
@@ -23,12 +27,12 @@ export default function Navbar() {
       <nav aria-label="Global" className="mx-auto flex max-w-7xl items-center justify-between p-4 lg:p-6 lg:px-8">
         <div className="flex lg:flex-1 justify-start items-center">
           <a href="#home" className="-m-1.5 p-1.5">
-            <Image 
+            <Image
               alt="Logo"
               width={200}
-              height={200} 
+              height={200}
               src={logo}
-              className="h-8 w-auto" 
+              className="h-8 w-auto"
             />
           </a>
           <span className='ml-2 text-green-700 font-bold'>Sharetree</span>
@@ -43,24 +47,26 @@ export default function Navbar() {
             <Bars3Icon aria-hidden="true" className="h-6 w-6" />
           </button>
         </div>
-        <PopoverGroup className="hidden lg:flex lg:gap-x-12">
-          <a href="#features" className="text-sm font-semibold leading-6 text-gray-900">
-            Features
-          </a>
-          <a href="#features" className="text-sm font-semibold leading-6 text-gray-900">
-            Marketplace
-          </a>
-          <a href="#features" className="text-sm font-semibold leading-6 text-gray-900">
-            Company
-          </a>
-        </PopoverGroup>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:items-center lg:gap-x-4">
-          <Link href="/login" className="text-sm font-semibold leading-6 text-gray-900 bg-blue-300 hover:bg-blue-400 transition-all rounded-full px-5 py-3">
-            Log In <span aria-hidden="true">&rarr;</span>
-          </Link>
-          <Link href="/register" className="text-sm font-semibold leading-6 text-gray-900 bg-green-300 hover:bg-green-400 transition-all rounded-2xl px-5 py-3">
-            Register
-          </Link>
+          {status === 'authenticated'
+            ?
+            (
+              <Link href="/login" className="text-sm font-semibold leading-6 text-gray-900 bg-red-300 hover:bg-red-400 transition-all rounded-full px-5 py-3">
+                Log Out <span aria-hidden="true">&rarr;</span>
+              </Link>
+            )
+            :
+            (
+              <>
+                <Link href="/login" className="text-sm font-semibold leading-6 text-gray-900 bg-blue-300 hover:bg-blue-400 transition-all rounded-full px-5 py-3">
+                  Log In <span aria-hidden="true">&rarr;</span>
+                </Link>
+                <Link href="/register" className="text-sm font-semibold leading-6 text-gray-900 bg-green-300 hover:bg-green-400 transition-all rounded-2xl px-5 py-3">
+                  Register
+                </Link>
+              </>
+            )
+          }
         </div>
       </nav>
 
@@ -89,39 +95,38 @@ export default function Navbar() {
           </div>
           <div className="mt-6 flow-root">
             <div className="-my-6 divide-y divide-gray-500/10">
-              <div className="space-y-2 py-6">
-                <a
-                  href="#features"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                >
-                  Features
-                </a>
-                <a
-                  href="#features"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                >
-                  Marketplace
-                </a>
-                <a
-                  href="#features"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                >
-                  Company
-                </a>
-              </div>
               <div className="py-6">
-                <Link
-                  href="/login"
-                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                >
-                  Log in
-                </Link>
-                <Link
-                  href="/register"
-                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                >
-                  Register
-                </Link>
+                {status === 'authenticated'
+                  ?
+                  (
+                    <>
+                      <h1>Hi, {username}</h1>
+                      <Link
+                        href="/login"
+                        className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                      >
+                        Log Out
+                      </Link>
+                    </>
+                  )
+                  :
+                  (
+                    <>
+                      <Link
+                        href="/login"
+                        className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                      >
+                        Log in
+                      </Link>
+                      <Link
+                        href="/register"
+                        className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                      >
+                        Register
+                      </Link>
+                    </>
+                  )
+                }
               </div>
             </div>
           </div>

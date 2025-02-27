@@ -16,7 +16,7 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (status === 'authenticated') {
-      router.push(`/${username}/admin/links`)
+      router.push(`/admin/${username}/links`)
     }
   }, [router, status, username])
 
