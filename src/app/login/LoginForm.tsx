@@ -18,7 +18,7 @@ export default function LoginForm() {
         if (status === 'authenticated') {
             router.push(`/admin/${username}/links`)
         }
-    }, [router, username])
+    }, [router, status, username])
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()

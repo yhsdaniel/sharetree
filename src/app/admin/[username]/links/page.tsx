@@ -22,25 +22,24 @@ export default function LinksPage() {
 
     const user = session?.user
     const idUser = user && 'id' in user ? user?.id : undefined
-
-    const fetchData = async () => {
-        try {
-            if(idUser){
-                const { data: response } = await axios.get(`/api/linkadmin`, { params: { id: idUser } })
-                setUserState(response.username)
-                setListLinks(response.link)
-            }
-        } catch (error) {
-            console.error(error)
-        }
-    }
     
     useEffect(() => {
+        const fetchData = async () => {
+            try {
+                if(idUser){
+                    const { data: response } = await axios.get(`/api/linkadmin`, { params: { id: idUser } })
+                    setUserState(response.username)
+                    setListLinks(response.link)
+                }
+            } catch (error) {
+                console.error(error)
+            }
+        }
         fetchData()
         if(status === 'unauthenticated') {
             router.push('/login')
         }
-    }, [idUser])
+    }, [idUser, router, status])
 
     if (status === 'authenticated') {
         return (
