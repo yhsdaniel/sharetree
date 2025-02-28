@@ -1,11 +1,8 @@
-'use client'
-
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
-import { useEffect } from 'react'
 import Image from 'next/image'
+import social from '../../../public/images/social.jpg'
 import Tiktok from '../../../public/images/Tiktok.png'
 import Instagram from '../../../public/images/Instagram.png'
 
@@ -14,15 +11,9 @@ const Navbar = dynamic(() => import('@/components/Navbar'), { ssr: false })
 
 export default function HomePage() {
   const { data: session, status } = useSession()
-  const router = useRouter()
   const user = session?.user
-  const username = (user && 'username' in user ? user?.username : undefined) || user?.name
+  const username = (user && 'username' in user ? user?.username as string : undefined) || user?.name as string
 
-  // useEffect(() => {
-  //   if (status === 'authenticated') {
-  //     router.push(`/admin/${username}/links`)
-  //   }
-  // }, [router, status, username])
   return (
     <div className='size-full relative overflow-y-auto overflow-x-hidden scroll-smooth'>
       <Navbar status={status} username={username}/>
@@ -77,10 +68,10 @@ export default function HomePage() {
       </div>
 
       {/* Second Banner */}
-      <div id='features' className="sm:p-10 min-h-screen bg-pink-200 flex justify-center items-center md:pt-[6rem] xl:pt-[8rem]">
-        <div className="container mx-32">
+      <div id='features' className="sm:p-10 bg-[#fafafc] min-h-screen flex justify-center items-center md:pt-[6rem] xl:pt-[8rem]">
+        <div className="container">
           <div
-            className="text-center flex flex-col md:flex-row justify-between items-center text-purple-800"
+            className="text-center flex flex-col md:flex-row justify-evenly items-center text-purple-800"
           >
             <motion.div
               initial={{ opacity: 0, translateX: -100 }}
@@ -102,16 +93,11 @@ export default function HomePage() {
               whileInView={{ opacity: 1, translateX: 1 }}
               transition={{ duration: 1 }}
               className='w-full flex justify-center items-center'>
-              <video
-                controls={false}
-                autoPlay
-                muted
-                loop
-                playsInline
-                className='rounded-3xl md:w-[50%] lg:w-[40%] aspect-auto'
-              >
-                <source src='/videos/social.mp4' type='video/mp4' />
-              </video>
+              <Image
+                alt='Social Media Icons'
+                src={social}
+                priority
+              />
             </motion.div>
           </div>
         </div>

@@ -3,6 +3,7 @@ import { Inter, Montserrat } from "next/font/google";
 import "./globals.css";
 import AuthProvider from "@/utils/SessionProvider";
 import { Toaster } from "react-hot-toast";
+import favicon from "./favicon.ico";
 
 const inter = Inter({ subsets: ["latin"] });
 const montserrat = Montserrat({
@@ -25,6 +26,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en" className="scroll-smooth">
+      <link rel="icon" href="/favicon.ico" sizes="any" />
       <body className={`${montserrat.className} h-screen`}>
         <AuthProvider>
           {children}

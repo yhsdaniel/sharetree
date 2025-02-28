@@ -9,20 +9,26 @@ import {
   Bars3Icon,
   XMarkIcon,
 } from '@heroicons/react/24/outline'
+import { motion } from 'framer-motion'
 import logo from '../../public/images/logo.png'
 import Link from 'next/link'
 import Image from 'next/image'
 
 type StatusProps = {
   status: string,
-  username: string
+  username: string | undefined | null
 }
 
 export default function Navbar({ status, username }: StatusProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
-    <header className="bg-white fixed w-[95%] left-0 translate-x-[2%] rounded-full mt-4 z-50">
+    <motion.header
+      initial={{ opacity: 0, translateY: -100 }}
+      animate={{ opacity: 1, translateY: 1 }}
+      transition={{ duration: .8 }}
+      className="bg-white fixed w-[95%] left-0 translate-x-[2%] rounded-full mt-4 z-50"
+    >
       {/* Desktop Responsive */}
       <nav aria-label="Global" className="mx-auto flex max-w-7xl items-center justify-between p-4 lg:p-6 lg:px-8">
         <div className="flex lg:flex-1 justify-start items-center">
@@ -132,6 +138,6 @@ export default function Navbar({ status, username }: StatusProps) {
           </div>
         </DialogPanel>
       </Dialog>
-    </header>
+    </motion.header>
   )
 }
