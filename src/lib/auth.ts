@@ -6,7 +6,6 @@ import { NextAuthOptions } from "next-auth";
 import { connect } from './mongodb';
 import { ObjectId } from 'mongodb'
 
-await connect()
 
 export const authOptions: NextAuthOptions = {
     secret: process.env.NEXTAUTH_SECRET,
@@ -55,6 +54,8 @@ export const authOptions: NextAuthOptions = {
     ],
     callbacks: {
         async jwt({ token, user }) {
+            await connect()
+            
             if (user && 'username' in user) {
                 const existingUser = await User.findOne({ email: user.email })
                 if(existingUser){
@@ -67,6 +68,8 @@ export const authOptions: NextAuthOptions = {
             return token
         },
         async session({ session, token }) {
+            await connect()
+
             const existingUser = await User.findOne({ email: token.email })
             return {
                 ...session,
@@ -78,6 +81,8 @@ export const authOptions: NextAuthOptions = {
             }
         },
         async signIn({ profile, account }) {
+            await connect()
+
             if(account?.provider === 'google'){
                 const userData = await User.findOne({ email: profile?.email })
                 let uniqueId = Math.floor(Math.random() * 90000 + 10000)
