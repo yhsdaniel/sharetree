@@ -6,6 +6,8 @@ import { NextAuthOptions } from "next-auth";
 import { connect } from './mongodb';
 import { ObjectId } from 'mongodb'
 
+await connect()
+
 export const authOptions: NextAuthOptions = {
     secret: process.env.NEXTAUTH_SECRET,
     session: {
@@ -70,25 +72,23 @@ export const authOptions: NextAuthOptions = {
                 ...session,
                 user: {
                     ...session.user,
-                    username: token.username || token.name,
+                    username: token.username || session.user?.name,
                     id: existingUser._id
                 }
             }
         },
         async signIn({ profile, account }) {
-            await connect()
-
             if(account?.provider === 'google'){
-                const emailData = await User.findOne({ email: profile?.email })
+                const userData = await User.findOne({ email: profile?.email })
                 let uniqueId = Math.floor(Math.random() * 90000 + 10000)
-                if(!emailData){
+
+                if(!userData){
                     const newUser = new User({
                         _id: new ObjectId(),
                         email: profile?.email,
-                        username: `${profile?.name?.toLowerCase()}${uniqueId}`,
-                        password: ''
+                        username: `${profile?.name?.split(' ')[0].toLowerCase()}${uniqueId}`,
+                        password: null
                     })
-                    console.log(newUser)
                     await newUser.save()
                 }
             }

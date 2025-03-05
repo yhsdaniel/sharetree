@@ -1,12 +1,12 @@
 'use client'
 
 import React, { useEffect } from 'react'
-import bgLogin from '../../../public/images/bg-login.jpg'
+import bgLogin from '../../../public/images/bg-login.webp'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import dynamic from 'next/dynamic'
-const Loginform = dynamic(() => import('@/app/login/LoginForm'), { ssr: false })
+const Loginform = dynamic(() => import('./LoginForm'), { ssr: false })
 
 export default function LoginPage() {
   const { data: session, status } = useSession()
@@ -35,7 +35,8 @@ export default function LoginPage() {
               className='w-full h-full object-cover max-md:hidden'
               width={500}
               height={800}
-              priority={true} />
+              loading='lazy' 
+            />
           </div>
         </div>
       </div>

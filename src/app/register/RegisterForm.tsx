@@ -32,16 +32,15 @@ export default function RegisterForm() {
                 }
             })
         } catch (error) {
+            toast.error('Username or email already registered')
             console.log(error)
         }
     }
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target
-
-        setRegister((preValues) => ({
+        setRegister(() => ({
             ...register,
-            [name]: value
+            [e.target.name]: e.target.value
         }))
     }
 
