@@ -1,40 +1,22 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
-import { useSession } from 'next-auth/react'
+import React from 'react'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import axios from 'axios'
 
-type LinkType = {
-    id: string,
-    url: string,
-    name: string
+type ListDeveiceComponentProps = {
+    listLinks: LinkType[]
+    username: string,
+    pathName?: string
 }
 
-const LinkDeviceComponent = React.memo(() => {
-    const { data: session } = useSession()
-    const pathName = usePathname()
-    const user = session?.user
-    const username = (user && 'username' in user ? user?.username : undefined) || user?.name
+export type LinkType = {
+    username?: string,
+    pathName: string,
+    url: string,
+    name?: string
+}
 
-    const [listLinks, setListLinks] = useState<LinkType[]>([])
-
-    useEffect(() => {
-        if(!username) return
-
-        const fetchData = async () => {
-            try {
-                const { data: response } = await axios.get(`/api/linkuser`, { params: { username } })
-                setListLinks(response)
-            } catch (error) {
-                console.error(error)
-            }
-        }
-
-        fetchData()
-    }, [username])
-
+const LinkDeviceComponent: React.FC<ListDeveiceComponentProps> = React.memo(({ listLinks, username, pathName }) => {
     return (
         <>
             {listLinks?.map((value, index) => (

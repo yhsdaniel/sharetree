@@ -5,13 +5,9 @@ import { motion } from 'framer-motion'
 import { useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
+import { LinkType } from '@/components/LinkComponent'
 
 const LinkComponent = dynamic(() => import('@/components/LinkComponent'), { ssr: false })
-
-type LinkType = {
-  url: string,
-  name: string
-}
 
 type SessionUser = {
   id?: string | null
@@ -19,7 +15,10 @@ type SessionUser = {
 
 export default function DeviceUI() {
   const [listLinks, setListLinks] = useState<LinkType[]>([])
-  const { data: session } = useSession()
+  const { data: session, status } = useSession()
+  const user = session?.user
+  const username = (user && 'username' in user ? user?.username as string : undefined) || user?.name as string
+
   const [idSession, setIdSession] = useState(() => {
     return {
       id: (session?.user as SessionUser)?.id || null
@@ -48,7 +47,7 @@ export default function DeviceUI() {
         <div className='w-[20rem] h-[35rem] bg-white shadow-2xl rounded-3xl relative flex justify-center items-center'>
           <div className='w-[19.5rem] h-[35rem] overflow-auto bg-black rounded-3xl absolute flex flex-col justify-start items-center -top-2 p-4'>
             <div className='text-white'><h1>Sharetree</h1></div>
-            <LinkComponent />
+            <LinkComponent listLinks={listLinks} username={username} pathName={""} />
           </div>
         </div>
       </div>

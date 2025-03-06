@@ -4,13 +4,33 @@ import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import Image from 'next/image'
 import logo from '/public/images/logo.png'
-import { notFound, useParams } from 'next/navigation'
+import { notFound, useParams, usePathname } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import { LinkType } from '@/components/LinkComponent'
+import axios from 'axios'
 
 const ListDeviceComponent = dynamic(() => import('@/components/LinkComponent'), { ssr: false })
 
 const CardUser = () => {
-    const params = useParams<{ username: string }>()
-    const username = params.username
+    const pathName = usePathname()
+    const username = pathName.split('/')[1]
+
+    const [listLinks, setListLinks] = useState<LinkType[]>([])
+
+    useEffect(() => {
+        if (!username) return
+
+        const fetchData = async () => {
+            try {
+                const { data: response } = await axios.get(`/api/linkuser`, { params: { username } })
+                setListLinks(response)
+            } catch (error) {
+                console.error(error)
+            }
+        }
+
+        fetchData()
+    }, [username, listLinks])
 
     if (!username) {
         return notFound()
@@ -24,7 +44,7 @@ const CardUser = () => {
                             <h1 className='text-black'>{username.charAt(0).toUpperCase()}</h1>
                         </div>
                     </div>
-                    <ListDeviceComponent />
+                    <ListDeviceComponent listLinks={listLinks} username={username} pathName={pathName}/>
                     <Link
                         href={'/'}
                         className='fixed md:relative bottom-0 md:m-10 p-4 text-sm bg-white md:bg-white/70 hover:bg-white w-full md:w-1/3 md:rounded-3xl flex justify-center items-center duration-150 ease-in-out'

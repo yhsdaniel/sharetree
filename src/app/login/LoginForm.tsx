@@ -3,12 +3,20 @@
 import GoogleButton from '@/components/GoogleButton'
 import { Input } from '@/components/ui/input'
 import Link from 'next/link'
-import React, { FormEvent, useEffect } from 'react'
+import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
 import { signIn, useSession } from 'next-auth/react'
 
 export default function LoginForm() {
+    const [formData, setFormData] = useState({
+        email: '',
+        password: ''
+    })
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setFormData({...formData, [e.target.name]: e.target.value })
+    }
+
     const router = useRouter()
     const { data: session, status } = useSession()
     const user = session?.user
@@ -20,11 +28,9 @@ export default function LoginForm() {
         }
     }, [router, status, username])
 
-    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-        const formData = new FormData(e.currentTarget)
-        const email = formData.get('email') as string
-        const password = formData.get('password') as string
+    const handleSubmit = async () => {
+        const email = formData.email
+        const password = formData.password
         await signIn("credentials", {
             email,
             password,
@@ -57,10 +63,11 @@ export default function LoginForm() {
                         type='email'
                         name='email'
                         autoComplete="off"
+                        autoFocus={true}
                         className="rounded-lg border-none h-12 bg-white p-4 shadow-sm"
-                        // value={login?.email}
+                        value={formData.email}
                         placeholder="Enter email address"
-                    // onChange={handleChange}
+                        onChange={handleChange}
                     />
                 </div>
                 <div className='mb-6'>
@@ -70,9 +77,9 @@ export default function LoginForm() {
                         name='password'
                         autoComplete="off"
                         className="rounded-lg border-none h-12 bg-white p-4 shadow-sm"
-                        // value={login?.password}
+                        value={formData.password}
                         placeholder="Password"
-                    // onChange={handleChange}
+                        onChange={handleChange}
                     />
                 </div>
                 <button type='submit' className='w-full border rounded-[50px] px-4 h-12 bg-[#7dd9f8] hover:bg-[#47bde4]/70 duration-150 ease-in-out text-[#393646] font-bold'>Login</button>

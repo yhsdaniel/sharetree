@@ -35,7 +35,7 @@ export default function LoginPage() {
               className='w-full h-full object-cover max-md:hidden'
               width={500}
               height={800}
-              loading='lazy' 
+              priority={true}
             />
           </div>
         </div>

@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import {
+  Button,
   Dialog,
   DialogPanel,
 } from '@headlessui/react'
@@ -13,6 +14,8 @@ import { motion } from 'framer-motion'
 import logo from '../../public/images/logo.png'
 import Link from 'next/link'
 import Image from 'next/image'
+import { signOut } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 
 type StatusProps = {
   status: string,
@@ -21,6 +24,16 @@ type StatusProps = {
 
 export default function Navbar({ status, username }: StatusProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const router = useRouter()
+
+  const handleSignOut = async () => {
+    try {
+      await signOut({ redirect: true })
+      router.push('/login')
+    } catch (error) {
+      console.error("Error Signing out", error)
+    }
+  }
 
   return (
     <motion.header
@@ -57,9 +70,9 @@ export default function Navbar({ status, username }: StatusProps) {
           {status === 'authenticated'
             ?
             (
-              <Link href="/login" className="text-sm font-semibold leading-6 text-gray-900 bg-red-300 hover:bg-red-400 transition-all rounded-full px-5 py-3">
+              <Button onClick={handleSignOut} className="text-sm font-semibold leading-6 text-gray-900 bg-red-300 hover:bg-red-400 transition-all rounded-full px-5 py-3">
                 Log Out <span aria-hidden="true">&rarr;</span>
-              </Link>
+              </Button>
             )
             :
             (
