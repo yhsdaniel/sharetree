@@ -1,24 +1,39 @@
 'use client'
 
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import bgLogin from '../../../public/images/bg-login.webp'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import dynamic from 'next/dynamic'
+import axios from 'axios';
+
 const Loginform = dynamic(() => import('./LoginForm'), { ssr: false })
 
 export default function LoginPage() {
-  const { data: session, status } = useSession()
+  const [userState, setUserState] = useState('')
   const router = useRouter()
+  const { data: session, status } = useSession()
   const user = session?.user
-  const username = (user && 'username' in user ? user?.username : undefined) || session?.user?.name
-
+  const idUser = user && 'id' in user ? user?.id : undefined
+  
   useEffect(() => {
-    if (status === 'authenticated') {
-      router.push(`/admin/${username}/links`)
+    const fetchData = async () => {
+      try {
+        if (idUser) {
+          const { data: response } = await axios.get(`/api/linkadmin`, { params: { id: idUser } })
+          setUserState(response.username)
+        }
+      } catch (error) {
+        console.error(error)
+      }
     }
-  }, [router, status, username])
+    fetchData()
+
+    if (status === 'authenticated') {
+      router.push(`/admin/${userState}/links`)
+    }
+  }, [router, status, userState])
 
   if (status === 'unauthenticated') {
     return (

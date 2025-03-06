@@ -7,6 +7,7 @@ import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
 import { signIn, useSession } from 'next-auth/react'
+import axios from 'axios'
 
 export default function LoginForm() {
     const [formData, setFormData] = useState({
@@ -18,17 +19,31 @@ export default function LoginForm() {
     }
 
     const router = useRouter()
+
+    const [userState, setUserState] = useState('')
     const { data: session, status } = useSession()
     const user = session?.user
-    const username = (user && 'username' in user ? user?.username : undefined) || session?.user?.name
-
+    const idUser = user && 'id' in user ? user?.id : undefined
+    
+    const fetchData = async () => {
+        try {
+            if(idUser){
+                const { data: response } = await axios.get(`/api/linkadmin`, { params: { id: idUser } })
+                setUserState(response.username)
+            }
+        } catch (error) {
+            console.error(error)
+        }
+    }
+    
     useEffect(() => {
         if (status === 'authenticated') {
-            router.push(`/admin/${username}/links`)
+            router.push(`/admin/${userState}/links`)
         }
-    }, [router, status, username])
+    }, [router, status, userState])
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
         const email = formData.email
         const password = formData.password
         await signIn("credentials", {
@@ -38,7 +53,8 @@ export default function LoginForm() {
         }).then((res) => {
             if (res?.ok) {
                 toast.success('Login successful')
-                router.push(`/admin/${username}/links`)
+                fetchData()
+                // router.push(`/admin/${userState}/links`)
             } else {
                 toast.error('Invalid Email or Password')
                 router.push('/login')

@@ -12,7 +12,6 @@ export async function middleware(req: NextRequest) {
 
     if(token){
         const username = token.username
-        console.log('username', username)
         // If the user is logged in and trying to access login or register page, redirect them
         if (username && (pathname.startsWith(`/${username}/admin`))) {
             const redirectUrl = `/${username}/admin`
