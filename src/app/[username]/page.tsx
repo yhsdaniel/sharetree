@@ -26,7 +26,7 @@ const UserForPublic = () => {
 
         const fetchData = async () => {
             try {
-                const { data: response } = await axios.get(`/api/linkuser`, { params: { username } })
+                const { data: response } = await axios.get(`/api/linkuser`, { params: { username: username } })
                 setListLinks(response)
             } catch (error) {
                 console.error(error)

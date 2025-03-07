@@ -14,6 +14,7 @@ const ListDeviceComponent = dynamic(() => import('@/components/LinkComponent'), 
 const CardUser = () => {
     const pathName = usePathname()
     const username = pathName.split('/')[1]
+    console.log(username)
 
     const [listLinks, setListLinks] = useState<LinkType[]>([])
 
@@ -22,7 +23,7 @@ const CardUser = () => {
 
         const fetchData = async () => {
             try {
-                const { data: response } = await axios.get(`/api/linkuser`, { params: { username } })
+                const { data: response } = await axios.get(`/api/linkuser`, { params: { username: username } })
                 setListLinks(response)
             } catch (error) {
                 console.error(error)
