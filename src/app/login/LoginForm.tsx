@@ -54,7 +54,7 @@ export default function LoginForm() {
             if (res?.ok) {
                 toast.success('Login successful')
                 fetchData()
-                // router.push(`/admin/${userState}/links`)
+                router.push(`/admin/${userState}/links`)
             } else {
                 toast.error('Invalid Email or Password')
                 router.push('/login')
