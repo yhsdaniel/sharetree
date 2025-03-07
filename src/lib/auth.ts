@@ -6,6 +6,7 @@ import { NextAuthOptions } from "next-auth";
 import { connect } from './mongodb';
 import { ObjectId } from 'mongodb'
 
+await connect()
 
 export const authOptions: NextAuthOptions = {
     secret: process.env.NEXTAUTH_SECRET,
@@ -19,8 +20,8 @@ export const authOptions: NextAuthOptions = {
     },
     providers: [
         GoogleProvider({
-            clientId: process.env.GOOGLE_ID!,
-            clientSecret: process.env.GOOGLE_SECRET!,
+            clientId: process.env.GOOGLE_ID as string,
+            clientSecret: process.env.GOOGLE_SECRET as string,
         }),
         CredentialsProvider({
             name: 'Credentials',
