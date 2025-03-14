@@ -17,7 +17,7 @@ type LinkWrapperProps = {
   linkWrapper: LinkType[]
 }
 
-const LinkWrapper: React.FC<LinkWrapperProps> = ({linkWrapper}) => {
+const LinkWrapper: React.FC<LinkWrapperProps> = ({ linkWrapper }) => {
   const [showModal, setShowModal] = useState<boolean>(false)
   const [type, setType] = useState('')
 
@@ -32,7 +32,7 @@ const LinkWrapper: React.FC<LinkWrapperProps> = ({linkWrapper}) => {
         </Button>
       </div>
       <section className='mt-6 md:mt-10'>
-        {linkWrapper.map((value, index) => (
+        {linkWrapper?.map((value, index) => (
           <CardUrl key={index} id={value._id} name={value.name} url={value.url} />
         ))}
       </section>

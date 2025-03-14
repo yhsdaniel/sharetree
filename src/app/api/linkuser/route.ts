@@ -1,7 +1,8 @@
 import { connect } from "@/lib/mongodb";
-import User from '@/utils/db/user';
 import { NextRequest, NextResponse } from "next/server";
 import mongoose from "mongoose";
+import User from '@/utils/db/user';
+import Link from "@/utils/db/links";
 
 export const dynamic = "force-dynamic"
 
@@ -11,16 +12,14 @@ export async function GET(req: NextRequest) {
         const { searchParams } = new URL(req.url);
         const username = searchParams.get('username');
 
-        if(!username){
-            return NextResponse.json({ error: 'Username not provided' }, { status: 400 })
-        }
-
         if (!username) {
-            return NextResponse.json({ error: 'Username not found' }, { status: 400 });
+            return NextResponse.json({ error: 'Username is required' }, { status: 400 });
         }
-
+        
         const userName = await User.findOne({ username: username })
-        if (!mongoose.isValidObjectId(userName._id)) {
+        console.log('user', userName.link)
+
+        if (!userName || !mongoose.isValidObjectId(userName._id)) {
             return NextResponse.json({ error: 'Invalid ID format' }, { status: 400 });
         }
         

@@ -1,5 +1,3 @@
-'use client'
-
 import React from 'react'
 import Link from 'next/link'
 
@@ -16,7 +14,7 @@ export type LinkType = {
     name?: string
 }
 
-const LinkDeviceComponent: React.FC<ListDeveiceComponentProps> = React.memo(({ listLinks, username, pathName }) => {
+const LinkDeviceComponent: React.FC<ListDeveiceComponentProps> = ({ listLinks, username, pathName }) => {
     return (
         <>
             {listLinks?.map((value, index) => (
@@ -29,7 +27,7 @@ const LinkDeviceComponent: React.FC<ListDeveiceComponentProps> = React.memo(({ l
             ))}
         </>
     )
-})
+}
 
 LinkDeviceComponent.displayName = 'LinkDeviceComponent'
 

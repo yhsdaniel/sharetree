@@ -45,6 +45,7 @@ export async function GET(req: NextRequest) {
         }
 
         const user = await User.findById(id).populate('link').exec();
+        console.log('user', user)
         return NextResponse.json({link: user.link, username: user.username}, { status: 200 });
     } catch (error) {
         console.log(error)
