@@ -1,4 +1,3 @@
-'use client'
 
 import Link from 'next/link'
 import { motion } from 'framer-motion'
@@ -31,7 +30,7 @@ export default function HomePage() {
           <Image
             src={Tiktok}
             alt='Tiktok Logo'
-            priority
+            loading='lazy'
           />
         </motion.div>
         <motion.div
@@ -43,7 +42,7 @@ export default function HomePage() {
           <Image
             src={Instagram}
             alt='Instagram Logo'
-            priority
+            loading='lazy'
           />
         </motion.div>
         <div className="relative mx-auto size-full sm:static px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row">
@@ -98,7 +97,7 @@ export default function HomePage() {
               <Image
                 alt='Social Media Icons'
                 src={social}
-                priority
+                loading='lazy'
               />
             </motion.div>
           </div>

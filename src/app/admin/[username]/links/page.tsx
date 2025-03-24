@@ -36,10 +36,11 @@ export default function LinksPage() {
             }
         }
         fetchData()
-        if(status === 'unauthenticated') {
-            router.push('/login')
-        }
     }, [idUser, router, status])
+    
+    if(status === 'unauthenticated') {
+        router.push('/login')
+    }
 
     if (status === 'authenticated') {
         return (

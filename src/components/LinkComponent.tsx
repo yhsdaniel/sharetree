@@ -2,7 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 
 type ListDeveiceComponentProps = {
-    listLinks: LinkType[]
+    listLinks?: LinkType[]
     username: string,
     pathName?: string
 }

@@ -28,7 +28,7 @@ export default function LoginForm() {
     const fetchData = async () => {
         try {
             if(idUser){
-                const { data: response } = await axios.get(`/api/linkadmin`, { params: { id: idUser } })
+                const { data: response } = await axios.post(`/api/linkadmin`, { params: { id: idUser } })
                 setUserState(response.username)
             }
         } catch (error) {

@@ -30,10 +30,13 @@ export default function LoginPage() {
     }
     fetchData()
 
+  }, [idUser])
+  
+  useEffect(() => {
     if (status === 'authenticated') {
       router.push(`/admin/${userState}/links`)
     }
-  }, [router, status, userState])
+  }, [userState, status])
 
   if (status === 'unauthenticated') {
     return (

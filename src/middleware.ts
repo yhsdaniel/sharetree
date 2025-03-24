@@ -5,7 +5,6 @@ import { NextResponse, NextRequest } from 'next/server'
 export async function middleware(req: NextRequest) {
     // Get the pathname from the URL
     const { pathname } = req.nextUrl;
-
     const secret = process.env.NEXTAUTH_SECRET
 
     const token = await getToken({ req, secret });
@@ -13,11 +12,13 @@ export async function middleware(req: NextRequest) {
     if(token){
         const username = token.username
         // If the user is logged in and trying to access login or register page, redirect them
-        if (username && (pathname.startsWith(`/admin/${username}`))) {
-            const redirectUrl = `/admin/${username}`
 
-            // Redirect to home or any other page you want
-            return NextResponse.redirect(new URL(redirectUrl, req.url));
+        if(pathname === '/login' || pathname === '/register'){
+            return NextResponse.redirect(new URL(`/admin/${username}/links`, req.url))
+        }
+    } else {
+        if(pathname === '/admin'){
+            return NextResponse.redirect(new URL(`/login`, req.url))
         }
     }
 
@@ -27,5 +28,5 @@ export async function middleware(req: NextRequest) {
 
 // See "Matching Paths" below to learn more
 export const config = {
-    matcher: ['/login', '/register', '/'],
+    matcher: ['/login', '/register', '/', '/admin/:path*'],
 }

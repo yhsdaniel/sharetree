@@ -17,7 +17,6 @@ export async function GET(req: NextRequest) {
         }
         
         const userName = await User.findOne({ username: username })
-        console.log('user', userName.link)
 
         if (!userName || !mongoose.isValidObjectId(userName._id)) {
             return NextResponse.json({ error: 'Invalid ID format' }, { status: 400 });
