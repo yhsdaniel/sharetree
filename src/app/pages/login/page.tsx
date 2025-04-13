@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
-import bgLogin from '../../../public/images/bg-login.webp'
+import bgLogin from '../../../../public/images/bg-login.webp'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';

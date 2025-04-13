@@ -1,6 +1,6 @@
 'use client'
 
-import bgLogin from '../../../public/images/bg-login.webp'
+import bgLogin from '../../../../public/images/bg-login.webp'
 import Image from 'next/image'
 import RegisterForm from './RegisterForm'
 import { useSession } from 'next-auth/react'
