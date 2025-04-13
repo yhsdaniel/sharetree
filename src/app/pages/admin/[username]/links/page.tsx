@@ -1,6 +1,6 @@
 'use client'
 
-import LinkWrapper from '@/app/admin/[username]/links/LinkWrapper'
+import LinkWrapper from '@/app/pages/admin/[username]/links/LinkWrapper'
 import React, { useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react'
 import axios from 'axios'
