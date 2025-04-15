@@ -9,7 +9,7 @@ import toast from 'react-hot-toast'
 import { signIn } from 'next-auth/react'
 import axios from 'axios'
 
-export default function LoginForm({ idUser }: { idUser: string | undefined }) {
+export default function LoginForm({ id_user }: { id_user: string | undefined | null }) {
     const router = useRouter()
     const [userState, setUserState] = useState('')
     const [formData, setFormData] = useState({
@@ -22,8 +22,8 @@ export default function LoginForm({ idUser }: { idUser: string | undefined }) {
 
     const fetchData = async () => {
         try {
-            if(idUser){
-                const { data: response } = await axios.post(`/api/linkadmin`, { params: { id: idUser } })
+            if(id_user){
+                const { data: response } = await axios.post(`/api/linkadmin`, { params: { id: id_user } })
                 setUserState(response.username)
             }
         } catch (error) {

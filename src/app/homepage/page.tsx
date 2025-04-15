@@ -7,13 +7,17 @@ import social from '../../../public/images/social.jpg'
 import Tiktok from '../../../public/images/Tiktok.png'
 import Instagram from '../../../public/images/Instagram.png'
 import Navbar from '@/components/Navbar'
+import { useMemo } from 'react'
 
 export const dynamic = 'force-dynamic'
 
 export default function HomePage() {
   const { data: session, status } = useSession()
   const user = session?.user
-  const username = (user && 'username' in user ? user?.username as string : undefined) || user?.name as string
+  const username = useMemo(() => {
+    if(!user) return null
+    return 'username' in user ? (user.username as string) : (user.name as string)
+  }, [user])
 
   return (
     <div className='size-full relative overflow-y-auto overflow-x-hidden scroll-smooth'>
@@ -24,7 +28,7 @@ export default function HomePage() {
         <motion.div
           initial={{ opacity: 0, translateX: -100 }}
           animate={{ opacity: 1, translateX: 1 }}
-          transition={{ duration: 1 }}
+          transition={{ duration: 1, delay: 0.3 }}
           className='absolute w-[7rem] h-[7rem] lg:w-[300px] lg:h-[300px] top-24 lg:top-32 left-0 mix-blend-screen'
         >
           <Image
@@ -36,7 +40,7 @@ export default function HomePage() {
         <motion.div
           initial={{ opacity: 0, translateX: 100 }}
           animate={{ opacity: 1, translateX: 1 }}
-          transition={{ duration: 1 }}
+          transition={{ duration: 1, delay: 0.5 }}
           className='absolute w-[8rem] h-[8rem] lg:w-[300px] lg:h-[300px] bottom-10 lg:bottom-32 -right-8 mix-blend-screen'
         >
           <Image

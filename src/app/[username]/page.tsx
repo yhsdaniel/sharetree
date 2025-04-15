@@ -10,14 +10,14 @@ const ListDeviceComponent = dynamic(() => import('@/components/LinkComponent'), 
 
 interface Props {
     params: { username: string }
-}
+}   
 
 const UserForPublic = async ({ params }: Props) => {
     const username = params.username
     const listLinks = await getUserLinks(username)
 
-    if (!username) {
-        return notFound()
+    if (!username || username === 'bad') {
+        notFound()
     }
 
     return (
