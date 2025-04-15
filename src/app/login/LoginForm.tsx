@@ -3,13 +3,15 @@
 import GoogleButton from '@/components/GoogleButton'
 import { Input } from '@/components/ui/input'
 import Link from 'next/link'
-import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+import React, { ChangeEvent, FormEvent, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
-import { signIn, useSession } from 'next-auth/react'
+import { signIn } from 'next-auth/react'
 import axios from 'axios'
 
-export default function LoginForm() {
+export default function LoginForm({ idUser }: { idUser: string | undefined }) {
+    const router = useRouter()
+    const [userState, setUserState] = useState('')
     const [formData, setFormData] = useState({
         email: '',
         password: ''
@@ -18,13 +20,6 @@ export default function LoginForm() {
         setFormData({...formData, [e.target.name]: e.target.value })
     }
 
-    const router = useRouter()
-
-    const [userState, setUserState] = useState('')
-    const { data: session, status } = useSession()
-    const user = session?.user
-    const idUser = user && 'id' in user ? user?.id : undefined
-    
     const fetchData = async () => {
         try {
             if(idUser){
@@ -35,12 +30,6 @@ export default function LoginForm() {
             console.error(error)
         }
     }
-    
-    useEffect(() => {
-        if (status === 'authenticated') {
-            router.push(`/admin/${userState}/links`)
-        }
-    }, [router, status, userState])
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -52,8 +41,8 @@ export default function LoginForm() {
             redirect: false
         }).then((res) => {
             if (res?.ok) {
-                toast.success('Login successful')
                 fetchData()
+                toast.success('Login successful')
                 router.push(`/admin/${userState}/links`)
             } else {
                 toast.error('Invalid Email or Password')

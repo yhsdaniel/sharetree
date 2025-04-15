@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
-import bgLogin from '../../../../public/images/bg-login.webp'
+import bgLogin from '../../../public/images/bg-login.webp'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
@@ -13,9 +13,10 @@ const Loginform = dynamic(() => import('./LoginForm'), { ssr: false })
 export default function LoginPage() {
   const [userState, setUserState] = useState('')
   const router = useRouter()
+  // GET SESSION
   const { data: session, status } = useSession()
   const user = session?.user
-  const idUser = user && 'id' in user ? user?.id : undefined
+  const idUser = user && 'id' in user ? (user?.id as string | undefined) : undefined
   
   useEffect(() => {
     const fetchData = async () => {
@@ -44,7 +45,7 @@ export default function LoginPage() {
         <div className='z-5 circle-bg'></div>
         <div className='size-full flex-center lg:gap-x-12 z-10'>
           <div className='bg-ct-blue-600 flex-center flex-col flex-1 z-10 mt-10 px-5 xl:px-[8rem]'>
-            <Loginform />
+            <Loginform idUser={idUser}/>
           </div>
           <div className='w-6/12 h-full flex-center max-md:hidden max-md:w-0'>
             <Image

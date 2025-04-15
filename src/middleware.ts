@@ -17,7 +17,7 @@ export async function middleware(req: NextRequest) {
             return NextResponse.redirect(new URL(`/admin/${username}/links`, req.url))
         }
     } else {
-        if(pathname === '/admin'){
+        if(pathname.startsWith('/admin')){
             return NextResponse.redirect(new URL(`/login`, req.url))
         }
     }

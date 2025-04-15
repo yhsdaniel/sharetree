@@ -1,7 +1,7 @@
 'use client'
 
 import { Roboto } from "next/font/google";
-import HomePage from "./pages/homepage/page";
+import HomePage from "./homepage/page";
 
 const roboto = Roboto({
   weight: '400',

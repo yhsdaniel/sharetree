@@ -7,6 +7,7 @@ import Image from 'next/image'
 import logo from '../../public/images/logo.png'
 import Link from 'next/link'
 import '@/app/navbar.css'
+import toast from 'react-hot-toast'
 
 
 const Sidebar = () => {
@@ -39,7 +40,7 @@ const Sidebar = () => {
     const handleSignOut = async () => {
         try {
             await signOut({ redirect: false })
-            router.refresh()
+            toast.success('Log Out successfully')
             router.push('/login')
         } catch (error) {
             console.error("Error Signing out", error)
