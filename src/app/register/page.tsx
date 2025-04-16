@@ -16,7 +16,7 @@ export default function RegisterPage() {
 
   useEffect(() => {
     if (status === 'authenticated' || session) {
-      router.push(`${username}/admin/links`)
+      router.push(`/admin/${username}/links`)
     }
   }, [router, status, username, session])
 

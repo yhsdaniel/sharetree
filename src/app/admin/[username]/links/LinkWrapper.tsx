@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { Suspense, useState } from 'react'
 import Modal from '@/components/Modal'
 import dynamic from 'next/dynamic'
 import { Button } from '@/components/ui/button'
@@ -25,16 +25,18 @@ const LinkWrapper: React.FC<LinkWrapperProps> = ({ linkWrapper }) => {
     <>
       <div className='md:px-16 relative'>
         <Button
-          className='w-full h-12 rounded-2xl bg-primary text-primary-foreground hover:bg-primary/90 mt-4 md:mt-0'
+          className='w-full h-12 rounded-2xl bg-gray-800 text-primary-foreground hover:bg-primary/90 mt-4 md:mt-0'
           onClick={() => { setShowModal(true); setType('add') }}
         >
           Add Link
         </Button>
       </div>
       <section className='mt-6 md:mt-10'>
-        {linkWrapper?.map((value, index) => (
-          <CardUrl key={index} id={value._id} name={value.name} url={value.url} />
-        ))}
+        <Suspense fallback={<div className='w-full h-full flex justify-center items-center'>Loading...</div>}>
+          {linkWrapper?.map((value, index) => (
+            <CardUrl key={index} id={value._id} name={value.name} url={value.url} />
+          ))}
+        </Suspense>
       </section>
       {showModal && <Modal type={type} setShowModal={setShowModal} id='' name='' />}
     </>

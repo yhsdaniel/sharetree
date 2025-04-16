@@ -41,6 +41,7 @@ export default function LinksPage() {
     if(status === 'unauthenticated') {
         router.push('/login')
     }
+    console.log(status)
 
     if (status === 'authenticated') {
         return (
