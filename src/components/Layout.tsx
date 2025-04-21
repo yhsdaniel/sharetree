@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react'
 import dynamic from 'next/dynamic'
+
 const Sidebar = dynamic(() => import('@/components/Sidebar'), { ssr: false })
 const DeviceUI = dynamic(() => import('@/components/DeviceUI'), { ssr: false })
 

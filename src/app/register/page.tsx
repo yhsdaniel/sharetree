@@ -1,47 +1,28 @@
-'use client'
-
 import bgLogin from '../../../public/images/bg-login.webp'
 import Image from 'next/image'
 import RegisterForm from './RegisterForm'
-import { useSession } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
-import { useEffect } from 'react'
 import Link from 'next/link'
 
 export default function RegisterPage() {
-  const { data: session, status } = useSession()
-  const router = useRouter()
-  const user = session?.user
-  const username = (user && 'username' in user ? user?.username : undefined) || session?.user?.name
-
-  useEffect(() => {
-    if (status === 'authenticated' || session) {
-      router.push(`/admin/${username}/links`)
-    }
-  }, [router, status, username, session])
-
-  if (status === 'unauthenticated') {
-    return (
-      <div className='w-auto h-full my-auto relative flex-center'>
-        <div className='z-5 circle-bg'></div>
-        <div className='size-full flex-center gap-12 z-10'>
-          <div className='bg-ct-blue-600 flex-center flex-col flex-1 z-10 mt-10'>
-            <RegisterForm />
-            <div className='mt-5 text-sm'>
-              <span>Already have an account? <Link href='/login' className='text-blue-600 hover:text-blue-800 transition-all'>Login</Link></span>
-            </div>
-          </div>
-          <div className='w-6/12 h-full flex-center max-md:hidden max-md:w-0'>
-            <Image
-              src={bgLogin}
-              alt="background-login"
-              className='w-full h-full object-cover max-md:hidden'
-              priority={true}
-            />
+  return (
+    <div className='w-auto h-full my-auto relative flex-center'>
+      <div className='z-5 circle-bg'></div>
+      <div className='size-full flex-center gap-12 z-10'>
+        <div className='bg-ct-blue-600 flex-center flex-col flex-1 z-10 mt-10'>
+          <RegisterForm />
+          <div className='mt-5 text-sm'>
+            <span>Already have an account? <Link href='/login' className='text-blue-600 hover:text-blue-800 transition-all'>Login</Link></span>
           </div>
         </div>
+        <div className='w-6/12 h-full flex-center max-md:hidden max-md:w-0'>
+          <Image
+            src={bgLogin}
+            alt="background-login"
+            className='w-full h-full object-cover max-md:hidden'
+            priority={true}
+          />
+        </div>
       </div>
-    )
-
-  }
+    </div>
+  )
 }

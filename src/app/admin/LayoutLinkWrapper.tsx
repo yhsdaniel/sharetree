@@ -8,8 +8,6 @@ type ChildProps = {
     userState: string
 }
 
-//https://sharetree.vercel.app/
-
 export default function LayoutLinkWrapper({ children, userState }: ChildProps) {
     const router = useRouter()
 

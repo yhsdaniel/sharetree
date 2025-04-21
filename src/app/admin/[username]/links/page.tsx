@@ -1,18 +1,20 @@
 'use client'
 
-import LinkWrapper from '@/app/admin/[username]/links/LinkWrapper'
 import React, { useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react'
 import axios from 'axios'
 import Layout from '@/components/Layout'
-import LayoutLinkWrapper from '../../LayoutLinkWrapper'
 import { useRouter } from 'next/navigation'
+import dynamic from 'next/dynamic'
 
 type LinkType = {
     _id: string,
     url: string,
     name: string
 }
+
+const LayoutLinkWrapper = dynamic(() => import('../../LayoutLinkWrapper'), { ssr: false })
+const LinkWrapper = dynamic(() => import('@/app/admin/[username]/links/LinkWrapper'), { ssr: false })
 
 export default function LinksPage() {
     const { data: session, status } = useSession()
@@ -37,11 +39,6 @@ export default function LinksPage() {
         }
         fetchData()
     }, [idUser, router, status])
-    
-    if(status === 'unauthenticated') {
-        router.push('/login')
-    }
-    console.log(status)
 
     if (status === 'authenticated') {
         return (

@@ -47,22 +47,40 @@ export const authOptions: NextAuthOptions = {
 
                 return {
                     id: existingUser.id,
-                    username: existingUser.username,
+                    name: existingUser.username,
                     email: existingUser.email,
                 }
             }
         })
     ],
     callbacks: {
-        async jwt({ token, user }) {
-            if (user && 'username' in user) {
-                const existingUser = await User.findOne({ email: user.email })
-                if(existingUser){
+        async jwt({ token, account, profile }) {
+            const existingUser = await User.findOne({ email: profile?.email })
+            if (profile && 'username' in profile) {
+                if (existingUser) {
                     return {
                         ...token,
-                        username: user.username
+                        username: profile?.username
                     }
                 }
+            }
+
+            if(account && profile) {
+                if(!existingUser){
+                    let uniqueId = Math.floor(Math.random() * 90000 + 10000)
+                    const newUser = new User({
+                        _id: new ObjectId(),
+                        email: profile?.email,
+                        username: `${profile?.name?.split(' ')[0].toLowerCase()}${uniqueId}`,
+                        password: null
+                    })
+                    await newUser.save()
+
+                    token.username = newUser.username
+                } else {
+                    token.username = existingUser.username
+                }
+                token.email = existingUser.email
             }
             return token
         },
@@ -72,31 +90,40 @@ export const authOptions: NextAuthOptions = {
                 ...session,
                 user: {
                     ...session.user,
-                    username: token.username || session.user?.name,
+                    name: token?.username || session.user?.name || existingUser?.username,
                     id: existingUser._id
                 }
             }
         },
-        async signIn({ profile, account }) {
-            if(account?.provider === 'google'){
-                const userData = await User.findOne({ email: profile?.email })
-                let uniqueId = Math.floor(Math.random() * 90000 + 10000)
+        // async signIn({ profile, account }) {
+        //     if (account?.provider === 'google') {
+        //         const userData = await User.findOne({ email: profile?.email })
+        //         let uniqueId = Math.floor(Math.random() * 90000 + 10000)
 
-                if(!userData){
-                    const newUser = new User({
-                        _id: new ObjectId(),
-                        email: profile?.email,
-                        username: `${profile?.name?.split(' ')[0].toLowerCase()}${uniqueId}`,
-                        password: null
-                    })
-                    await newUser.save()
-                }
-            }
-            return true
-        },
+        //         if (!userData) {
+        //             const newUser = new User({
+        //                 _id: new ObjectId(),
+        //                 email: profile?.email,
+        //                 username: `${profile?.name?.split(' ')[0].toLowerCase()}${uniqueId}`,
+        //                 password: null
+        //             })
+        //             await newUser.save()
+
+        //             // Add custom data to account for passing to JWT
+        //             account.newUser = {
+        //                 id: newUser._id.toString(),
+        //                 name: newUser.username
+        //             };
+        //         }
+        //     }
+        //     return true
+        // },
         async redirect({ url, baseUrl }) {
-            if( url.startsWith('/')) return `${baseUrl}/${url}`
-            else if ( new URL(url).origin === baseUrl ) return url
+            if (url.startsWith('/')) {
+                return `${baseUrl}/${url}`
+            } else if (new URL(url).origin === baseUrl) {
+                return url
+            }
             return baseUrl
         }
     }

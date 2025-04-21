@@ -3,32 +3,19 @@
 import GoogleButton from '@/components/GoogleButton'
 import { Input } from '@/components/ui/input'
 import Link from 'next/link'
-import React, { ChangeEvent, FormEvent, useState } from 'react'
+import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
-import { signIn } from 'next-auth/react'
-import axios from 'axios'
+import { getSession, signIn } from 'next-auth/react'
 
-export default function LoginForm({ id_user }: { id_user: string | undefined | null }) {
+export default function LoginForm() {
     const router = useRouter()
-    const [userState, setUserState] = useState('')
     const [formData, setFormData] = useState({
         email: '',
         password: ''
     })
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setFormData({...formData, [e.target.name]: e.target.value })
-    }
-
-    const fetchData = async () => {
-        try {
-            if(id_user){
-                const { data: response } = await axios.post(`/api/linkadmin`, { params: { id: id_user } })
-                setUserState(response.username)
-            }
-        } catch (error) {
-            console.error(error)
-        }
+        setFormData({ ...formData, [e.target.name]: e.target.value })
     }
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -39,14 +26,15 @@ export default function LoginForm({ id_user }: { id_user: string | undefined | n
             email,
             password,
             redirect: false
-        }).then((res) => {
+        }).then(async (res) => {
             if (res?.ok) {
-                fetchData()
                 toast.success('Login successful')
-                router.push(`/admin/${userState}/links`)
+                const updateSession = await getSession()
+                if(updateSession?.user?.name) {
+                    router.push(`/admin/${updateSession?.user?.name}/links`)
+                }
             } else {
-                toast.error('Invalid Email or Password')
-                router.push('/login')
+                toast.error("Couldn't get user info")
             }
         }).catch((err) => {
             console.log(err)

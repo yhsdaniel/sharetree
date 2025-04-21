@@ -1,12 +1,38 @@
 'use client'
 
-import { signIn, useSession } from "next-auth/react";
+import { getSession, signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 const GoogleButton = () => {
+    const router = useRouter()
+
+    const handleGoogleSignIn = () => {
+        signIn("google", { redirect: false }).then(async (res) => {
+            if (res?.ok) {
+                toast.success("Login successful");
+                
+                setTimeout(async () => {
+                    const updateSession = await getSession()
+                    console.log(updateSession)
+                    if(updateSession?.user?.name){
+                        router.push(`/admin/${updateSession?.user?.name}/links`)
+                    }
+                }, (1000));
+            } else {
+                toast.error("Couldn't get user info")
+            }
+        }).catch((err) => {
+            console.log("Google sign-in error:", err)
+            toast.error("An unexpected error occurred")
+            router.push("/login")
+        });
+    }
+
     return (
         <button
             className="flex w-full justify-center gap-5 rounded-2xl border-gray-300 border bg-white mt-6 py-3 px-3 text-sm font-bold hover:bg-gray-100 transition-all"
-            onClick={() => signIn("google")}>
+            onClick={handleGoogleSignIn}>
             <GoogleLogo />
             <div>Continue with Google</div>
         </button>
