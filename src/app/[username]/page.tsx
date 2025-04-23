@@ -23,9 +23,9 @@ const UserForPublic = async ({ params }: Props) => {
     }
 
     return (
-        <div className='size-full overflow-auto bg-blue-200 flex justify-center items-center'>
-            <div className='w-full h-auto pb-40 flex flex-col justify-center items-center'>
-                <div className='size-full pt-16 relative flex flex-col justify-start items-center'>
+        <div className='overflow-auto bg-blue-200 flex justify-center items-center'>
+            <div className='w-full h-auto md:mx-[35%] mx-[10%] mb-40 mt-12 flex flex-col justify-center items-center'>
+                <div className='w-full relative flex flex-col justify-start items-center'>
                     <div className='text-white p-4 flex flex-col justify-center items-center'>
                         <div className='rounded-full bg-white w-20 h-20 flex justify-center items-center'>
                             <h1 className='text-black'>{username.charAt(0).toUpperCase()}</h1>

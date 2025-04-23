@@ -1,9 +1,8 @@
-import { LinkType } from '@/components/LinkComponent'
 import axios from 'axios'
 
 const BASE_URL = process.env.NEXT_PUBLIC_NEXTAUTH_URL
 
-export const getUserLinks = async (username: string): Promise<LinkType[]> => {
+export const getUserLinks = async (username: string) => {
     try {
         if(!BASE_URL) {
             throw new Error('Missing NEXT_PUBLIC_NEXTAUTH_URL environment variable')
@@ -22,7 +21,7 @@ export const getUserLinks = async (username: string): Promise<LinkType[]> => {
     }
 }
 
-export const getLinks = async (userId: string): Promise<LinkType[]> => {
+export const getLinks = async (userId: string) => {
     try {
         if(!BASE_URL) {
             throw new Error('Missing NEXT_PUBLIC_NEXTAUTH_URL environment variable')

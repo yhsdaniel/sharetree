@@ -1,32 +1,32 @@
 'use client'
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { motion } from 'framer-motion'
 import Modal from "./Modal"
 import { Input } from "./ui/input"
 import axios from "axios"
-import { useSession } from "next-auth/react"
 import toast from "react-hot-toast"
 
 interface AppProps {
-    id: string,
+    _id: string,
     name: string,
-    url: string
+    url: string,
+    onUpdate?: (update: { id: string, name: string, url: string }) => void
 }
 
-export default function CardURL({ id, name, url }: AppProps) {
-    const [showModal, setShowModal] = useState<boolean>(false)
+export default function CardURL({ _id, name, url, onUpdate }: AppProps) {
+    const [showModal, setShowModal] = useState(false)
     const [editName, setEditName] = useState(false)
     const [editUrl, setEditUrl] = useState(false)
     const [type, setType] = useState('')
-    const [isEdit, setIsEdit] = useState({
-        name: name || '',
-        url: url || ''
-    })
+    const [isEdit, setIsEdit] = useState({ name, url })
 
-    const { data: session } = useSession()
-    const user = session?.user
-    const username = (user && 'username' in user ? user?.username : undefined) || session?.user?.name
+    useEffect(() => {
+        setIsEdit({
+            name: name,
+            url: url
+        })
+    }, [name, url])
 
     const handleEdit = {
         EditName: () => {
@@ -47,10 +47,10 @@ export default function CardURL({ id, name, url }: AppProps) {
         }));
     }
 
-    const handleKeyDown = (event: any) => {
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
-            if(isEdit.name !== name || isEdit.url !== url) {
-                handleSave(event);
+            if (isEdit.name !== name || isEdit.url !== url) {
+                handleSave();
             } else {
                 setEditName(false)
                 setEditUrl(false)
@@ -61,21 +61,23 @@ export default function CardURL({ id, name, url }: AppProps) {
     const handleLosesFocus = () => {
         setEditName(false)
         setEditUrl(false)
+        handleSave()
     }
 
-    const handleSave = async (e: any) => {
-        e.preventDefault()
-        await axios.put(`/api/linkadmin`, { id: id, name: isEdit.name, url: isEdit.url })
-            .then((response) => {
-                if (response) {
-                    setEditName(false)
-                    setEditUrl(false)
-                    toast.success('Updated successfully')
-                }
-            }).catch((err) => {
-                console.log(err)
-                toast.error('Something went wrong')
-            })
+    const handleSave = async () => {
+        try {
+            await axios.put(`/api/linkadmin`, { id: _id, name: isEdit.name, url: isEdit.url })
+            toast.success('Updated successfully')
+            setEditName(false)
+            setEditUrl(false)
+            
+            if(onUpdate){
+                onUpdate({ id: _id, name: isEdit.name, url: isEdit.url})
+            }
+        } catch (error) {
+            toast.error('Error updating link')
+            console.error(error)
+        }
     };
 
     return (
@@ -140,7 +142,7 @@ export default function CardURL({ id, name, url }: AppProps) {
                     </svg>
                 </motion.button>
             </div>
-            {showModal && <Modal type={type} setShowModal={setShowModal} id={id} name={name} />}
+            {showModal && <Modal type={type} setShowModal={setShowModal} id={_id} name={name} />}
         </div>
     )
 }

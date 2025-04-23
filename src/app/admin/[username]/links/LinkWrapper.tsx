@@ -1,25 +1,41 @@
 'use client'
 
-import { Suspense, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import Modal from '@/components/Modal'
 import dynamic from 'next/dynamic'
 import { Button } from '@/components/ui/button'
+import axios from 'axios'
+import { useSession } from 'next-auth/react'
 
 const CardUrl = dynamic(() => import('@/components/CardURL'), { ssr: false })
 
-type LinkType = {
-  _id: string,
-  url: string,
-  name: string,
-}
+const LinkWrapper = () => {
+  const { data: session } = useSession()
+  const user = session?.user
+  const idUser = user && 'id' in user ? user?.id : undefined
 
-type LinkWrapperProps = {
-  linkWrapper: LinkType[]
-}
-
-const LinkWrapper: React.FC<LinkWrapperProps> = ({ linkWrapper }) => {
+  const [links, setLinks] = useState<{ _id: string, name: string, url: string }[]>([])
   const [showModal, setShowModal] = useState<boolean>(false)
   const [type, setType] = useState('')
+
+  useEffect(() => {
+    const fetchLinks = async () => {
+      const { data: response } = await axios.get('/api/linkadmin', { params: { id: idUser } })
+      setLinks(response.link)
+    }
+    fetchLinks()
+  }, [])
+
+  const handleUpdate = (update: { id: string, name: string, url: string }) => {
+    setLinks((prevLinks) =>
+      prevLinks.map((link) => {
+        if (link._id === update.id) {
+          return { ...link, name: update.name, url: update.url }
+        }
+        return link
+      })
+    )
+  }
 
   return (
     <>
@@ -33,8 +49,8 @@ const LinkWrapper: React.FC<LinkWrapperProps> = ({ linkWrapper }) => {
       </div>
       <section className='mt-6 md:mt-10'>
         <Suspense fallback={<div className='w-full h-full flex justify-center items-center'>Loading...</div>}>
-          {linkWrapper?.map((value, index) => (
-            <CardUrl key={index} id={value._id} name={value.name} url={value.url} />
+          {links?.map((value, index) => (
+            <CardUrl key={index} _id={value._id} name={value.name} url={value.url} onUpdate={handleUpdate} />
           ))}
         </Suspense>
       </section>

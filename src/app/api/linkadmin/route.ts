@@ -56,14 +56,13 @@ export async function PUT(req: NextRequest) {
     const reqBody = await req.json()
     const { id, name, url } = reqBody
 
-    console.log('Filtered', { id, name, url })
-
     const link = await Link.findOne({ _id: id });
-    console.log('Matched document:', link);
 
     try {
-        const editLink = await Link.findOneAndUpdate({ _id: id }, { $set: { name, url } })
-        return NextResponse.json(editLink, { status: 200 })
+        if(link){
+            const editLink = await Link.findOneAndUpdate({ _id: id }, { $set: { name, url } })
+            return NextResponse.json(editLink, { status: 200 })
+        }
     } catch (error) {
         console.log(error)
         return NextResponse.json({ error }, { status: 500 })
