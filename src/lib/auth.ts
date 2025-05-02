@@ -54,33 +54,20 @@ export const authOptions: NextAuthOptions = {
         })
     ],
     callbacks: {
-        async jwt({ token, account, profile }) {
-            const existingUser = await User.findOne({ email: profile?.email })
-            if (profile && 'username' in profile) {
-                if (existingUser) {
-                    return {
-                        ...token,
-                        username: profile?.username
-                    }
-                }
-            }
+        async jwt({ token, account, profile, user }) {
+            const existingUser = await User.findOne({ email: token?.email })
 
-            if(account && profile) {
-                if(!existingUser){
-                    let uniqueId = Math.floor(Math.random() * 90000 + 10000)
-                    const newUser = new User({
-                        _id: new ObjectId(),
-                        email: profile?.email,
-                        username: `${profile?.name?.split(' ')[0].toLowerCase()}${uniqueId}`,
-                        password: null
-                    })
-                    await newUser.save()
+            if (!existingUser && token) {
+                let uniqueId = Math.floor(Math.random() * 90000 + 10000)
+                const newUser = new User({
+                    _id: new ObjectId(),
+                    email: profile?.email,
+                    username: `${profile?.name?.split(' ')[0].toLowerCase()}${uniqueId}`,
+                    password: null
+                })
+                await newUser.save()
 
-                    token.username = newUser.username
-                } else {
-                    token.username = existingUser.username
-                }
-                token.email = existingUser.email
+                token.username = newUser.username
             }
             return token
         },

@@ -6,27 +6,24 @@ import Modal from "./Modal"
 import { Input } from "./ui/input"
 import axios from "axios"
 import toast from "react-hot-toast"
+import { useMutation } from "@apollo/client"
+import { UPDATE_LINK_MUTATION } from "@/graphql/accessQuery"
 
 interface AppProps {
-    _id: string,
+    id: string,
     name: string,
     url: string,
-    onUpdate?: (update: { id: string, name: string, url: string }) => void
+    onUpdate: () => void
 }
 
-export default function CardURL({ _id, name, url, onUpdate }: AppProps) {
+export default function CardURL({ id, name, url, onUpdate }: AppProps) {
+    const [updateLinkMutation, { loading, error, data }] = useMutation(UPDATE_LINK_MUTATION);
+
     const [showModal, setShowModal] = useState(false)
     const [editName, setEditName] = useState(false)
     const [editUrl, setEditUrl] = useState(false)
     const [type, setType] = useState('')
     const [isEdit, setIsEdit] = useState({ name, url })
-
-    useEffect(() => {
-        setIsEdit({
-            name: name,
-            url: url
-        })
-    }, [name, url])
 
     const handleEdit = {
         EditName: () => {
@@ -65,21 +62,23 @@ export default function CardURL({ _id, name, url, onUpdate }: AppProps) {
     }
 
     const handleSave = async () => {
-        try {
-            await axios.put(`/api/linkadmin`, { id: _id, name: isEdit.name, url: isEdit.url })
-            toast.success('Updated successfully')
+        await updateLinkMutation({
+            variables: {
+                id: id,
+                name: isEdit.name,
+                url: isEdit.url
+            }
+        }).then(() => {
             setEditName(false)
             setEditUrl(false)
-            
-            if(onUpdate){
-                onUpdate({ id: _id, name: isEdit.name, url: isEdit.url})
-            }
-        } catch (error) {
+            toast.success('Your updated successfully')
+            onUpdate()
+        }).catch((error) => {
+            console.error('Error updating link:', error)
             toast.error('Error updating link')
-            console.error(error)
-        }
+        })
     };
-
+    
     return (
         <div className='size-full border overflow-auto border-gray-300 shadow-lg rounded-3xl mt-4 p-2 px-6 md:px-16'>
             <div className="flex justify-start items-center cursor-pointer" onClick={handleEdit.EditName}>
@@ -142,7 +141,7 @@ export default function CardURL({ _id, name, url, onUpdate }: AppProps) {
                     </svg>
                 </motion.button>
             </div>
-            {showModal && <Modal type={type} setShowModal={setShowModal} id={_id} name={name} />}
+            {showModal && <Modal type={type} setShowModal={setShowModal} id={id} name={name} />}
         </div>
     )
 }

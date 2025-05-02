@@ -14,7 +14,6 @@ const GoogleButton = () => {
                 
                 setTimeout(async () => {
                     const updateSession = await getSession()
-                    console.log(updateSession)
                     if(updateSession?.user?.name){
                         router.push(`/admin/${updateSession?.user?.name}/links`)
                     }

@@ -1,3 +1,4 @@
+'use client'
 
 import Link from 'next/link'
 import { motion } from 'framer-motion'
@@ -9,19 +10,17 @@ import Instagram from '../../../public/images/Instagram.png'
 import Navbar from '@/components/Navbar'
 import { useMemo } from 'react'
 
-export const dynamic = 'force-dynamic'
-
 export default function HomePage() {
   const { data: session, status } = useSession()
   const user = session?.user
   const username = useMemo(() => {
-    if(!user) return null
+    if (!user) return null
     return 'username' in user ? (user.username as string) : (user.name as string)
   }, [user])
 
   return (
     <div className='size-full relative overflow-y-auto overflow-x-hidden scroll-smooth'>
-      <Navbar status={status} username={username}/>
+      <Navbar status={status} username={username} />
 
       {/* First Banner */}
       <div id='home' className="sm:p-10 min-h-screen bg-green-800 flex justify-center items-center md:pt-[6rem] xl:pt-[8rem]">
