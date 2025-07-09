@@ -52,7 +52,6 @@ export const resolvers = {
     Mutation: {
         updateLink: async (_parent: any, args: { id: string, name: string, url: string }) => {
             const { id, name, url } = args
-            console.log(id, name, url, 'id name url')
             await connect()
             if(id){
                 const link = await Link.findOneAndUpdate({ _id: id }, { name, url })

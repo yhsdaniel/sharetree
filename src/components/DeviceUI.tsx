@@ -2,7 +2,7 @@
 
 import { Suspense, useContext } from 'react'
 import dynamic from 'next/dynamic'
-import { UserListContext } from './Layout'
+import { UserListContext } from './layout/Layout'
 
 const LinkComponent = dynamic(() => import('@/components/LinkComponent'), { ssr: false })
 

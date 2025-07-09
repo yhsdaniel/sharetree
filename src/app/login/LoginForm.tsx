@@ -3,53 +3,18 @@
 import GoogleButton from '@/components/GoogleButton'
 import { Input } from '@/components/ui/input'
 import Link from 'next/link'
-import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
-import toast from 'react-hot-toast'
-import { getSession, signIn } from 'next-auth/react'
+import { useFormHooks } from '../hooks/useFormHooks'
 
 export default function LoginForm() {
-    const router = useRouter()
-    const [formData, setFormData] = useState({
-        email: '',
-        password: ''
-    })
-    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value })
-    }
-
-    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-        const email = formData.email
-        const password = formData.password
-        await signIn("credentials", {
-            email,
-            password,
-            redirect: false
-        }).then(async (res) => {
-            if (res?.ok) {
-                toast.success('Login successful')
-                const updateSession = await getSession()
-                if(updateSession?.user?.name) {
-                    router.push(`/admin/${updateSession?.user?.name}/links`)
-                }
-            } else {
-                toast.error("Couldn't get user info")
-            }
-        }).catch((err) => {
-            console.log(err)
-            toast.error('Invalid Email or Password')
-            router.push('/login')
-        })
-    }
+    const { formDataLogin, handleChangeLogin, handleSubmitLogin } = useFormHooks()
     return (
         <div className="lg:flex-col lg:flex w-full">
             <div className='text-[#393646] text-center'>
                 <h1 className="text-4xl font-bold">Welcome Back!</h1>
                 <span className="text-md">Log in to your Sharetree</span>
             </div>
-
-            <form onSubmit={handleSubmit} autoComplete="off" className="mt-10">
+        
+            <form onSubmit={handleSubmitLogin} autoComplete="off" className="mt-10">
                 <div className='mb-4'>
                     <Input
                         required
@@ -58,9 +23,9 @@ export default function LoginForm() {
                         autoComplete="off"
                         autoFocus={true}
                         className="rounded-lg border-none h-12 bg-white p-4 shadow-sm"
-                        value={formData.email}
+                        value={formDataLogin.email}
                         placeholder="Enter email address"
-                        onChange={handleChange}
+                        onChange={handleChangeLogin}
                     />
                 </div>
                 <div className='mb-6'>
@@ -70,9 +35,9 @@ export default function LoginForm() {
                         name='password'
                         autoComplete="off"
                         className="rounded-lg border-none h-12 bg-white p-4 shadow-sm"
-                        value={formData.password}
+                        value={formDataLogin.password}
                         placeholder="Password"
-                        onChange={handleChange}
+                        onChange={handleChangeLogin}
                     />
                 </div>
                 <button type='submit' className='w-full border rounded-[50px] px-4 h-12 bg-[#7dd9f8] hover:bg-[#47bde4]/70 duration-150 ease-in-out text-[#393646] font-bold'>Login</button>

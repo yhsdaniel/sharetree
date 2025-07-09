@@ -1,6 +1,6 @@
 'use client'
 
-import Layout from '@/components/Layout'
+import Layout from '@/components/layout/Layout'
 import client from '@/lib/apolloClient'
 import { ApolloProvider } from '@apollo/client'
 import dynamic from 'next/dynamic'

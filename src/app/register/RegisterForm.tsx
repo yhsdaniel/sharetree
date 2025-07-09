@@ -2,48 +2,10 @@
 
 import GoogleButton from "@/components/GoogleButton";
 import { Input } from "@/components/ui/input";
-import Link from "next/link";
-import { ChangeEvent, useState } from "react";
-import axios from 'axios'
-import { useRouter } from "next/navigation";
-import toast from "react-hot-toast";
-
-interface User {
-    username: string;
-    email: string;
-    password: string;
-}
+import { useFormHooks } from "../hooks/useFormHooks";
 
 export default function RegisterForm() {
-    const [register, setRegister] = useState<User>({
-        username: '',
-        email: '',
-        password: '',
-    })
-    const router = useRouter()
-
-    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault()
-        try {
-            await axios.post('/api/users/register', register).then((response) => {
-                if( response.status === 200 ) {
-                    toast.success('Registered successfully')
-                    router.push('/login')
-                }
-            })
-        } catch (error) {
-            toast.error('Username or email already registered')
-            console.log(error)
-        }
-    }
-
-    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setRegister(() => ({
-            ...register,
-            [e.target.name]: e.target.value
-        }))
-    }
-
+    const { formDataRegister, handleChangeRegister, handleSubmitRegister } = useFormHooks()
     return (
         <div className="flex-col flex w-3/4">
             <div className='text-[#393646] text-center'>
@@ -51,7 +13,7 @@ export default function RegisterForm() {
                 <span className="text-md">Sign up for free</span>
             </div>
 
-            <form onSubmit={handleSubmit} className="mt-10">
+            <form onSubmit={handleSubmitRegister} className="mt-10">
                 <div className='mb-4'>
                     <Input
                         required
@@ -59,9 +21,9 @@ export default function RegisterForm() {
                         name='username'
                         autoComplete="off"
                         className="rounded-lg border-none h-12 bg-white p-4 shadow-sm"
-                        value={register?.username}
+                        value={formDataRegister?.username}
                         placeholder="Enter username"
-                        onChange={handleChange}
+                        onChange={handleChangeRegister}
                     />
                 </div>
                 <div className='mb-4'>
@@ -71,9 +33,9 @@ export default function RegisterForm() {
                         name='email'
                         autoComplete="off"
                         className="rounded-lg border-none h-12 bg-white p-4 shadow-sm"
-                        value={register?.email}
+                        value={formDataRegister?.email}
                         placeholder="Enter email address"
-                        onChange={handleChange}
+                        onChange={handleChangeRegister}
                     />
                 </div>
                 <div className='mb-6'>
@@ -84,9 +46,9 @@ export default function RegisterForm() {
                         autoComplete="off"
                         autoCorrect="off"
                         className="rounded-lg border-none h-12 bg-white p-4 shadow-sm"
-                        value={register?.password}
+                        value={formDataRegister?.password}
                         placeholder="Password"
-                        onChange={handleChange}
+                        onChange={handleChangeRegister}
                     />
                 </div>
                 <button type='submit' className='w-full border rounded-[50px] px-4 h-12 bg-[#7dd9f8] hover:bg-[#47bde4]/70 duration-150 ease-in-out text-[#393646] font-bold'>Sign Up</button>

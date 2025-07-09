@@ -3,7 +3,6 @@ import { Inter, Montserrat } from "next/font/google";
 import "./globals.css";
 import AuthProvider from "@/utils/SessionProvider";
 import { Toaster } from "react-hot-toast";
-import favicon from "./favicon.ico";
 
 const inter = Inter({ subsets: ["latin"] });
 const montserrat = Montserrat({
@@ -16,6 +15,13 @@ const montserrat = Montserrat({
 export const metadata: Metadata = {
   title: "Sharetree",
   description: "Share your social links",
+  icons: {
+    icon: '/favicon.ico',
+    other: [
+      { rel: 'icon', url: '/favicon-16x16.png', sizes: '16x16' },
+      { rel: 'icon', url: '/favicon-32x32.png', sizes: '32x32' },
+    ],
+  },
 };
 
 export default async function RootLayout({
