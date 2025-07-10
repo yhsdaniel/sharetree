@@ -10,7 +10,6 @@ type ListLinksProps = {
 const LinkDeviceComponent = ({ listLinks }: { listLinks: ListLinksProps[] }) => {
     const router = useRouter()
     const isAdminRoute = router?.asPath.startsWith('/admin')
-    // const pathURL = window.location.pathname.startsWith('/admin')
 
     return (
         <>
