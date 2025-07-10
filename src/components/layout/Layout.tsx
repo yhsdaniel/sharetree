@@ -1,10 +1,8 @@
-import React, { ReactNode } from 'react'
-import dynamic from 'next/dynamic'
+import React, { lazy, ReactNode } from 'react'
 import LayoutLinkWrapper from '@/app/admin/LayoutLinkWrapper'
 import UserListProvider from '@/context/UserListProvider'
-
-const Sidebar = dynamic(() => import('@/components/Sidebar'), { ssr: false })
-const DeviceUI = dynamic(() => import('@/components/DeviceUI'), { ssr: false })
+import Sidebar from '../Sidebar'
+import DeviceUI from '../DeviceUI'
 
 type LayoutProps = {
     children: ReactNode

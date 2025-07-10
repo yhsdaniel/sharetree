@@ -1,32 +1,34 @@
 'use client'
 
-import { getSession, signIn } from "next-auth/react";
+import { getSession, signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 const GoogleButton = () => {
-    const router = useRouter()
+    const { data: session, status } = useSession();
+    const router = useRouter();
+    const [hasSignedIn, setHasSignedIn] = useState(false);
 
-    const handleGoogleSignIn = () => {
-        signIn("google", { redirect: false }).then(async (res) => {
-            if (res?.ok) {
-                toast.success("Login successful");
-                
-                setTimeout(async () => {
-                    const updateSession = await getSession()
-                    if(updateSession?.user?.name){
-                        router.push(`/admin/${updateSession?.user?.name}/links`)
-                    }
-                }, (1000));
+    const handleGoogleSignIn = async () => {
+        const res = await signIn("google", { redirect: false });
+        if (res?.ok) {
+            toast.success("Login successful");
+            setHasSignedIn(true); // wait for session update
+        }
+    };
+
+    useEffect(() => {
+        if (hasSignedIn && status === "authenticated" && session?.user?.username) {
+            const username = session?.user?.username.split(" ")[0]?.toLowerCase();
+
+            if (username) {
+                router.push(`/admin/${username}/links`);
             } else {
-                toast.error("Couldn't get user info")
+                toast.error("Username not found in session.");
             }
-        }).catch((err) => {
-            console.log("Google sign-in error:", err)
-            toast.error("An unexpected error occurred")
-            router.push("/login")
-        });
-    }
+        }
+    }, [status, session, hasSignedIn, router]);
 
     return (
         <button

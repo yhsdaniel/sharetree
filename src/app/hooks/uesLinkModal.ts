@@ -33,7 +33,7 @@ export const useLinkModal = (initialOwner: string, onClose: () => void) => {
                 if (response) {
                     toast.success('Your link has been added')
                     onClose()
-                    window.location.reload()
+                    // window.location.reload()
                 }
             }).catch((err) => {
                 console.log(err)
@@ -47,7 +47,7 @@ export const useLinkModal = (initialOwner: string, onClose: () => void) => {
                 if (response) {
                     toast.success(`Deleted link successfully`)
                     onClose()
-                    window.location.reload()
+                    // window.location.reload()
                 }
             }).catch((err) => {
                 console.log(err)

@@ -33,7 +33,7 @@ const UserListProvider = ({ children }: LayoutProps) => {
             try {
                 if (idUser) {
                     const { data: response } = await axios.get(`/api/linkadmin`, { params: { id: idUser } })
-                    setUserState(response.username)
+                    setUserState(response.username || response.name)
                     setListLinks(response.link)
                 }
             } catch (error) {

@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation'
 import React, { ReactNode, useContext } from 'react'
-import { UserListContext } from '@/components/layout/Layout'
+import { UserListContext } from '@/context/UserListProvider'
 
 type ChildProps = {
     children: ReactNode

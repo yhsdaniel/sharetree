@@ -24,7 +24,6 @@ const LinkWrapper = () => {
   
   const refetchLinks = () => refetch()
   
-  if (!idUser) return <p>User not logged in.</p>;
   if (loading) return <div className='w-full h-full flex justify-center items-center'>Loading...</div>;
   if (error) return <p>Error fetching links.</p>;
 

@@ -3,9 +3,7 @@
 import Layout from '@/components/layout/Layout'
 import client from '@/lib/apolloClient'
 import { ApolloProvider } from '@apollo/client'
-import dynamic from 'next/dynamic'
-
-const LinkWrapper = dynamic(() => import('@/app/admin/[username]/links/LinkWrapper'), { ssr: false })
+import LinkWrapper from './LinkWrapper'
 
 export default function LinksPage() {
     return (

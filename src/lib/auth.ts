@@ -55,21 +55,24 @@ export const authOptions: NextAuthOptions = {
     ],
     callbacks: {
         async jwt({ token, account, profile, user }) {
-            const existingUser = await User.findOne({ email: token?.email })
-
-            if (!existingUser && token) {
-                let uniqueId = Math.floor(Math.random() * 90000 + 10000)
-                const newUser = new User({
-                    _id: new ObjectId(),
-                    email: profile?.email,
-                    username: `${profile?.name?.split(' ')[0].toLowerCase()}${uniqueId}`,
-                    password: null
-                })
-                await newUser.save()
-
-                token.username = newUser.username
+            if (!token.username) {
+                const user = await User.findOne({ email: token.email });
+                if (user) {
+                    token.username = user.username;
+                } else if (profile?.email) {
+                    let uniqueId = Math.floor(Math.random() * 90000 + 10000);
+                    const newUsername = `${profile.name?.split(' ')[0].toLowerCase()}${uniqueId}`;
+                    const newUser = new User({
+                        _id: new ObjectId(),
+                        email: profile.email,
+                        username: newUsername,
+                        password: null,
+                    });
+                    await newUser.save();
+                    token.username = newUsername;
+                }
             }
-            return token
+            return token;
         },
         async session({ session, token }) {
             const existingUser = await User.findOne({ email: token.email })
@@ -77,7 +80,7 @@ export const authOptions: NextAuthOptions = {
                 ...session,
                 user: {
                     ...session.user,
-                    name: token?.username || session.user?.name || existingUser?.username,
+                    username: token?.username || session.user?.name || existingUser?.username,
                     id: existingUser._id
                 }
             }

@@ -1,10 +1,9 @@
 'use client'
 
-import { Suspense, useContext } from 'react'
-import dynamic from 'next/dynamic'
-import { UserListContext } from './layout/Layout'
+import { lazy, Suspense, useContext } from 'react'
+import { UserListContext } from '@/context/UserListProvider'
 
-const LinkComponent = dynamic(() => import('@/components/LinkComponent'), { ssr: false })
+const LinkComponent = lazy(() => import('@/components/LinkComponent'))
 
 export default function DeviceUI() {
   const listLinks = useContext(UserListContext)
