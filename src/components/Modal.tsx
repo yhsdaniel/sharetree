@@ -13,6 +13,7 @@ interface ModalProps {
 }
 
 const Modal: React.FC<ModalProps> = ({ setShowModal, type, name, id }) => {
+    console.log(id)
     const { data: session } = useSession()
     const user = session?.user
     const username = (user && 'username' in user ? user?.username : session?.user?.name) as string

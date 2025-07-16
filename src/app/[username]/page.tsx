@@ -1,12 +1,13 @@
-import dynamic from 'next/dynamic'
+'use client'
+
 import Link from 'next/link'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
-import { motion } from 'framer-motion'
 
 import logo from '/public/images/logo.png'
 import { getUserLinks } from '@/lib/getuserlinks'
-import { lazy, Suspense } from 'react'
+import { lazy, Suspense, useEffect, useState } from 'react'
+import axios from 'axios'
 
 const ListDeviceComponent = lazy(() => import('@/components/LinkComponent'))
 
@@ -14,17 +15,32 @@ interface Props {
     params: { username: string }
 }
 
-const UserForPublic = async ({ params }: Props) => {
+const UserForPublic = ({ params }: Props) => {
     const username = params.username
-    const listLinks = await getUserLinks(username)
+    const [linkUser, setLinkUser] = useState([])
+    // const listLinks = await getUserLinks(username)
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                if (username) {
+                    const { data: response } = await axios.get(`/api/linkuser`, { params: { username: username } })
+                    setLinkUser(response)
+                }
+            } catch (error) {
+                console.error(error)
+            }
+        }
+        fetchData()
+    }, [username])
 
     if (!username) {
         notFound()
     }
 
     return (
-        <div className='overflow-auto bg-blue-200 flex justify-center items-center'>
-            <div className='w-full h-full md:mx-[35%] mx-[10%] mb-40 mt-12 flex flex-col justify-center items-center'>
+        <div className='size-full overflow-auto bg-blue-200 flex justify-center items-center'>
+            <div className='h-full w-[80%] md:w-[40%] mb-40 mt-12 flex flex-col justify-center items-center'>
                 <div className='w-full relative flex flex-col justify-start items-center'>
                     <div className='text-white p-4 flex flex-col justify-center items-center'>
                         <div className='rounded-full bg-white w-20 h-20 flex justify-center items-center'>
@@ -33,7 +49,7 @@ const UserForPublic = async ({ params }: Props) => {
                         <h1 className='text-xl font-bold my-4'>{`@${username}`}</h1>
                     </div>
                     <Suspense fallback={<div className='w-full h-full flex justify-center items-center'>Loading...</div>}>
-                        <ListDeviceComponent listLinks={listLinks} />
+                        <ListDeviceComponent listLinks={linkUser} />
                     </Suspense>
                 </div>
 

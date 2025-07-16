@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
     try {
         const reqBody = await req.json()
         const { name, url, owner } = reqBody
-        let user = await User.findOne({ email: owner })
+        let user = await User.findOne({ username: owner })
         if (!user) {
             return NextResponse.json({ error: 'User not found' }, { status: 404 })
         }

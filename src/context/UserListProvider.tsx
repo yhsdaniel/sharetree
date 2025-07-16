@@ -15,6 +15,7 @@ type LinkType = {
 type UserListContextType = {
     userState: string,
     listLinks?: LinkType[],
+    idUser: string | undefined,
     setListLinks?: React.Dispatch<React.SetStateAction<LinkType[]>>
 }
 
@@ -45,7 +46,7 @@ const UserListProvider = ({ children }: LayoutProps) => {
 
     return (
         <div className='size-full bg-gray-200'>
-            <UserListContext.Provider value={{ userState, listLinks, setListLinks }}>
+            <UserListContext.Provider value={{ idUser, userState, listLinks, setListLinks }}>
                 {children}
             </UserListContext.Provider>
         </div>

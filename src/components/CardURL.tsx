@@ -1,23 +1,21 @@
 'use client'
 
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { motion } from 'framer-motion'
 import Modal from "./Modal"
 import { Input } from "./ui/input"
 import axios from "axios"
 import toast from "react-hot-toast"
-import { useMutation } from "@apollo/client"
-import { UPDATE_LINK_MUTATION } from "@/graphql/accessQuery"
 
 interface AppProps {
     id: string,
     name: string,
     url: string,
-    onUpdate: () => void
+    onUpdate?: (update: { id: string, name: string, url: string }) => void
 }
 
 export default function CardURL({ id, name, url, onUpdate }: AppProps) {
-    const [updateLinkMutation, { loading, error, data }] = useMutation(UPDATE_LINK_MUTATION);
+    // const [updateLinkMutation, { loading, error, data }] = useMutation(UPDATE_LINK_MUTATION);
 
     const [showModal, setShowModal] = useState(false)
     const [editName, setEditName] = useState(false)
@@ -62,23 +60,21 @@ export default function CardURL({ id, name, url, onUpdate }: AppProps) {
     }
 
     const handleSave = async () => {
-        await updateLinkMutation({
-            variables: {
-                id: id,
-                name: isEdit.name,
-                url: isEdit.url
-            }
-        }).then(() => {
+        try {
+            await axios.put(`/api/linkadmin`, { id: id, name: isEdit.name, url: isEdit.url })
+            toast.success('Updated successfully')
             setEditName(false)
             setEditUrl(false)
-            toast.success('Your updated successfully')
-            onUpdate()
-        }).catch((error) => {
-            console.error('Error updating link:', error)
+
+            if (onUpdate) {
+                onUpdate({ id: id, name: isEdit.name, url: isEdit.url })
+            }
+        } catch (error) {
             toast.error('Error updating link')
-        })
+            console.error(error)
+        }
     };
-    
+
     return (
         <div className='size-full border overflow-auto border-gray-300 shadow-lg rounded-3xl mt-4 p-2 px-6 md:px-16'>
             <div className="flex justify-start items-center cursor-pointer" onClick={handleEdit.EditName}>

@@ -25,6 +25,4 @@ const LinkDeviceComponent = ({ listLinks }: { listLinks: ListLinksProps[] }) => 
     )
 }
 
-LinkDeviceComponent.displayName = 'LinkDeviceComponent'
-
 export default LinkDeviceComponent
