@@ -162,3 +162,21 @@ h6 {
 .animate-bounce {
   animation: bounce 2s infinite;
 }
+
+.animate-gradientx {
+  background: linear-gradient(320deg, rgb(1, 153, 59), #1a7d85, rgb(1, 153, 59));
+  background-position: center;
+  animation: gradientX 4s forwards ease;
+}
+
+@keyframes gradientX {
+  0% {
+    background-size: 200% 200%;
+    background-position: left center;
+  }
+
+  100% {
+    background-size: 100% 100%;
+    background-position: center;
+  }
+}

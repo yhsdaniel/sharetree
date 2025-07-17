@@ -9,8 +9,8 @@ const nextConfig = {
             {
                 protocol: 'https',
                 port: '',
-                hostname: 'tailwindui.com',
-                pathname: '/img/logos/**'
+                hostname: 'lh3.googleusercontent.com',
+                pathname: '**'
             }
         ],
         dangerouslyAllowSVG: true,

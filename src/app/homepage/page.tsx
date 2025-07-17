@@ -23,12 +23,12 @@ export default function HomePage() {
       <Navbar status={status} username={username} />
 
       {/* First Banner */}
-      <div id='home' className="sm:p-10 min-h-screen bg-green-800 flex justify-center items-center md:pt-[6rem] xl:pt-[8rem]">
+      <div id='home' className="sm:p-10 min-h-screen animate-gradientx flex justify-center items-center md:pt-[6rem] xl:pt-[8rem]">
         <motion.div
           initial={{ opacity: 0, translateX: -100 }}
           animate={{ opacity: 1, translateX: 1 }}
           transition={{ duration: 1, delay: 0.3 }}
-          className='absolute w-[7rem] h-[7rem] lg:w-[300px] lg:h-[300px] top-24 lg:top-32 left-0 mix-blend-screen'
+          className='absolute w-56 lg:w-[300px] top-24 lg:top-32 left-0 mix-blend-screen'
         >
           <Image
             src={Tiktok}
@@ -40,7 +40,7 @@ export default function HomePage() {
           initial={{ opacity: 0, translateX: 100 }}
           animate={{ opacity: 1, translateX: 1 }}
           transition={{ duration: 1, delay: 0.5 }}
-          className='absolute w-[8rem] h-[8rem] lg:w-[300px] lg:h-[300px] bottom-10 lg:bottom-32 -right-8 mix-blend-screen'
+          className='absolute w-56 lg:w-[300px] bottom-10 lg:bottom-32 -right-8 mix-blend-screen'
         >
           <Image
             src={Instagram}
@@ -49,25 +49,33 @@ export default function HomePage() {
           />
         </motion.div>
         <div className="relative mx-auto size-full sm:static px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row">
-          <motion.div
-            initial={{ opacity: 0, translateY: -100 }}
-            animate={{ opacity: 1, translateY: 1 }}
-            transition={{ duration: 1 }}
+          <div
             className="text-center flex flex-col justify-center items-center md:mx-32 lg:mx-56 xl:mx-72"
           >
-            <h1 className="text-4xl font-bold tracking-tight text-yellow-100 sm:text-6xl">
+            <motion.h1
+              initial={{ opacity: 0, translateX: -100 }}
+              animate={{ opacity: 1, translateX: 1 }}
+              transition={{ duration: 1 }}
+              className="text-4xl text-shadow-2xs text-shadow-sky-300 font-bold tracking-tight text-yellow-100 sm:text-6xl">
               Everything what you want. All in one in simple link for bio
-            </h1>
-            <p className="mt-4 lg:mt-10 text-md lg:text-xl text-yellow-100">
+            </motion.h1>
+            <motion.p 
+              initial={{ opacity: 0, translateX: 100 }}
+              animate={{ opacity: 1, translateX: 1 }}
+              transition={{ duration: 1 }}
+              className="mt-4 lg:mt-10 text-md lg:text-xl text-yellow-100">
               Join people using Sharetree for their link in bio. One link to help you share everything you create and sell from your Instagram, TikTok, Twitter, YouTube and other social media profiles.
-            </p>
-            <Link
+            </motion.p>
+            <motion.a
+              initial={{ opacity: 0, translateY: 100 }}
+              animate={{ opacity: 1, translateY: 1 }}
+              transition={{ duration: 1 }}
               href='login'
-              className="inline-block rounded-3xl border border-transparent mt-10 bg-blue-300 px-8 py-3 text-center font-medium text-black hover:bg-blue-400 duration-150 ease-in-out"
+              className="font-bold rounded-3xl border border-transparent mt-10 bg-blue-300 px-8 py-3 text-center text-gray-600 hover:bg-blue-400 hover:text-gray-800 duration-150 ease-in-out"
             >
               Get Started for free
-            </Link>
-          </motion.div>
+            </motion.a>
+          </div>
         </div>
       </div>
 

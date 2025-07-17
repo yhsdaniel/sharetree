@@ -3,16 +3,19 @@
 import { signOut, useSession } from 'next-auth/react'
 import { Button } from '@/components/ui/button'
 import { useRouter, usePathname } from 'next/navigation'
+import { motion } from 'framer-motion'
 import Image from 'next/image'
 import logo from '../../public/images/logo.png'
 import Link from 'next/link'
 import '@/app/navbar.css'
 import toast from 'react-hot-toast'
+import { Suspense } from 'react'
 
 
 const Sidebar = () => {
     const { data: session } = useSession()
     const user = session?.user
+    console.log(user?.image)
     const username = (user && 'username' in user ? user?.username : undefined) || session?.user?.name
     const router = useRouter()
     const pathName = usePathname()
@@ -61,15 +64,22 @@ const Sidebar = () => {
                     />
                     <ul className='flex justify-center items-center'>
                         <li className='w-full flex'>
-                            <span className='h-12 w-full flex items-center px-3'>
-                                {`${username},`}
+                            <span className='h-12 w-full text-sm flex items-center px-4 py-3 mx-4 rounded-3xl bg-black/20'>
+                                <img
+                                    src={`${user?.image}`}
+                                    alt='Profile Poc'
+                                    referrerPolicy='no-referrer'
+                                    loading='lazy'
+                                    className='rounded-full w-9 mr-3'
+                                />
+                                {`${username}`}
                             </span>
                         </li>
                         <li className='flex flex-col justify-center items-center mx-4'>
                             <Button onClick={handleSignOut} className='flex flex-col focus:outline-none outline-transparent group items-center h-12 w-[inherit] [&>div]:w-full flex-1 my-4 p-0 md:flex-none text-gray-700 bg-white hover:bg-gray-100 rounded-xl duration-300 ease- mx-4in-out text-start'>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M5.636 5.636a9 9 0 1 0 12.728 0M12 3v9" />
-                                </svg>
+                                <span className='h-12 w-full flex justify-start items-center'>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className='w-5 mr-1'><path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z" /></svg>
+                                </span>
                             </Button>
                         </li>
                     </ul>
@@ -90,7 +100,11 @@ const Sidebar = () => {
 
 
             {/* DESKTOP version */}
-            <nav className='size-full bg-transparent hidden md:block md:p-2 shadow-lg h-full w-full md:max-w-xs md:fixed md:left-0 top-0' aria-label='desktop navigation' tabIndex={-1} data-testid="ReactNavigation">
+            <motion.nav
+                initial={{ opacity: 0, translateX: -100 }}
+                animate={{ opacity: 1, translateX: 1 }}
+                transition={{ duration: 1 }}
+                className='size-full bg-transparent hidden md:block md:p-2 shadow-lg h-full w-full md:max-w-xs md:fixed md:left-0 top-0' aria-label='desktop navigation' tabIndex={-1} data-testid="ReactNavigation">
                 <div className='flex flex-col size-full bg-white md:rounded-3xl'>
                     <section className='w-full flex justify-start items-center p-4'>
                         <Link href="#home" className="-m-1.5 p-1.5">
@@ -118,26 +132,30 @@ const Sidebar = () => {
                             ))}
                         </ul>
                     </section>
-                    <div className='w-full flex'>
-                        <span className='h-12 w-full flex items-center px-3'>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 mx-4">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
-                            </svg>
-                            {`${username}`}
-                        </span>
-                    </div>
+                    <Suspense fallback={<div>Loading...</div>}>
+                        <div className='w-full flex'>
+                            <span className='h-12 w-full flex items-center px-3 mx-4 rounded-3xl bg-black/20'>
+                                <img
+                                    src={`${user?.image}`}
+                                    alt='Profile Poc'
+                                    referrerPolicy='no-referrer'
+                                    loading='lazy'
+                                    className='rounded-full w-9 mr-3'
+                                />
+                                {`${username}`}
+                            </span>
+                        </div>
+                    </Suspense>
                     <section className='w-full flex'>
                         <Button onClick={handleSignOut} className='flex focus:outline-none outline-transparent group items-center h-12 w-[inherit] [&>div]:w-full flex-1 my-4 p-0 md:flex-none text-gray-700 bg-white hover:bg-gray-100 rounded-xl duration-300 ease-in-out text-start'>
-                            <span className='h-12 w-full flex items-center px-3'>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 mx-4">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M5.636 5.636a9 9 0 1 0 12.728 0M12 3v9" />
-                                </svg>
-                                <span>Log out</span>
+                            <span className='h-12 w-full flex justify-start items-center px-3 mx-4'>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className='w-7 mr-3'><path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z" /></svg>
+                                <span>Sign out</span>
                             </span>
                         </Button>
                     </section>
                 </div>
-            </nav>
+            </motion.nav>
         </>
     )
 }

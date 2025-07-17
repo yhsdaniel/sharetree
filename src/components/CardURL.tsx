@@ -15,7 +15,6 @@ interface AppProps {
 }
 
 export default function CardURL({ id, name, url, onUpdate }: AppProps) {
-    // const [updateLinkMutation, { loading, error, data }] = useMutation(UPDATE_LINK_MUTATION);
 
     const [showModal, setShowModal] = useState(false)
     const [editName, setEditName] = useState(false)
@@ -62,7 +61,11 @@ export default function CardURL({ id, name, url, onUpdate }: AppProps) {
     const handleSave = async () => {
         try {
             await axios.put(`/api/linkadmin`, { id: id, name: isEdit.name, url: isEdit.url })
-            toast.success('Updated successfully')
+            if(isEdit.name === name || isEdit.url === url){
+                toast.error('No Updated')
+            } else {
+                toast.success('Updated successfully')
+            }
             setEditName(false)
             setEditUrl(false)
 
@@ -76,54 +79,57 @@ export default function CardURL({ id, name, url, onUpdate }: AppProps) {
     };
 
     return (
-        <div className='size-full border overflow-auto border-gray-300 shadow-lg rounded-3xl mt-4 p-2 px-6 md:px-16'>
-            <div className="flex justify-start items-center cursor-pointer" onClick={handleEdit.EditName}>
-                {editName ? (
-                    <Input
-                        type='text'
-                        name='name'
-                        className='my-4'
-                        autoComplete='off'
-                        value={isEdit.name}
-                        autoFocus
-                        onKeyDown={handleKeyDown}
-                        onBlur={handleLosesFocus}
-                        onSubmit={handleSave}
-                        onChange={handleChange}
-                    />
-                ) : (
-                    <>
-                        <h5 className="mb-4">{name}</h5>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4 ml-3">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
-                        </svg>
-                    </>
-                )}
-            </div>
+        <div className='size-full flex border overflow-auto border-gray-300 shadow-lg rounded-3xl mt-4 p-2 px-6 md:px-16'>
+            <div className="flex flex-col">
+                <div className="flex justify-start items-center cursor-pointer" onClick={handleEdit.EditName}>
+                    {editName ? (
+                        <Input
+                            type='text'
+                            name='name'
+                            className='my-4'
+                            autoComplete='off'
+                            value={isEdit.name}
+                            autoFocus
+                            onKeyDown={handleKeyDown}
+                            onBlur={handleLosesFocus}
+                            onSubmit={handleSave}
+                            onChange={handleChange}
+                        />
+                    ) : (
+                        <>
+                            <h5 className="mb-4">{name}</h5>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4 ml-3 hover:text-green-500 duration-150 ease-in-out">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
+                            </svg>
+                        </>
+                    )}
+                </div>
 
-            <div className="w-full text-sm mb-4 flex justify-start items-center cursor-pointer" onClick={handleEdit.EditUrl}>
-                {editUrl ? (
-                    <Input
-                        type='text'
-                        name='url'
-                        className='my-4'
-                        autoComplete='off'
-                        value={isEdit.url}
-                        autoFocus
-                        onKeyDown={handleKeyDown}
-                        onBlur={handleLosesFocus}
-                        onSubmit={handleSave}
-                        onChange={handleChange}
-                    />
-                ) : (
-                    <>
-                        <div className="italic overflow-hidden break-words md:whitespace-normal whitespace-nowrap text-ellipsis w-auto">{url}</div>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4 ml-3">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
-                        </svg>
-                    </>
-                )}
+                <div className="w-full text-sm mb-4 flex justify-start items-center cursor-pointer" onClick={handleEdit.EditUrl}>
+                    {editUrl ? (
+                        <Input
+                            type='text'
+                            name='url'
+                            className='my-4'
+                            autoComplete='off'
+                            value={isEdit.url}
+                            autoFocus
+                            onKeyDown={handleKeyDown}
+                            onBlur={handleLosesFocus}
+                            onSubmit={handleSave}
+                            onChange={handleChange}
+                        />
+                    ) : (
+                        <>
+                            <div className="italic overflow-hidden break-words md:whitespace-normal whitespace-nowrap text-ellipsis w-auto">{url}</div>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4 ml-3 hover:text-green-500 duration-150 ease-in-out">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
+                            </svg>
+                        </>
+                    )}
+                </div>
             </div>
+            
             <div className="w-full flex justify-end items-center">
                 {/* Modal for Delete */}
                 <motion.button

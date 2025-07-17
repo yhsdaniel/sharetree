@@ -14,6 +14,7 @@ type LinkType = {
 
 type UserListContextType = {
     userState: string,
+    userImage: string | undefined,
     listLinks?: LinkType[],
     idUser: string | undefined,
     setListLinks?: React.Dispatch<React.SetStateAction<LinkType[]>>
@@ -25,6 +26,7 @@ const UserListProvider = ({ children }: LayoutProps) => {
     const { data: session } = useSession()
     const [userState, setUserState] = useState('')
     const [listLinks, setListLinks] = useState<LinkType[]>([])
+    const userImage = session?.user?.image
 
     const user = session?.user
     const idUser = user && 'id' in user ? user?.id : undefined
@@ -46,7 +48,7 @@ const UserListProvider = ({ children }: LayoutProps) => {
 
     return (
         <div className='size-full bg-gray-200'>
-            <UserListContext.Provider value={{ idUser, userState, listLinks, setListLinks }}>
+            <UserListContext.Provider value={{ idUser, userState, userImage, listLinks, setListLinks }}>
                 {children}
             </UserListContext.Provider>
         </div>

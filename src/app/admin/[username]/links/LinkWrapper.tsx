@@ -4,6 +4,7 @@ import { lazy, Suspense, useContext, useState } from 'react'
 import Modal from '@/components/Modal'
 import { Button } from '@/components/ui/button'
 import { UserListContext } from '@/context/UserListProvider'
+import { useSession } from 'next-auth/react'
 
 const CardUrl = lazy(() => import('@/components/CardURL'))
 
@@ -11,15 +12,7 @@ const LinkWrapper = () => {
   const userState = useContext(UserListContext)
 
   const [showModal, setShowModal] = useState(false)
-  const [links, setLinks] = useState(userState?.listLinks)
   const [type, setType] = useState('')
-
-  // const { loading, error, data, refetch } = useQuery(GET_LINKS_QUERY, {
-  //   variables: { id: userState?.idUser },
-  //   skip: !userState?.idUser
-  // })
-
-  // const refetchLinks = () => refetch()
 
   const handleUpdate = (update: { id: string, name: string, url: string }) => {
     if (userState?.setListLinks) {
