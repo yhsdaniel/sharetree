@@ -43,7 +43,7 @@ export default function Navbar({ status, username }: StatusProps) {
       className="bg-white sticky top-0 w-full z-50"
     >
       {/* Desktop Responsive */}
-      <nav aria-label="Global" className="mx-auto flex items-center justify-between p-4 lg:p-6 lg:px-8">
+      <nav aria-label="Global" className="mx-auto flex items-center justify-between p-4 lg:px-8">
         <div className="flex lg:flex-1 justify-start items-center">
           <a href="#home" className="-m-1.5 p-1.5">
             <Image

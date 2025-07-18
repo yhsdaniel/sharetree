@@ -23,7 +23,7 @@ export default function HomePage() {
       <Navbar status={status} username={username} />
 
       {/* First Banner */}
-      <div id='home' className="sm:p-10 min-h-screen animate-gradientx flex justify-center items-center md:pt-[6rem] xl:pt-[8rem]">
+      <div id='home' className="sm:p-10 min-h-screen animate-gradientx flex justify-center items-center">
         <motion.div
           initial={{ opacity: 0, translateX: -100 }}
           animate={{ opacity: 1, translateX: 1 }}
