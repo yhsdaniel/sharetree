@@ -1,7 +1,6 @@
 'use client'
 
 import { signOut, useSession } from 'next-auth/react'
-import { Button } from '@/components/ui/button'
 import { useRouter, usePathname } from 'next/navigation'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
@@ -9,7 +8,6 @@ import logo from '../../public/images/logo.png'
 import Link from 'next/link'
 import '@/app/navbar.css'
 import toast from 'react-hot-toast'
-import { Suspense } from 'react'
 import { DropdownMenuComponent } from './DropdownMenu'
 
 

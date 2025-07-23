@@ -4,30 +4,46 @@ import { AnimatePresence } from 'framer-motion'
 import { useSession } from 'next-auth/react'
 import ModalAdd from './ModalAdd'
 import ModalDelete from './ModalDelete'
+import { useContext } from 'react'
+import { UserListContext } from '@/context/UserListProvider'
 
 interface ModalProps {
-    setShowModal: (showModal: boolean) => void,
+    userId?: string,
     id: string,
     type: string,
     name: string,
+    setShowModal: (showModal: boolean) => void,
+    onUpdate?: (update: { id?: string, name: string, url?: string }) => void,
+    refresh: () => void
 }
 
-const Modal: React.FC<ModalProps> = ({ setShowModal, type, name, id }) => {
-    const { data: session } = useSession()
-    const user = session?.user
-    const username = (user && 'username' in user ? user?.username : session?.user?.name) as string
-
+const Modal: React.FC<ModalProps> = ({ userId, type, name, id, setShowModal, onUpdate, refresh }) => {
+    const userContext = useContext(UserListContext)
+    const username = userContext?.userState as string
+    
     return (
         <AnimatePresence>
             <div className='fixed left-0 top-0 bg-black/30 w-full h-screen z-20'>
                 {type === 'add' && (
-                    <ModalAdd owner={username} onClose={() => setShowModal(false)}/>
+                    <ModalAdd
+                        owner={username}
+                        onClose={() => setShowModal(false)}
+                        onUpdate={onUpdate}
+                        refresh={refresh}
+                    />
                 )}
 
                 {type === 'delete' && (
-                    <ModalDelete id={id} name={name} owner={username} onClose={() => setShowModal(false)}/>
+                    <ModalDelete
+                        userId={userId}
+                        id={id}
+                        name={name}
+                        owner={username}
+                        onClose={() => setShowModal(false)}
+                        onUpdate={onUpdate}
+                        refresh={refresh}
+                    />
                 )}
-
             </div>
         </AnimatePresence>
     )

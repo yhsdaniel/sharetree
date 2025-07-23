@@ -32,7 +32,7 @@ const GoogleButton = () => {
 
     return (
         <button
-            className="flex w-full justify-center gap-5 rounded-2xl border-gray-300 border bg-white mt-6 py-3 px-3 text-sm font-bold hover:bg-gray-100 transition-all"
+            className="flex w-full justify-center gap-5 rounded-lg border-gray-300 border bg-white mt-6 py-3 px-3 text-sm font-bold hover:bg-gray-100 transition-all"
             onClick={handleGoogleSignIn}>
             <GoogleLogo />
             <div>Continue with Google</div>

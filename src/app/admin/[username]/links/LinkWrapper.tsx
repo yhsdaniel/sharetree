@@ -1,23 +1,27 @@
 'use client'
 
-import { lazy, Suspense, useContext, useState } from 'react'
+import { lazy, Suspense, useContext, useEffect, useState } from 'react'
 import Modal from '@/components/Modal'
 import { Button } from '@/components/ui/button'
 import { UserListContext } from '@/context/UserListProvider'
-import { useSession } from 'next-auth/react'
+import { Item } from '@radix-ui/react-dropdown-menu'
 
 const CardUrl = lazy(() => import('@/components/CardURL'))
 
 const LinkWrapper = () => {
-  const userState = useContext(UserListContext)
+  const userListContext = useContext(UserListContext);
+  const listLinks = userListContext?.listLinks;
+  const setListLinks = userListContext?.setListLinks;
+  const idUser = userListContext?.idUser;
+  const refresh = userListContext?.refresh
 
   const [showModal, setShowModal] = useState(false)
   const [type, setType] = useState('')
 
   const handleUpdate = (update: { id: string, name: string, url: string }) => {
-    if (userState?.setListLinks) {
-      userState.setListLinks((prevLinks) =>
-        prevLinks?.map((link) => {
+    if (setListLinks) {
+      setListLinks((prevLinks: any) =>
+        prevLinks?.map((link: any) => {
           if (link._id === update.id) {
             return { ...link, name: update.name, url: update.url }
           }
@@ -27,11 +31,32 @@ const LinkWrapper = () => {
     }
   }
 
-  if (!userState?.idUser) return <div className='w-full h-full flex justify-center items-center'>Loading...</div>;
+  const updatedNewAndDelete = (update: { id?: string, name: string, url?: string }) => {
+    if (setListLinks) {
+      console.log('Update received:', update);
+      setListLinks((prevLinks: any[]) => {
+        console.log('Previous links:', prevLinks);
+        const exists = prevLinks.some((item: any) => item._id === update.id);
+        console.log('Does it exist?', exists);
+        if (exists) {
+          // Delete it
+          console.log('Deleting item with id:', update.id);
+          const updateLinkAfterDelete = prevLinks.filter((item: any) => item._id !== update.id)
+          console.log('After delete:', updateLinkAfterDelete);
+          return updateLinkAfterDelete
+        } else {
+          // Add new
+          return [...prevLinks, { name: update.name, url: update.url }];
+        }
+      })
+    }
+  }
+
+  if (!listLinks) return <div className='size-full flex justify-center items-center loader'></div>;
 
   return (
-    <>
-      <div className='md:px-16 relative'>
+    <div className='size-full relative'>
+      <div className='md:px-16'>
         <Button
           className='w-full h-12 rounded-2xl bg-gray-800 text-primary-foreground hover:bg-primary/90 mt-4 md:mt-0'
           onClick={() => {
@@ -43,14 +68,30 @@ const LinkWrapper = () => {
         </Button>
       </div>
       <section className='mt-6 md:mt-10'>
-        <Suspense fallback={<div className='w-full h-full flex justify-center items-center'>Loading...</div>}>
-          {userState?.listLinks?.map((value: any, index: any) => (
-            <CardUrl key={index} id={value._id} name={value.name} url={value.url} onUpdate={handleUpdate} />
+        <Suspense fallback={<div className='loader'></div>}>
+          {listLinks?.map((value: any, index: any) => (
+            <CardUrl 
+              key={index} 
+              userId={idUser || ''}
+              id={value._id} 
+              name={value.name}
+              url={value.url} 
+              onUpdate={handleUpdate} 
+            />
           ))}
         </Suspense>
       </section>
-      {showModal && <Modal type={type} setShowModal={setShowModal} id={userState?.idUser || ''} name='' />}
-    </>
+      {showModal && 
+        <Modal 
+          type={type} 
+          setShowModal={setShowModal}
+          id={idUser || ''} 
+          name=''
+          onUpdate={updatedNewAndDelete} 
+          refresh={refresh ?? (() => {})} 
+        />
+      }
+    </div>
   )
 }
 

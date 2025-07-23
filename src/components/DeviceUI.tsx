@@ -18,7 +18,7 @@ export default function DeviceUI() {
           className='w-[20rem] h-[35rem] bg-white shadow-2xl rounded-3xl relative flex justify-center items-center'>
           <div className='w-[19.5rem] h-[35rem] overflow-auto bg-gray-800 rounded-3xl absolute flex flex-col justify-start items-center -top-2 p-4'>
             <div className='text-white'><h1>Sharetree</h1></div>
-            <Suspense fallback={<div className='w-full h-full flex justify-center items-center'>Loading...</div>}>
+            <Suspense fallback={<div className='w-full h-full flex justify-center items-center'><div className='loader'></div></div>}>
               <LinkComponent listLinks={listLinks?.listLinks || []} />
             </Suspense>
           </div>

@@ -45,7 +45,7 @@ export async function GET(req: NextRequest) {
         }
 
         const user = await User.findById(id).populate('link').exec();
-        return NextResponse.json({link: user.link, username: user.username}, { status: 200 });
+        return NextResponse.json({ link: user.link, username: user.username }, { status: 200 });
     } catch (error) {
         console.log(error)
         return NextResponse.json({ error }, { status: 500 })
@@ -59,7 +59,7 @@ export async function PUT(req: NextRequest) {
     const link = await Link.findOne({ _id: id });
 
     try {
-        if(link){
+        if (link) {
             const editLink = await Link.findOneAndUpdate({ _id: id }, { $set: { name, url } })
             return NextResponse.json(editLink, { status: 200 })
         }
@@ -71,11 +71,22 @@ export async function PUT(req: NextRequest) {
 
 export async function DELETE(req: NextRequest) {
     const reqBody = await req.json()
-    const { id } = reqBody
+    const { userId, id } = reqBody
+
+    if (!id || !userId) {
+        return NextResponse.json({ error: "Missing id or userId" }, { status: 400 });
+    }
 
     try {
-        const deleteLink = await Link.deleteOne({ _id: id })
-        return NextResponse.json(deleteLink, { status: 200 })
+        const objectId = new mongoose.Types.ObjectId(id);
+        // const deleteLink = await Link.deleteOne({ _id: objectId })
+
+        await User.updateOne(
+            { _id: userId },
+            { $pull: { link: objectId } }
+        )
+
+        return NextResponse.json({ message: "Link deleted successfully" }, { status: 200 })
     } catch (error) {
         console.log(error)
         return NextResponse.json({ error }, { status: 500 })

@@ -9,13 +9,15 @@ import toast from "react-hot-toast"
 import { SquarePen, Trash, Trash2 } from "lucide-react"
 
 interface AppProps {
+    userId: string,
     id: string,
     name: string,
     url: string,
-    onUpdate?: (update: { id: string, name: string, url: string }) => void
+    onUpdate?: (update: { id: string, name: string, url: string }) => void,
+    refresh?: () => void
 }
 
-export default function CardURL({ id, name, url, onUpdate }: AppProps) {
+export default function CardURL({ userId, id, name, url, onUpdate, refresh }: AppProps) {
 
     const [showModal, setShowModal] = useState(false)
     const [editName, setEditName] = useState(false)
@@ -62,7 +64,9 @@ export default function CardURL({ id, name, url, onUpdate }: AppProps) {
     const handleSave = async () => {
         try {
             await axios.put(`/api/linkadmin`, { id: id, name: isEdit.name, url: isEdit.url })
-            toast.success('Updated successfully')
+            if(isEdit.name === name || isEdit.url === name){
+                toast.success('Updated successfully')
+            }
             setEditName(false)
             setEditUrl(false)
 
@@ -95,7 +99,7 @@ export default function CardURL({ id, name, url, onUpdate }: AppProps) {
                     ) : (
                         <>
                             <h5 className="mb-4">{name}</h5>
-                            <SquarePen className="mx-4" width={16} height={16}/>
+                            <SquarePen className="mx-4 hover:text-green-600 duration-150 ease-in" width={16} height={16}/>
                         </>
                     )}
                 </div>
@@ -117,7 +121,7 @@ export default function CardURL({ id, name, url, onUpdate }: AppProps) {
                     ) : (
                         <>
                             <div className="italic overflow-hidden break-words md:whitespace-normal whitespace-nowrap text-ellipsis w-auto text-xs md:text-sm">{url}</div>
-                            <SquarePen className="mx-4" width={16} height={16}/>
+                            <SquarePen className="mx-4 hover:text-green-600 duration-150 ease-in" width={16} height={16}/>
                         </>
                     )}
                 </div>
@@ -134,7 +138,17 @@ export default function CardURL({ id, name, url, onUpdate }: AppProps) {
                     <Trash width={20} height={20}/>
                 </motion.button>
             </div>
-            {showModal && <Modal type={type} setShowModal={setShowModal} id={id} name={name} />}
+            
+            {showModal && 
+                <Modal 
+                    userId={userId}
+                    id={id}
+                    type={type} 
+                    setShowModal={setShowModal} 
+                    name={name} 
+                    refresh={refresh ?? (() => {})}
+                />
+            }
         </div>
     )
 }

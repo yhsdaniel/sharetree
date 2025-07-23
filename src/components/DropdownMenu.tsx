@@ -26,18 +26,29 @@ export function DropdownMenuComponent({ username, image, signout }: DropDownProp
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <Button 
+                <Button
                     variant="outline"
                     className="w-full my-2 mx-4 py-2 pr-6 pl-2 md:px-2 h-auto justify-start rounded-3xl"
                 >
-                    <img
-                        src={`${image}`}
-                        alt='Profile Poc'
-                        referrerPolicy='no-referrer'
-                        loading='lazy'
-                        className='rounded-full w-9 mr-3'
-                    />
-                    {`${username}`}
+                    {image ? (
+                        <>
+                            <img
+                                src={`${image}`}
+                                alt='Profile Poc'
+                                referrerPolicy='no-referrer'
+                                loading='lazy'
+                                className='rounded-full w-9 mr-3'
+                            />
+                            {`${username}`}
+                        </>
+                    ) : (
+                        <>
+                            <div className='rounded-full bg-white border border-gray-300 flex justify-center items-center mr-2'>
+                                <h3 className='text-black size-8 m-0 flex justify-center items-center'>{username?.charAt(0).toUpperCase()}</h3>
+                            </div>
+                            {username}
+                        </>
+                    )}
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56" align="start">

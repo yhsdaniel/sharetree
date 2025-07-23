@@ -20,7 +20,7 @@ export default function HomePage() {
 
   return (
     <div className='size-full relative overflow-y-auto overflow-x-hidden scroll-smooth'>
-      <Navbar status={status} username={username} />
+      <Navbar status={status} />
 
       {/* First Banner */}
       <div id='home' className="sm:p-10 min-h-screen animate-gradientx flex justify-center items-center">
@@ -48,22 +48,27 @@ export default function HomePage() {
             loading='lazy'
           />
         </motion.div>
-        <div className="relative mx-auto size-full sm:static px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row">
-          <div
-            className="text-center flex flex-col justify-center items-center md:mx-32 lg:mx-56 xl:mx-72"
-          >
+        <div className="relative mx-auto size-full sm:static px-4 flex flex-col lg:flex-row">
+          <div className="text-center flex flex-col justify-center items-center md:mx-32 lg:mx-56 xl:mx-72">
             <motion.h1
               initial={{ opacity: 0, translateX: -100 }}
               animate={{ opacity: 1, translateX: 1 }}
               transition={{ duration: 1 }}
-              className="text-4xl text-shadow-2xs text-shadow-sky-300 font-bold tracking-tight text-yellow-100 sm:text-6xl">
-              Everything what you want. All in one in simple link for bio
+              className="my-0 text-4xl text-shadow-2xs text-shadow-sky-300 font-bold tracking-tight text-gray-200 sm:text-6xl uppercase">
+              Everything what you want. 
+            </motion.h1>
+            <motion.h1
+              initial={{ opacity: 0, translateX: -100 }}
+              animate={{ opacity: 1, translateX: 1 }}
+              transition={{ duration: 1 }}
+              className="my-0 text-4xl text-shadow-2xs text-shadow-sky-300 font-bold tracking-tight text-gray-200 sm:text-6xl uppercase">
+              All in one in simple link for bio
             </motion.h1>
             <motion.p 
               initial={{ opacity: 0, translateX: 100 }}
               animate={{ opacity: 1, translateX: 1 }}
               transition={{ duration: 1 }}
-              className="mt-4 lg:mt-10 text-md lg:text-xl text-yellow-100">
+              className="mt-4 lg:mt-10 text-md lg:text-xl text-yellow-200">
               Join people using Sharetree for their link in bio. One link to help you share everything you create and sell from your Instagram, TikTok, Twitter, YouTube and other social media profiles.
             </motion.p>
             <motion.a
@@ -71,7 +76,7 @@ export default function HomePage() {
               animate={{ opacity: 1, translateY: 1 }}
               transition={{ duration: 1 }}
               href='login'
-              className="font-bold rounded-3xl border border-transparent mt-10 bg-blue-300 px-8 py-3 text-center text-gray-600 hover:bg-blue-400 hover:text-gray-800 duration-150 ease-in-out"
+              className="rounded-3xl border border-transparent mt-10 bg-blue-600 px-8 py-3 text-center text-white hover:bg-blue-500 duration-150 ease-in-out shadow-sm shadow-white/50"
             >
               Get Started for free
             </motion.a>
@@ -80,7 +85,7 @@ export default function HomePage() {
       </div>
 
       {/* Second Banner */}
-      <div id='features' className="sm:p-10 bg-[#fafafc] min-h-screen flex justify-center items-center md:pt-[6rem] xl:pt-[8rem]">
+      {/* <div id='features' className="sm:p-10 bg-[#fafafc] min-h-screen flex justify-center items-center md:pt-[6rem] xl:pt-[8rem]">
         <div className="container">
           <div
             className="text-center flex flex-col md:flex-row justify-evenly items-center text-purple-800"
@@ -113,7 +118,7 @@ export default function HomePage() {
             </motion.div>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   )
 }

@@ -10,7 +10,12 @@ type URLForm = {
     owner: string
 }
 
-export const useLinkModal = (initialOwner: string, onClose: () => void) => {
+export const useLinkModal = (
+    initialOwner: string,
+    onClose: () => void,
+    onUpdate?: (update: { id?: string | undefined, name: string, url?: string }) => void,
+    refresh?: () => void
+) => {
     const [fillLink, setFillLink] = useState<URLForm>({
         url: '',
         name: '',
@@ -32,8 +37,11 @@ export const useLinkModal = (initialOwner: string, onClose: () => void) => {
             .then((response) => {
                 if (response) {
                     toast.success('Your link has been added')
+                    if (onUpdate) {
+                        onUpdate({ name: fillLink.name, url: fillLink.url })
+                    }
+                    refresh?.()
                     onClose()
-                    // window.location.reload()
                 }
             }).catch((err) => {
                 console.log(err)
@@ -41,13 +49,19 @@ export const useLinkModal = (initialOwner: string, onClose: () => void) => {
             })
     }
 
-    const handleSubmitDelete = async (id: string, name: string) => {
-        await axios.delete(`/api/linkadmin`, { data: { id } })
+    const handleSubmitDelete = async (  userId: string, id: string, name: string) => {
+        await axios.delete(`/api/linkadmin`, { data: { userId, id } })
             .then((response) => {
                 if (response) {
-                    toast.success(`Deleted link successfully`)
+                    // const strToObj = JSON.parse(response.config.data)
+                    // const valueOfObj = Object.values(strToObj)
+                    // console.log(typeof valueOfObj[0])
+                    toast.success(`Deleted ${name} successfully`)
+                    if (onUpdate) {
+                        onUpdate({ id, name })
+                    }
+                    refresh?.()
                     onClose()
-                    // window.location.reload()
                 }
             }).catch((err) => {
                 console.log(err)

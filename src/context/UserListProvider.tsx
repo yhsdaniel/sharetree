@@ -17,15 +17,18 @@ type UserListContextType = {
     userImage: string | undefined,
     listLinks?: LinkType[],
     idUser: string | undefined,
-    setListLinks?: React.Dispatch<React.SetStateAction<LinkType[]>>
+    setListLinks?: React.Dispatch<React.SetStateAction<LinkType[]>>,
+    refresh?: () => void
 }
 
 export const UserListContext = createContext<UserListContextType | null>(null)
 
 const UserListProvider = ({ children }: LayoutProps) => {
-    const { data: session } = useSession()
     const [userState, setUserState] = useState('')
     const [listLinks, setListLinks] = useState<LinkType[]>([])
+    const [refreshFlag, setRefreshFlag] = useState(0)
+
+    const { data: session } = useSession()
     const userImage = session?.user?.image
 
     const user = session?.user
@@ -44,11 +47,11 @@ const UserListProvider = ({ children }: LayoutProps) => {
             }
         }
         fetchData()
-    }, [idUser])
+    }, [idUser, refreshFlag])
 
     return (
         <div className='size-full bg-gray-200'>
-            <UserListContext.Provider value={{ idUser, userState, userImage, listLinks, setListLinks }}>
+            <UserListContext.Provider value={{ idUser, userState, userImage, listLinks, setListLinks, refresh: () => setRefreshFlag(prev => prev+1) }}>
                 {children}
             </UserListContext.Provider>
         </div>

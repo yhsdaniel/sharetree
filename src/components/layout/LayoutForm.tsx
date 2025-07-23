@@ -13,11 +13,11 @@ export default function LayoutForm({ children }: { children: React.ReactNode }) 
         <div className='w-6/12 h-full flex-center max-md:hidden max-md:w-0'>
           <Image
             src={bgLogin}
-            alt="background-login"
+            alt="Image"
             className='w-full h-full object-cover max-md:hidden'
             width={500}
             height={800}
-            loading='lazy'
+            priority={true}
           />
         </div>
       </div>

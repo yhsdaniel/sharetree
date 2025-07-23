@@ -40,7 +40,7 @@ export default function LoginForm() {
                         onChange={handleChangeLogin}
                     />
                 </div>
-                <button type='submit' className='w-full border rounded-[50px] px-4 h-12 bg-[#7dd9f8] hover:bg-[#47bde4]/70 duration-150 ease-in-out text-[#393646] font-bold'>Login</button>
+                <button type='submit' className='w-full border rounded-lg px-4 h-12 bg-[#7dd9f8] hover:bg-[#47bde4]/70 duration-150 ease-in-out text-[#393646] font-bold'>Login</button>
             </form>
             <span className="text-sm mt-10 text-right">Don&apos;t have an account? <Link href='/register' className='text-blue-600 hover:text-blue-700'>Register</Link></span>
             <div className="flex justify-center items-center mt-6">

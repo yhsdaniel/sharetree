@@ -2,15 +2,17 @@ import React from 'react'
 import { Input } from './ui/input'
 import { Button } from './ui/button'
 import { motion } from 'framer-motion'
-import { useLinkModal } from '../app/hooks/uesLinkModal'
+import { useLinkModal } from '../app/hooks/useLinkModal'
 
 type Props = {
     owner: string,
-    onClose: () => void
+    onClose: () => void,
+    onUpdate?: (update: { id?: string, name: string, url?: string }) => void,
+    refresh: () => void
 }
 
-export default function ModalAdd({ owner, onClose }: Props) {
-    const { fillLink, handleChange, handleSubmitAdd } = useLinkModal(owner, onClose)
+export default function ModalAdd({ owner, onClose, onUpdate, refresh }: Props) {
+    const { fillLink, handleChange, handleSubmitAdd } = useLinkModal(owner, onClose, onUpdate, refresh)
     return (
         <motion.div
             className='md:ml-[320px] md:mr-[230px] lg:mr-[316px] xl:mr-[460px] bg-white border border-gray-300 bottom-0 shadow-inner shadow-gray-300 rounded-3xl z-30 p-6 pb-20'
