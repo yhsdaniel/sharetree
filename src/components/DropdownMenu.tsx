@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 
 import { CircleUser, LogOut, Settings } from 'lucide-react'
+import Image from "next/image"
 
 type DropDownProps = {
     username: string | undefined | null,
@@ -32,11 +33,12 @@ export function DropdownMenuComponent({ username, image, signout }: DropDownProp
                 >
                     {image ? (
                         <>
-                            <img
-                                src={`${image}`}
-                                alt='Profile Poc'
+                            <Image
+                                src={image}
+                                alt='Profile'
+                                width={20}
+                                height={20}
                                 referrerPolicy='no-referrer'
-                                loading='lazy'
                                 className='rounded-full w-9 mr-3'
                             />
                             {`${username}`}

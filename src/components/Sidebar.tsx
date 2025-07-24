@@ -4,7 +4,7 @@ import { signOut, useSession } from 'next-auth/react'
 import { useRouter, usePathname } from 'next/navigation'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
-import logo from '../../public/images/logo.png'
+import logo from '@/assets/images/logo.png'
 import Link from 'next/link'
 import '@/app/navbar.css'
 import toast from 'react-hot-toast'
@@ -46,8 +46,8 @@ const Sidebar = () => {
                 <div className='flex justify-between items-center'>
                     <div className='flex justify-center items-center'>
                         <Image
-                            alt='Logo'
                             src={logo}
+                            alt='Logo'
                             width={40}
                             height={40}
                             className='mx-4'

@@ -4,9 +4,9 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { useSession } from 'next-auth/react'
 import Image from 'next/image'
-import social from '../../../public/images/social.jpg'
-import Tiktok from '../../../public/images/Tiktok.png'
-import Instagram from '../../../public/images/Instagram.png'
+import social from '@/assets/images/social.jpg'
+import Tiktok from '@/assets/images/Tiktok.png'
+import Instagram from '@/assets/images/Instagram.png'
 import Navbar from '@/components/Navbar'
 import { useMemo } from 'react'
 
@@ -33,7 +33,8 @@ export default function HomePage() {
           <Image
             src={Tiktok}
             alt='Tiktok Logo'
-            loading='lazy'
+            width={200}
+            height={200}
           />
         </motion.div>
         <motion.div
@@ -45,7 +46,8 @@ export default function HomePage() {
           <Image
             src={Instagram}
             alt='Instagram Logo'
-            loading='lazy'
+            width={200}
+            height={200}
           />
         </motion.div>
         <div className="relative mx-auto size-full sm:static px-4 flex flex-col lg:flex-row">
@@ -111,9 +113,10 @@ export default function HomePage() {
               transition={{ duration: 1 }}
               className='w-full flex justify-center items-center'>
               <Image
-                alt='Social Media Icons'
                 src={social}
-                loading='lazy'
+                alt='Social Media Icons'
+                width={200}
+                height={200}
               />
             </motion.div>
           </div>

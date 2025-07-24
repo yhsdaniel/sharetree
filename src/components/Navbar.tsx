@@ -11,7 +11,7 @@ import {
   XMarkIcon,
 } from '@heroicons/react/24/outline'
 import { AnimatePresence, motion } from 'framer-motion'
-import logo from '../../public/images/logo.png'
+import logo from '@/assets/images/logo.png'
 import Link from 'next/link'
 import Image from 'next/image'
 import { signOut } from 'next-auth/react'
@@ -47,10 +47,10 @@ export default function Navbar({ status }: StatusProps) {
         <div className="flex lg:flex-1 justify-start items-center">
           <a href="#home" className="-m-1.5 p-1.5">
             <Image
+              src={logo}
               alt="Logo"
               width={200}
               height={200}
-              src={logo}
               className="h-8 w-auto"
             />
           </a>
@@ -97,10 +97,10 @@ export default function Navbar({ status }: StatusProps) {
             <header className="flex items-center justify-between">
               <div className="-m-1.5 p-1.5 flex justify-center items-center gap-2">
                 <Image
+                  src={logo}
                   alt="Logo"
                   width={200}
                   height={200}
-                  src={logo}
                   className="h-8 w-auto"
                 />
                 <span className='text-green-700 font-bold'>Sharetree</span>

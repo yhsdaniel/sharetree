@@ -4,8 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
 
-import logo from '/images/logo.png'
-import { getUserLinks } from '@/lib/getuserlinks'
+import logo from '@/assets/images/logo.png'
 import { lazy, Suspense, useEffect, useState } from 'react'
 import axios from 'axios'
 
@@ -59,7 +58,13 @@ const UserForPublic = ({ params }: Props) => {
                         href={'/'}
                         className='md:relative bottom-0 m-8 p-4 text-sm bg-white w-7/12 md:w-2/12 rounded-3xl -translate-y-12 flex justify-center items-center duration-150 ease-in-out animate-bounce'
                     >
-                        <Image src={logo} alt='Logo' width={25} height={25} className='mx-2' />
+                        <Image 
+                            src={logo} 
+                            alt='Logo'
+                            width={50} 
+                            height={50}
+                            className='mx-2' 
+                        />
                         Join on Sharetree
                     </Link>
                 </div>

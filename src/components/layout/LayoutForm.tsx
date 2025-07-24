@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import React from 'react'
-import bgLogin from '../../../public/images/bg-login.webp'
+import bgLogin from '@/assets/images/bg-login.webp'
 
 export default function LayoutForm({ children }: { children: React.ReactNode }) {
   return (
@@ -14,10 +14,9 @@ export default function LayoutForm({ children }: { children: React.ReactNode }) 
           <Image
             src={bgLogin}
             alt="Image"
+            width={800}
+            height={1000}
             className='w-full h-full object-cover max-md:hidden'
-            width={500}
-            height={800}
-            priority={true}
           />
         </div>
       </div>
