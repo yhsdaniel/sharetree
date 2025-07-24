@@ -50,7 +50,7 @@ const UserListProvider = ({ children }: LayoutProps) => {
     }, [idUser, refreshFlag])
 
     return (
-        <div className='size-full bg-gray-200'>
+        <div className='size-full'>
             <UserListContext.Provider value={{ idUser, userState, userImage, listLinks, setListLinks, refresh: () => setRefreshFlag(prev => prev+1) }}>
                 {children}
             </UserListContext.Provider>

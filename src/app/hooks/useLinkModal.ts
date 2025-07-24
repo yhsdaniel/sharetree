@@ -53,9 +53,6 @@ export const useLinkModal = (
         await axios.delete(`/api/linkadmin`, { data: { userId, id } })
             .then((response) => {
                 if (response) {
-                    // const strToObj = JSON.parse(response.config.data)
-                    // const valueOfObj = Object.values(strToObj)
-                    // console.log(typeof valueOfObj[0])
                     toast.success(`Deleted ${name} successfully`)
                     if (onUpdate) {
                         onUpdate({ id, name })

@@ -113,20 +113,6 @@ const Sidebar = () => {
                             ))}
                         </ul>
                     </section>
-                    {/* <Suspense fallback={<div>Loading...</div>}>
-                        <div className='w-full flex'>
-                            <span className='h-12 w-full flex items-center px-3 mx-4 rounded-3xl bg-black/20'>
-                                <img
-                                    src={`${user?.image}`}
-                                    alt='Profile Poc'
-                                    referrerPolicy='no-referrer'
-                                    loading='lazy'
-                                    className='rounded-full w-9 mr-3'
-                                />
-                                {`${username}`}
-                            </span>
-                        </div>
-                    </Suspense> */}
                     <div className='w-full flex'>
                         <DropdownMenuComponent
                             username={username}

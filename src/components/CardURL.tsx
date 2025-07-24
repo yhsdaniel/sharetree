@@ -1,12 +1,12 @@
 'use client'
 
-import { useContext, useEffect, useState } from "react"
+import { useState } from "react"
 import { motion } from 'framer-motion'
 import Modal from "./Modal"
 import { Input } from "./ui/input"
 import axios from "axios"
 import toast from "react-hot-toast"
-import { SquarePen, Trash, Trash2 } from "lucide-react"
+import { SquarePen, Trash } from "lucide-react"
 
 interface AppProps {
     userId: string,
@@ -81,9 +81,9 @@ export default function CardURL({ userId, id, name, url, onUpdate, onUpdateAddAn
     };
 
     return (
-        <div className='size-full flex border overflow-auto border-gray-300 shadow-lg rounded-3xl mt-4 p-2 px-6 md:px-16'>
-            <div className="w-9/12 flex flex-col">
-                <div className="flex justify-start items-center cursor-pointer" onClick={handleEdit.EditName}>
+        <div className='size-full flex border overflow-auto bg-white border-gray-300 shadow-lg rounded-3xl mt-4 py-6 px-6 md:px-16'>
+            <div className="w-9/12 flex flex-col gap-4">
+                <div className="flex justify-between items-center cursor-pointer" onClick={handleEdit.EditName}>
                     {editName ? (
                         <Input
                             type='text'
@@ -99,13 +99,13 @@ export default function CardURL({ userId, id, name, url, onUpdate, onUpdateAddAn
                         />
                     ) : (
                         <>
-                            <h5 className="mb-4">{name}</h5>
-                            <SquarePen className="mx-4 hover:text-green-600 duration-150 ease-in" width={16} height={16}/>
+                            <div className="overflow-hidden text-xs md:text-sm font-bold">{name}</div>
+                            <SquarePen className="mx-4 w-4 hover:text-green-600 duration-150 ease-in"/>
                         </>
                     )}
                 </div>
 
-                <div className="w-full text-sm mb-4 flex justify-start items-center cursor-pointer" onClick={handleEdit.EditUrl}>
+                <div className="w-full text-sm flex justify-between items-center cursor-pointer" onClick={handleEdit.EditUrl}>
                     {editUrl ? (
                         <Input
                             type='text'
@@ -121,8 +121,8 @@ export default function CardURL({ userId, id, name, url, onUpdate, onUpdateAddAn
                         />
                     ) : (
                         <>
-                            <div className="italic overflow-hidden break-words md:whitespace-normal whitespace-nowrap text-ellipsis w-auto text-xs md:text-sm">{url}</div>
-                            <SquarePen className="mx-4 hover:text-green-600 duration-150 ease-in" width={16} height={16}/>
+                            <div className="w-full italic overflow-hidden break-words whitespace-nowrap text-ellipsis md:text-xs">{url}</div>
+                            <SquarePen className="mx-4 w-5 hover:text-green-600 duration-150 ease-in"/>
                         </>
                     )}
                 </div>

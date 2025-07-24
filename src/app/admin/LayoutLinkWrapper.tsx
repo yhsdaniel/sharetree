@@ -14,7 +14,7 @@ const LayoutLinkWrapper: React.FC<ChildProps> = ({ children }) => {
     const userState = useContext(UserListContext)
 
     return (
-        <main className='h-screen'>
+        <main className='h-full'>
             <div className='h-full md:ml-[320px] md:mr-[230px] lg:mr-[316px] xl:mr-[460px] p-2 overflow-y-auto'>
                 <motion.div
                     initial={{ opacity: 0, translateY: -100 }}
@@ -27,7 +27,7 @@ const LayoutLinkWrapper: React.FC<ChildProps> = ({ children }) => {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 1 }}
-                    className='h-[calc(100%-4rem)] overflow-auto bg-white mt-2 p-4 rounded-2xl shadow-lg relative'>
+                    className='h-[calc(100%-4rem)] md:mx-40 overflow-auto mt-2 p-4 rounded-2xl relative'>
                     {children}
                 </motion.div>
             </div>

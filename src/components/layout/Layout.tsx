@@ -10,7 +10,7 @@ type LayoutProps = {
 
 const Layout = ({ children }: LayoutProps) => {
     return (
-        <div className='size-full bg-gray-200'>
+        <div className='size-full bg-white md:bg-gray-200'>
             <UserListProvider>
                 <Sidebar />
                 <LayoutLinkWrapper>
