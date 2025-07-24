@@ -33,16 +33,11 @@ const LinkWrapper = () => {
 
   const updatedNewAndDelete = (update: { id?: string, name: string, url?: string }) => {
     if (setListLinks) {
-      console.log('Update received:', update);
       setListLinks((prevLinks: any[]) => {
-        console.log('Previous links:', prevLinks);
         const exists = prevLinks.some((item: any) => item._id === update.id);
-        console.log('Does it exist?', exists);
         if (exists) {
           // Delete it
-          console.log('Deleting item with id:', update.id);
           const updateLinkAfterDelete = prevLinks.filter((item: any) => item._id !== update.id)
-          console.log('After delete:', updateLinkAfterDelete);
           return updateLinkAfterDelete
         } else {
           // Add new
@@ -77,10 +72,13 @@ const LinkWrapper = () => {
               name={value.name}
               url={value.url} 
               onUpdate={handleUpdate} 
+              onUpdateAddAndDelete={updatedNewAndDelete}
             />
           ))}
         </Suspense>
       </section>
+
+      {/* ADD MODAL */}
       {showModal && 
         <Modal 
           type={type} 

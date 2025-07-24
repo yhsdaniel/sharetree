@@ -14,10 +14,11 @@ interface AppProps {
     name: string,
     url: string,
     onUpdate?: (update: { id: string, name: string, url: string }) => void,
+    onUpdateAddAndDelete?: (update: { id?: string, name: string, url?: string }) => void,
     refresh?: () => void
 }
 
-export default function CardURL({ userId, id, name, url, onUpdate, refresh }: AppProps) {
+export default function CardURL({ userId, id, name, url, onUpdate, onUpdateAddAndDelete, refresh }: AppProps) {
 
     const [showModal, setShowModal] = useState(false)
     const [editName, setEditName] = useState(false)
@@ -29,7 +30,7 @@ export default function CardURL({ userId, id, name, url, onUpdate, refresh }: Ap
         EditName: () => {
             setEditName(true)
             setEditUrl(false)
-        },
+        }, 
         EditUrl: () => {
             setEditUrl(true)
             setEditName(false)
@@ -138,7 +139,8 @@ export default function CardURL({ userId, id, name, url, onUpdate, refresh }: Ap
                     <Trash width={20} height={20}/>
                 </motion.button>
             </div>
-            
+
+            {/* DELETE MODAL */}
             {showModal && 
                 <Modal 
                     userId={userId}
@@ -146,6 +148,7 @@ export default function CardURL({ userId, id, name, url, onUpdate, refresh }: Ap
                     type={type} 
                     setShowModal={setShowModal} 
                     name={name} 
+                    onUpdate={onUpdateAddAndDelete}
                     refresh={refresh ?? (() => {})}
                 />
             }
