@@ -1,41 +1,20 @@
-'use client'
-
 import Link from 'next/link'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
-
 import logo from '@/assets/images/logo.png'
-import { lazy, Suspense, useEffect, useState } from 'react'
-import axios from 'axios'
-
-const ListDeviceComponent = lazy(() => import('@/components/LinkComponent'))
+import { getUserLinks } from '@/lib/getuserlinks'
+import ListDeviceWrapper from '@/components/ListDeviceWrapper'
 
 interface Props {
     params: { username: string }
 }
 
-const UserForPublic = ({ params }: Props) => {
+const UserForPublic = async ({ params }: Props) => {
     const username = params.username
-    const [linkUser, setLinkUser] = useState([])
-    // const listLinks = await getUserLinks(username)
+    if (!username) notFound()
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                if (username) {
-                    const { data: response } = await axios.get(`/api/linkuser`, { params: { username: username } })
-                    setLinkUser(response)
-                }
-            } catch (error) {
-                console.error(error)
-            }
-        }
-        fetchData()
-    }, [username])
+    const linkUser = await getUserLinks(username)
 
-    if (!username) {
-        notFound()
-    }
 
     return (
         <div className='size-full overflow-auto bg-gray-700 flex justify-center items-center'>
@@ -47,9 +26,7 @@ const UserForPublic = ({ params }: Props) => {
                         </div>
                         <h1 className='text-xl font-bold my-4'>{`@${username}`}</h1>
                     </div>
-                    <Suspense fallback={<div className='w-full h-full flex justify-center items-center'><div className='loader'></div></div>}>
-                        <ListDeviceComponent listLinks={linkUser} />
-                    </Suspense>
+                    <ListDeviceWrapper listLinks={linkUser}/>
                 </div>
 
                 {/* FOOTER */}
