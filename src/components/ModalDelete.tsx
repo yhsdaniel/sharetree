@@ -7,14 +7,13 @@ type Props = {
     userId?: string,
     id: string,
     name: string,
-    owner: string,
     onClose: () => void,
     onUpdate?: (update: { id?: string, name: string, url?: string }) => void,
     refresh: () => void
 }
 
-export default function ModalDelete({ userId, id, name, owner, onClose, onUpdate, refresh }: Props) {
-    const { handleSubmitDelete } = useLinkModal(owner, onClose, onUpdate, refresh)
+export default function ModalDelete({ userId, id, name, onClose, onUpdate, refresh }: Props) {
+    const { handleSubmitDelete } = useLinkModal(onClose, onUpdate, refresh)
     return (
         <motion.div
             className='md:ml-[320px] md:mr-[230px] lg:mr-[316px] xl:mr-[460px] bg-white border border-gray-300 bottom-0 shadow-inner shadow-gray-300 rounded-3xl z-30 p-6 pb-20'

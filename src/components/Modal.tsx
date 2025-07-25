@@ -18,15 +18,11 @@ interface ModalProps {
 }
 
 const Modal: React.FC<ModalProps> = ({ userId, type, name, id, setShowModal, onUpdate, refresh }) => {
-    const userContext = useContext(UserListContext)
-    const username = userContext?.userState as string
-    
     return (
         <AnimatePresence>
             <div className='fixed left-0 top-0 bg-black/30 w-full h-screen z-20'>
                 {type === 'add' && (
                     <ModalAdd
-                        owner={username}
                         onClose={() => setShowModal(false)}
                         onUpdate={onUpdate}
                         refresh={refresh}
@@ -38,7 +34,6 @@ const Modal: React.FC<ModalProps> = ({ userId, type, name, id, setShowModal, onU
                         userId={userId}
                         id={id}
                         name={name}
-                        owner={username}
                         onClose={() => setShowModal(false)}
                         onUpdate={onUpdate}
                         refresh={refresh}

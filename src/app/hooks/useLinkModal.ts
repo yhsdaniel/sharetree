@@ -1,17 +1,16 @@
 'use client'
 
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useContext, useState } from 'react'
 import axios from 'axios'
 import toast from 'react-hot-toast'
+import { UserListContext } from '@/context/UserListProvider'
 
 type URLForm = {
     url: string,
     name: string,
-    owner: string
 }
 
 export const useLinkModal = (
-    initialOwner: string,
     onClose: () => void,
     onUpdate?: (update: { id?: string | undefined, name: string, url?: string }) => void,
     refresh?: () => void
@@ -19,7 +18,6 @@ export const useLinkModal = (
     const [fillLink, setFillLink] = useState<URLForm>({
         url: '',
         name: '',
-        owner: initialOwner
     })
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {

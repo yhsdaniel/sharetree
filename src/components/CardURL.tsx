@@ -65,7 +65,7 @@ export default function CardURL({ userId, id, name, url, onUpdate, onUpdateAddAn
     const handleSave = async () => {
         try {
             await axios.put(`/api/linkadmin`, { id: id, name: isEdit.name, url: isEdit.url })
-            if(isEdit.name === name || isEdit.url === name){
+            if(isEdit.name !== name || isEdit.url !== name){
                 toast.success('Updated successfully')
             }
             setEditName(false)
@@ -143,9 +143,9 @@ export default function CardURL({ userId, id, name, url, onUpdate, onUpdateAddAn
             {/* DELETE MODAL */}
             {showModal && 
                 <Modal 
+                    type={type} 
                     userId={userId}
                     id={id}
-                    type={type} 
                     setShowModal={setShowModal} 
                     name={name} 
                     onUpdate={onUpdateAddAndDelete}

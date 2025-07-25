@@ -1,7 +1,9 @@
+import { authOptions } from '@/lib/auth'
 import { connect } from '@/lib/mongodb'
 import Link from '@/utils/db/links'
 import User from '@/utils/db/user'
 import mongoose from 'mongoose'
+import { getServerSession } from 'next-auth'
 import { NextRequest, NextResponse } from 'next/server'
 
 await connect()
@@ -9,8 +11,11 @@ await connect()
 export async function POST(req: NextRequest) {
     try {
         const reqBody = await req.json()
-        const { name, url, owner } = reqBody
-        let user = await User.findOne({ username: owner })
+        const { name, url } = reqBody
+
+        const session = await getServerSession(authOptions);
+
+        let user = await User.findOne({ username: session?.user?.username })
         if (!user) {
             return NextResponse.json({ error: 'User not found' }, { status: 404 })
         }
