@@ -12,11 +12,11 @@ import { useMemo } from 'react'
 
 export default function HomePage() {
   const { data: session, status } = useSession()
-  const user = session?.user
-  const username = useMemo(() => {
-    if (!user) return null
-    return 'username' in user ? (user.username as string) : (user.name as string)
-  }, [user])
+  // const user = session?.user
+  // const username = useMemo(() => {
+  //   if (!user) return null
+  //   return 'username' in user ? (user.username as string) : (user.name as string)
+  // }, [user])
 
   return (
     <div className='size-full relative overflow-y-auto overflow-x-hidden scroll-smooth'>

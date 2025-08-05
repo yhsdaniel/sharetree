@@ -20,8 +20,8 @@ const LayoutLinkWrapper: React.FC<ChildProps> = ({ children }) => {
                     initial={{ opacity: 0, translateY: -100 }}
                     animate={{ opacity: 1, translateY: 1 }}
                     transition={{ duration: 1 }}
-                    className='h-14 w-full bg-green-700 text-white flex justify-center items-center rounded-xl'>
-                    <span className='text-sm'>Your sharetree link is: <button onClick={() => router.push(`/${userState?.userState}`)} className='underline italic hover:text-blue-500 transition duration-150'>{`sharetree.vercel.app/${userState?.userState}`}</button></span>
+                    className='h-10 md:h-14 w-full bg-green-700 text-white flex justify-center items-center rounded-xl'>
+                    <span className='text-xs md:text-sm'>Your sharetree link is: <button onClick={() => router.push(`/${userState?.userState}`)} className='underline italic hover:text-blue-500 transition duration-150'>{`sharetree.vercel.app/${userState?.userState}`}</button></span>
                 </motion.div>
                 <motion.div 
                     initial={{ opacity: 0 }}

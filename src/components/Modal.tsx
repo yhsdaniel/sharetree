@@ -1,11 +1,8 @@
 'use client'
 
 import { AnimatePresence } from 'framer-motion'
-import { useSession } from 'next-auth/react'
 import ModalAdd from './ModalAdd'
 import ModalDelete from './ModalDelete'
-import { useContext } from 'react'
-import { UserListContext } from '@/context/UserListProvider'
 
 interface ModalProps {
     userId?: string,
@@ -18,29 +15,30 @@ interface ModalProps {
 }
 
 const Modal: React.FC<ModalProps> = ({ userId, type, name, id, setShowModal, onUpdate, refresh }) => {
+    const closeModal = () => {
+        setShowModal(false)
+    }
     return (
-        <AnimatePresence>
-            <div className='fixed left-0 top-0 bg-black/30 w-full h-screen z-20'>
-                {type === 'add' && (
-                    <ModalAdd
-                        onClose={() => setShowModal(false)}
-                        onUpdate={onUpdate}
-                        refresh={refresh}
-                    />
-                )}
+        <div className='fixed left-0 top-0 bg-black/30 w-full h-screen z-20 flex justify-center items-center' onClick={closeModal}>
+            {type === 'add' && (
+                <ModalAdd
+                    onClose={() => setShowModal(false)}
+                    onUpdate={onUpdate}
+                    refresh={refresh}
+                />
+            )}
 
-                {type === 'delete' && (
-                    <ModalDelete
-                        userId={userId}
-                        id={id}
-                        name={name}
-                        onClose={() => setShowModal(false)}
-                        onUpdate={onUpdate}
-                        refresh={refresh}
-                    />
-                )}
-            </div>
-        </AnimatePresence>
+            {type === 'delete' && (
+                <ModalDelete
+                    userId={userId}
+                    id={id}
+                    name={name}
+                    onClose={() => setShowModal(false)}
+                    onUpdate={onUpdate}
+                    refresh={refresh}
+                />
+            )}
+        </div>
     )
 }
 

@@ -1,5 +1,3 @@
-import axios from 'axios'
-
 const BASE_URL = process.env.NEXT_PUBLIC_NEXTAUTH_URL
 
 export const getUserLinks = async (username: string) => {

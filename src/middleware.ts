@@ -11,18 +11,26 @@ export async function middleware(req: NextRequest) {
 
     if(token){
         const username = token.username
-        // If the user is logged in and trying to access login or register page, redirect them
+        const match = pathname.match(/^\/admin\/([^/]+)\/links/); //check if the path starts with /admin/username/links
+        const usernamePath = match ? match[1] : null; // Extract the username from the path
 
+        // If the user is logged in and trying to access admin links, allow them
+        if(pathname.startsWith('/admin') && usernamePath === username){
+            return NextResponse.next();
+        }
+        // If the user is logged in and trying to access login or register page, redirect them
         if(pathname === '/login' || pathname === '/register'){
             return NextResponse.redirect(new URL(`/admin/${username}/links`, req.url))
+        }
+        // If the user is logged in and trying to access wrong username in the path, redirect them
+        if(usernamePath !== username){
+            return NextResponse.redirect(new URL(`/login`, req.url))
         }
     } else {
         if(pathname.startsWith('/admin')){
             return NextResponse.redirect(new URL(`/login`, req.url))
         }
     }
-
-    // If the user is not logged in and trying to access any other page, allow them
     return NextResponse.next();
 }
 

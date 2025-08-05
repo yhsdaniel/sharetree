@@ -65,7 +65,7 @@ const Sidebar = () => {
                         </li>
                     </ul>
                 </div>
-                <ul className='size-full flex justify-center items-center'>
+                {/* <ul className='size-full flex justify-center items-center'>
                     {items.map((item, index) => (
                         <li key={index} className={pathName === item.url ? 'active-mobile' : 'relative flex flex-col justify-center items-center p-2 mx-2'}>
                             <Link href={item.url}>
@@ -76,7 +76,7 @@ const Sidebar = () => {
                             </Link>
                         </li>
                     ))}
-                </ul>
+                </ul> */}
             </nav>
 
 

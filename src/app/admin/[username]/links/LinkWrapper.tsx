@@ -4,7 +4,7 @@ import { lazy, Suspense, useContext, useEffect, useState } from 'react'
 import Modal from '@/components/Modal'
 import { Button } from '@/components/ui/button'
 import { UserListContext } from '@/context/UserListProvider'
-import { Item } from '@radix-ui/react-dropdown-menu'
+import { AnimatePresence, Reorder } from 'framer-motion'
 
 const CardUrl = lazy(() => import('@/components/CardURL'))
 
@@ -15,6 +15,7 @@ const LinkWrapper = () => {
   const idUser = userListContext?.idUser;
   const refresh = userListContext?.refresh
 
+  const [isList, setIsList] = useState(listLinks)
   const [showModal, setShowModal] = useState(false)
   const [type, setType] = useState('')
 
@@ -64,31 +65,36 @@ const LinkWrapper = () => {
       </div>
       <section className='mt-6 md:mt-10'>
         <Suspense fallback={<div className='loader'></div>}>
-          {listLinks?.map((value: any, index: any) => (
-            <CardUrl 
-              key={index} 
-              userId={idUser || ''}
-              id={value._id} 
-              name={value.name}
-              url={value.url} 
-              onUpdate={handleUpdate} 
-              onUpdateAddAndDelete={updatedNewAndDelete}
-            />
-          ))}
+          <Reorder.Group axis='y' values={isList ?? []} onReorder={setIsList}>
+            {listLinks?.map((value: any, index: any) => (
+              <Reorder.Item key={index} value={value}>
+                <CardUrl
+                  userId={idUser || ''}
+                  id={value._id}
+                  name={value.name}
+                  url={value.url}
+                  onUpdate={handleUpdate}
+                  onUpdateAddAndDelete={updatedNewAndDelete}
+                />
+              </Reorder.Item>
+            ))}
+          </Reorder.Group>
         </Suspense>
       </section>
 
       {/* ADD MODAL */}
-      {showModal && 
-        <Modal 
-          type={type} 
-          setShowModal={setShowModal}
-          id={idUser || ''} 
-          name=''
-          onUpdate={updatedNewAndDelete} 
-          refresh={refresh ?? (() => {})} 
-        />
-      }
+      <AnimatePresence>
+        {showModal &&
+          <Modal
+            type={type}
+            setShowModal={setShowModal}
+            id={idUser || ''}
+            name=''
+            onUpdate={updatedNewAndDelete}
+            refresh={refresh ?? (() => { })}
+          />
+        }
+      </AnimatePresence>
     </div>
   )
 }

@@ -29,7 +29,7 @@ export function DropdownMenuComponent({ username, image, signout }: DropDownProp
             <DropdownMenuTrigger asChild>
                 <Button
                     variant="outline"
-                    className="w-full my-2 mx-4 py-2 pr-6 pl-2 md:px-2 h-auto justify-start rounded-3xl"
+                    className="w-full my-2 mx-4 py-0 pr-6 pl-0 md:px-2 h-auto justify-start rounded-3xl"
                 >
                     {image ? (
                         <>

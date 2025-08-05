@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from "react"
-import { motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import Modal from "./Modal"
 import { Input } from "./ui/input"
 import axios from "axios"
@@ -30,7 +30,7 @@ export default function CardURL({ userId, id, name, url, onUpdate, onUpdateAddAn
         EditName: () => {
             setEditName(true)
             setEditUrl(false)
-        }, 
+        },
         EditUrl: () => {
             setEditUrl(true)
             setEditName(false)
@@ -65,7 +65,7 @@ export default function CardURL({ userId, id, name, url, onUpdate, onUpdateAddAn
     const handleSave = async () => {
         try {
             await axios.put(`/api/linkadmin`, { id: id, name: isEdit.name, url: isEdit.url })
-            if(isEdit.name !== name || isEdit.url !== name){
+            if (isEdit.name !== name || isEdit.url !== name) {
                 toast.success('Updated successfully')
             }
             setEditName(false)
@@ -100,7 +100,7 @@ export default function CardURL({ userId, id, name, url, onUpdate, onUpdateAddAn
                     ) : (
                         <>
                             <div className="overflow-hidden text-xs md:text-sm font-bold">{name}</div>
-                            <SquarePen className="mx-4 w-4 hover:text-green-600 duration-150 ease-in"/>
+                            <SquarePen className="mx-4 w-4 hover:text-green-600 duration-150 ease-in" />
                         </>
                     )}
                 </div>
@@ -121,13 +121,13 @@ export default function CardURL({ userId, id, name, url, onUpdate, onUpdateAddAn
                         />
                     ) : (
                         <>
-                            <div className="w-full italic overflow-hidden break-words whitespace-nowrap text-ellipsis md:text-xs">{url}</div>
-                            <SquarePen className="mx-4 w-5 hover:text-green-600 duration-150 ease-in"/>
+                            <div className="w-full italic overflow-hidden break-words whitespace-nowrap text-ellipsis text-xs">{url}</div>
+                            <SquarePen className="mx-4 w-5 hover:text-green-600 duration-150 ease-in" />
                         </>
                     )}
                 </div>
             </div>
-            
+
             <div className="w-3/12 flex justify-end items-center">
                 {/* Modal for Delete */}
                 <motion.button
@@ -136,22 +136,24 @@ export default function CardURL({ userId, id, name, url, onUpdate, onUpdateAddAn
                     className='size-6 cursor-pointer hover:text-red-600 duration-150 ease-in'
                     onClick={() => { setShowModal(true); setType('delete') }}
                 >
-                    <Trash width={20} height={20}/>
+                    <Trash width={20} height={20} />
                 </motion.button>
             </div>
 
             {/* DELETE MODAL */}
-            {showModal && 
-                <Modal 
-                    type={type} 
-                    userId={userId}
-                    id={id}
-                    setShowModal={setShowModal} 
-                    name={name} 
-                    onUpdate={onUpdateAddAndDelete}
-                    refresh={refresh ?? (() => {})}
-                />
-            }
+            <AnimatePresence>
+                {showModal &&
+                    <Modal
+                        type={type}
+                        userId={userId}
+                        id={id}
+                        setShowModal={setShowModal}
+                        name={name}
+                        onUpdate={onUpdateAddAndDelete}
+                        refresh={refresh ?? (() => { })}
+                    />
+                }
+            </AnimatePresence>
         </div>
     )
 }

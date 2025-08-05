@@ -12,12 +12,15 @@ type Props = {
 
 export default function ModalAdd({ onClose, onUpdate, refresh }: Props) {
     const { fillLink, handleChange, handleSubmitAdd } = useLinkModal(onClose, onUpdate, refresh)
+    const isMobile = window.innerWidth <= 768
     return (
         <motion.div
-            className='md:ml-[320px] md:mr-[230px] lg:mr-[316px] xl:mr-[460px] bg-white border border-gray-300 bottom-0 shadow-inner shadow-gray-300 rounded-3xl z-30 p-6 pb-20'
-            initial={{ opacity: 0, translateY: 1 }}
-            animate={{ opacity: 1, translateY: 100 }}
-            transition={{ duration: .3 }}
+            initial={{ opacity: 0, translateY: isMobile ? 100 : -100 }}
+            animate={{ opacity: 1, translateY: isMobile ? 1 : -50 }}
+            exit={{ opacity: 0, translateY: isMobile ? 100 : -100 }}
+            transition={{ duration: .2, ease: 'linear' }}
+            className=' bg-white border border-gray-300 w-full md:w-2/5 bottom-0 md:relative fixed shadow-inner shadow-gray-300 md:rounded-3xl rounded-t-3xl z-30 md:p-6 md:pb-20 p-6'
+            onClick={(e) => e.stopPropagation()}
         >
             <button onClick={onClose} className='relative inline float-right cursor-pointer hover:font-bold transition duration-150'>X</button>
             <p>Add new link</p>
@@ -41,7 +44,7 @@ export default function ModalAdd({ onClose, onUpdate, refresh }: Props) {
                 value={fillLink.url}
                 onChange={handleChange}
             />
-            <Button className='my-4 float-right' onClick={handleSubmitAdd}>Add</Button>
+            <Button className='w-full md:w-auto my-4 float-right' onClick={handleSubmitAdd}>Add</Button>
         </motion.div>
     )
 }
