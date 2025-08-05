@@ -17,13 +17,14 @@ const nextConfig = {
         contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
     },
     reactStrictMode: true,
-    // turbopack: {
-    //     // Example: adding an alias and custom file extension
-    //     resolveAlias: {
-    //     underscore: 'lodash',
-    //     },
-    //     resolveExtensions: ['.mdx', '.tsx', '.ts', '.jsx', '.js', '.json'],
-    // },
+    turbopack: {
+        // Example: adding an alias and custom file extension
+        resolveAlias: {
+        underscore: 'lodash',
+        },
+        resolveExtensions: ['.mdx', '.tsx', '.ts', '.jsx', '.js', '.json'],
+    },
+    output: "standalone"
 };
 
 export default nextConfig;

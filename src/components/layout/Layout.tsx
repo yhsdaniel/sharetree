@@ -4,17 +4,17 @@ import UserListProvider, { UserListContext } from '@/context/UserListProvider'
 import Sidebar from '../Sidebar'
 import DeviceUI from '../DeviceUI'
 import DeviceUIMobile from '../DeviceUIMobile'
+import { useIsMobile } from '../hooks/use-mobile'
 
 type LayoutProps = {
     children: ReactNode,
-    window?: Window,
     onUpdate?: (update: { id: string, name: string, url: string }) => void,
     onUpdateAddAndDelete?: (update: { id?: string, name: string, url?: string }) => void,
     refresh?: () => void
 }
 
-const Layout = ({ children, window }: LayoutProps) => {
-    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+const Layout = ({ children }: LayoutProps) => {
+    const isMobile = useIsMobile()
     const userContext = useContext(UserListContext)
 
     const updatedNewAndDelete = (update: { id?: string, name: string, url?: string }) => {
@@ -40,7 +40,8 @@ const Layout = ({ children, window }: LayoutProps) => {
                 <LayoutLinkWrapper>
                     {children}
                 </LayoutLinkWrapper>
-                {isMobile ? 
+                {isMobile 
+                    ? 
                     <DeviceUIMobile updatedNewAndDelete={updatedNewAndDelete} /> 
                     : 
                     <DeviceUI />}

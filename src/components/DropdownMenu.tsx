@@ -5,12 +5,8 @@ import {
     DropdownMenuGroup,
     DropdownMenuItem,
     DropdownMenuLabel,
-    DropdownMenuPortal,
     DropdownMenuSeparator,
     DropdownMenuShortcut,
-    DropdownMenuSub,
-    DropdownMenuSubContent,
-    DropdownMenuSubTrigger,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
@@ -29,7 +25,7 @@ export function DropdownMenuComponent({ username, image, signout }: DropDownProp
             <DropdownMenuTrigger asChild>
                 <Button
                     variant="outline"
-                    className="w-full my-2 mx-4 py-0 pr-6 pl-0 md:px-2 h-auto justify-start rounded-3xl"
+                    className="w-full my-2 mx-4 py-0 pr-6 pl-0 md:px-2 h-auto justify-start rounded-3xl focus-visible:shadow-none"
                 >
                     {image ? (
                         <>
@@ -39,14 +35,14 @@ export function DropdownMenuComponent({ username, image, signout }: DropDownProp
                                 width={20}
                                 height={20}
                                 referrerPolicy='no-referrer'
-                                className='rounded-full w-9 mr-3'
+                                className='rounded-full w-9 mr-3 my-1 ml-1'
                             />
-                            {`${username}`}
+                            <span className='text-black/80 font-bold'>{`${username}`}</span>
                         </>
                     ) : (
                         <>
                             <div className='rounded-full bg-white border border-gray-300 flex justify-center items-center mr-2'>
-                                <h3 className='text-black size-8 m-0 flex justify-center items-center'>{username?.charAt(0).toUpperCase()}</h3>
+                                <h3 className='text-black font-bold size-8 m-0 flex justify-center items-center'>{username?.charAt(0).toUpperCase()}</h3>
                             </div>
                             {username}
                         </>

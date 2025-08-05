@@ -19,7 +19,7 @@ const Modal: React.FC<ModalProps> = ({ userId, type, name, id, setShowModal, onU
         setShowModal(false)
     }
     return (
-        <div className='fixed left-0 top-0 bg-black/30 w-full h-screen z-20 flex justify-center items-center' onClick={closeModal}>
+        <div className='fixed left-0 top-0 bg-black/30 w-full h-screen z-[100] flex justify-center items-center' onClick={closeModal}>
             {type === 'add' && (
                 <ModalAdd
                     onClose={() => setShowModal(false)}
