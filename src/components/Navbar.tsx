@@ -121,8 +121,8 @@ export default function Navbar({ status }: StatusProps) {
                     )
                     :
                     (
-                      <Link href="/login" className="text-xs font-semibold text-gray-900 transition-all rounded-full px-5 py-3">
-                        <LogIn /> Sign In <span aria-hidden="true">&rarr;</span>
+                      <Link href="/login" className="text-xs flex justify-start items-center gap-2 font-semibold text-gray-900 transition-all rounded-full py-3">
+                        <LogIn /> Sign In
                       </Link>
                     )
                   }
