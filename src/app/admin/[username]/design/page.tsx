@@ -2,12 +2,12 @@
 
 import React from 'react'
 import Layout from '@/components/layout/Layout'
-import SettingsWrapper from './SettingWrapper'
+import DesignWrapper from './DesignWrapper'
 
-export default function SettingPage() {
+export default function DesignPage() {
     return (
         <Layout>
-            <SettingsWrapper />
+            <DesignWrapper />
         </Layout>
     )
 }

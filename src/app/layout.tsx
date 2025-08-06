@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Montserrat, Roboto } from "next/font/google";
+import { Inter, Montserrat } from "next/font/google";
 import "./globals.css";
 import AuthProvider from "@/utils/SessionProvider";
 import { Toaster } from "react-hot-toast";

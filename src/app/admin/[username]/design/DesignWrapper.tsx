@@ -2,7 +2,7 @@
 
 import React from 'react'
 
-export default function SettingsWrapper() {
+export default function DesignWrapper() {
     return (
         <>
             <div></div>

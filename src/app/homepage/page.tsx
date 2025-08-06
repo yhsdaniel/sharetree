@@ -8,7 +8,6 @@ import social from '@/assets/images/social.jpg'
 import Tiktok from '@/assets/images/Tiktok.png'
 import Instagram from '@/assets/images/Instagram.png'
 import Navbar from '@/components/Navbar'
-import { useMemo } from 'react'
 
 export default function HomePage() {
   const { data: session, status } = useSession()

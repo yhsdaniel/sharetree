@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation'
 import React, { ReactNode, useContext } from 'react'
 import { UserListContext } from '@/context/UserListProvider'
 import { motion } from 'framer-motion'
+import toast from 'react-hot-toast'
 
 type ChildProps = {
     children: ReactNode
@@ -13,15 +14,21 @@ const LayoutLinkWrapper: React.FC<ChildProps> = ({ children }) => {
     const router = useRouter()
     const userState = useContext(UserListContext)
 
+    const handleCopy = () => {
+        navigator.clipboard.writeText(`sharetree.vercel.app/${userState?.userState}`)
+        toast.success('Copy success')
+    }
+
     return (
-        <main className='h-full'>
-            <div className='h-full md:ml-[320px] md:mr-[230px] lg:mr-[316px] xl:mr-[460px] p-2 overflow-y-auto flex flex-col justify-center items-center'>
+        <main className='size-full'>
+            <div className='size-full p-2 overflow-y-auto flex flex-col justify-center items-center'>
                 <motion.div
                     initial={{ opacity: 0, translateY: -100 }}
                     animate={{ opacity: 1, translateY: 1 }}
                     transition={{ duration: 1 }}
-                    className='h-10 md:h-14 w-full bg-green-700 text-white flex justify-center items-center rounded-xl'>
-                    <span className='text-xs md:text-sm'>Your sharetree link is: <button onClick={() => router.push(`/${userState?.userState}`)} className='underline italic hover:text-blue-500 transition duration-150'>{`sharetree.vercel.app/${userState?.userState}`}</button></span>
+                    className='h-12 p-8 w-full bg-green-200 border border-green-700 text-[--sidebar-accent-foreground] flex flex-col justify-center items-start rounded-xl'>
+                    <p className='text-xs md:text-sm leading-6 md:leading-7 font-bold'>Your sharetree link is: <button onClick={() => router.push(`/${userState?.userState}`)} className='underline italic hover:text-blue-500 transition duration-150'>{`sharetree.vercel.app/${userState?.userState}`}</button></p>
+                    <p className='text-xs md:text-sm leading-6 md:leading-7'><button className='underline italic hover:text-blue-500 transition duration-150' onClick={handleCopy}>Copy your sharetree URL</button></p>
                 </motion.div>
                 <motion.div 
                     initial={{ opacity: 0 }}

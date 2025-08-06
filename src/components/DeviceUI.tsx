@@ -9,7 +9,7 @@ const LinkComponent = lazy(() => import('@/components/LinkComponent'))
 export default function DeviceUI({ ...props }) {
   const userContext = useContext(UserListContext)
   return (
-    <div className='h-screen w-full md:max-w-[230px] lg:max-w-[316px] xl:max-w-[460px] p-2 md:fixed md:right-0 top-0'>
+    <div className='h-screen w-full md:w-1/2 p-2'>
       <div className='size-full rounded-2xl flex justify-center items-center'>
         <motion.div
           initial={{ opacity: 0, translateX: 100 }}

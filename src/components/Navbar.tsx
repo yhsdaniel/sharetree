@@ -4,7 +4,6 @@ import { useState } from 'react'
 import {
   Button,
   Dialog,
-  DialogPanel,
 } from '@headlessui/react'
 import {
   Bars3Icon,
@@ -16,7 +15,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { signOut } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
-import { LogIn, NotebookPen } from 'lucide-react'
+import { LogIn, LogOut } from 'lucide-react'
 
 type StatusProps = {
   status: string
@@ -36,11 +35,8 @@ export default function Navbar({ status }: StatusProps) {
   }
 
   return (
-    <motion.header
-      initial={{ opacity: 0, translateY: -100 }}
-      animate={{ opacity: 1, translateY: 1 }}
-      transition={{ duration: .8 }}
-      className="bg-white absolute top-0 w-full z-50"
+    <header
+      className="bg-white sticky top-0 w-full z-50"
     >
       {/* Desktop Responsive */}
       <nav aria-label="Global" className="mx-auto flex items-center justify-between p-4 lg:px-8">
@@ -85,7 +81,7 @@ export default function Navbar({ status }: StatusProps) {
       </nav>
 
       {/* Mobile Responsive */}
-      <AnimatePresence initial={false}>
+      <AnimatePresence>
         <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">
           <motion.div
             initial={{ x: "100%" }}
@@ -94,7 +90,7 @@ export default function Navbar({ status }: StatusProps) {
             transition={{ ease: 'linear', duration: 0.2 }}
             className="fixed inset-y-0 right-0 z-50 w-8/12 overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 duration-150 ease-linear"
           >
-            <header className="flex items-center justify-between">
+            <nav className="flex items-center justify-between">
               <div className="-m-1.5 p-1.5 flex justify-center items-center gap-2">
                 <Image
                   src={logo}
@@ -112,32 +108,30 @@ export default function Navbar({ status }: StatusProps) {
               >
                 <XMarkIcon aria-hidden="true" className="h-6 w-6 text-gray-500 hover:text-black duration-150 ease-linear" />
               </button>
-            </header>
+            </nav>
             <div className="mt-6 flow-root">
               <div className="-my-6 divide-y divide-gray-500/10">
                 <div className="py-6">
-                  <>
-                    <Link
-                      href="/login"
-                      className="-mx-3 my-4 flex gap-2 rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-green-200 duration-150 ease-linear"
-                    >
-                      <LogIn className='text-sm' />
-                      Log in
-                    </Link>
-                    <Link
-                      href="/register"
-                      className="-mx-3 my-4 flex gap-2 rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-green-200 duration-150 ease-linear"
-                    >
-                      <NotebookPen className='text-sm' />
-                      Register
-                    </Link>
-                  </>
+                  {status === 'authenticated'
+                    ?
+                    (
+                      <Button onClick={handleSignOut} className="text-xs flex justify-start items-center gap-2 font-semibold text-gray-900 transition-all rounded-full py-3">
+                        <LogOut />Log Out
+                      </Button>
+                    )
+                    :
+                    (
+                      <Link href="/login" className="text-xs font-semibold text-gray-900 transition-all rounded-full px-5 py-3">
+                        <LogIn /> Sign In <span aria-hidden="true">&rarr;</span>
+                      </Link>
+                    )
+                  }
                 </div>
               </div>
             </div>
           </motion.div>
         </Dialog>
       </AnimatePresence>
-    </motion.header>
+    </header>
   )
 }
