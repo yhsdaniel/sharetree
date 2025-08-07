@@ -21,23 +21,23 @@ export default function DeviceUIMobile({ refresh, updatedNewAndDelete }: DeviceU
 
     return (
         <>
-            <div className='fixed bottom-0 left-0 translate-x-1/4 -translate-y-1/4 w-auto bg-gray-500 flex justify-center items-center gap-2 p-4 rounded-3xl z-[50]'>
+            <div className='fixed bottom-0 left-0 right-0 -translate-y-1/4 w-fit bg-green-200 border border-green-500 flex justify-center items-center mx-auto py-3 px-2 rounded-3xl z-[50]'>
                 <Button
-                    className='bg-transparent flex flex-col justify-center items-center p-0 px-4 hover:bg-transparent' 
+                    className='bg-transparent text-black flex flex-col justify-center items-center gap-0 p-0 px-4 hover:bg-transparent' 
                     onClick={() => { setShowModal(true); setType('add'); }}
                 >
                     <Plus />
                     Add
                 </Button>
                 <Button
-                    className='bg-transparent flex flex-col justify-center items-center p-0 px-4 hover:bg-transparent'
+                    className='bg-transparent text-black flex flex-col justify-center items-center gap-0 p-0 px-4 hover:bg-transparent'
                     onClick={() => setShowDeviceUI(!showDeviceUI)}
                 >
                     <Eye />
                     Preview
                 </Button>
                 <Button
-                    className='bg-transparent flex flex-col justify-center items-center p-0 px-4 hover:bg-transparent'
+                    className='bg-transparent text-black flex flex-col justify-center items-center gap-0 p-0 px-4 hover:bg-transparent'
                 >
                     <Paintbrush />
                     Design
@@ -57,11 +57,11 @@ export default function DeviceUIMobile({ refresh, updatedNewAndDelete }: DeviceU
                 }
                 {showDeviceUI && (
                     <motion.div
-                        initial={{ opacity: 0, translateY: 100 }}
+                        initial={{ opacity: 0, translateX: 1, translateY: 100 }}
                         animate={{ opacity: 1, translateY: 0 }}
                         exit={{ opacity: 0, translateY: 100 }}
-                        transition={{ duration: 0.1, ease: 'easeInOut' }}
-                        className='fixed bottom-0 bg-black/50 size-full z-[50]'
+                        transition={{ duration: .5, ease: 'linear' }}
+                        className='fixed bottom-0 rounded-t-[2rem] bg-gray-400 h-[80vh] w-full z-[50] overflow-auto'
                         onClick={() => setShowDeviceUI(false)}
                     >
                         <DeviceUI />

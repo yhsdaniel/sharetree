@@ -16,7 +16,6 @@ const nextConfig = {
         dangerouslyAllowSVG: true,
         contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
     },
-    reactStrictMode: true,
     turbopack: {
         // Example: adding an alias and custom file extension
         resolveAlias: {

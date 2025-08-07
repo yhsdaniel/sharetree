@@ -54,7 +54,7 @@ const LinkWrapper = () => {
     <div className='size-full relative'>
       <div className='md:px-16'>
         <Button
-          className='w-full h-12 rounded-2xl bg-gray-800 text-primary-foreground hover:bg-primary/90 mt-4 md:mt-0'
+          className='w-full h-10 md:h-12 text-xs rounded-2xl bg-gray-800 text-primary-foreground hover:bg-primary/90 mt-4 md:mt-0'
           onClick={() => {
             setShowModal(true);
             setType('add')

@@ -81,7 +81,7 @@ export default function CardURL({ userId, id, name, url, onUpdate, onUpdateAddAn
     };
 
     return (
-        <div className='size-full flex border overflow-auto bg-white border-gray-300 shadow-lg rounded-3xl mt-4 py-6 px-6 md:px-16'>
+        <div className='size-full flex border overflow-auto bg-white border-gray-300 shadow-lg rounded-3xl mt-4 py-4 md:py-6 px-6 md:px-16'>
             <div className="w-9/12 flex flex-col gap-4">
                 <div className="flex justify-between items-center cursor-pointer" onClick={handleEdit.EditName}>
                     {editName ? (
@@ -100,7 +100,7 @@ export default function CardURL({ userId, id, name, url, onUpdate, onUpdateAddAn
                     ) : (
                         <>
                             <div className="overflow-hidden text-xs md:text-sm font-bold">{name}</div>
-                            <SquarePen className="mx-4 w-4 hover:text-green-600 duration-150 ease-in" />
+                            <SquarePen className="mx-4 w-3 md:w-4 hover:text-green-600 duration-150 ease-in" />
                         </>
                     )}
                 </div>
@@ -122,7 +122,7 @@ export default function CardURL({ userId, id, name, url, onUpdate, onUpdateAddAn
                     ) : (
                         <>
                             <div className="w-full italic overflow-hidden break-words whitespace-nowrap text-ellipsis text-xs">{url}</div>
-                            <SquarePen className="mx-4 w-5 hover:text-green-600 duration-150 ease-in" />
+                            <SquarePen className="mx-4 w-4 md:w-5 hover:text-green-600 duration-150 ease-in" />
                         </>
                     )}
                 </div>
@@ -136,7 +136,7 @@ export default function CardURL({ userId, id, name, url, onUpdate, onUpdateAddAn
                     className='size-6 cursor-pointer hover:text-red-600 duration-150 ease-in'
                     onClick={() => { setShowModal(true); setType('delete') }}
                 >
-                    <Trash width={20} height={20} />
+                    <Trash className="md:w-4 w-3" />
                 </motion.button>
             </div>
 

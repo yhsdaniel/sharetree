@@ -27,7 +27,7 @@ export default function HomePage() {
           initial={{ opacity: 0, translateX: -100 }}
           animate={{ opacity: 1, translateX: 1 }}
           transition={{ duration: 1, delay: 0.3 }}
-          className='absolute w-56 lg:w-[300px] top-24 lg:top-32 left-0 mix-blend-screen'
+          className='absolute w-36 lg:w-[300px] top-24 lg:top-32 left-0 mix-blend-screen'
         >
           <Image
             src={Tiktok}
@@ -40,7 +40,7 @@ export default function HomePage() {
           initial={{ opacity: 0, translateX: 100 }}
           animate={{ opacity: 1, translateX: 1 }}
           transition={{ duration: 1, delay: 0.5 }}
-          className='absolute w-56 lg:w-[300px] bottom-10 lg:bottom-32 -right-8 mix-blend-screen'
+          className='absolute w-36 lg:w-[300px] bottom-10 lg:bottom-32 -right-8 mix-blend-screen'
         >
           <Image
             src={Instagram}
@@ -55,14 +55,14 @@ export default function HomePage() {
               initial={{ opacity: 0, translateX: -100 }}
               animate={{ opacity: 1, translateX: 1 }}
               transition={{ duration: 1 }}
-              className="my-0 text-4xl text-shadow-2xs text-shadow-sky-300 font-bold tracking-tight text-gray-200 sm:text-6xl uppercase">
+              className="my-0 text-2xl md:text-4xl text-shadow-2xs text-shadow-sky-300 font-bold tracking-tight text-gray-200 sm:text-6xl uppercase">
               Everything what you want. 
             </motion.h1>
             <motion.h1
               initial={{ opacity: 0, translateX: -100 }}
               animate={{ opacity: 1, translateX: 1 }}
               transition={{ duration: 1 }}
-              className="my-0 text-4xl text-shadow-2xs text-shadow-sky-300 font-bold tracking-tight text-gray-200 sm:text-6xl uppercase">
+              className="my-0 text-2xl md:text-4xl text-shadow-2xs text-shadow-sky-300 font-bold tracking-tight text-gray-200 sm:text-6xl uppercase">
               All in one in simple link for bio
             </motion.h1>
             <motion.p 
