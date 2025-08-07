@@ -49,7 +49,7 @@ export async function GET(req: NextRequest) {
             return NextResponse.json({ error: 'Invalid ID format' }, { status: 400 });
         }
 
-        const user = await User.findById(id).populate('link').exec();
+        const user = await User.findById(id).select('username link').populate('link', 'name url').exec();
         return NextResponse.json({ link: user.link, username: user.username }, { status: 200 });
     } catch (error) {
         console.log(error)

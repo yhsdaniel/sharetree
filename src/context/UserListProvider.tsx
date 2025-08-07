@@ -34,7 +34,10 @@ const UserListProvider = ({ children }: LayoutProps) => {
     const user = session?.user
     const idUser = user && 'id' in user ? user?.id : undefined
 
+    
     useEffect(() => {
+        if(!idUser) return
+
         const fetchData = async () => {
             try {
                 if (idUser) {
@@ -46,6 +49,7 @@ const UserListProvider = ({ children }: LayoutProps) => {
                 console.error(error)
             }
         }
+
         fetchData()
     }, [idUser, refreshFlag])
 
