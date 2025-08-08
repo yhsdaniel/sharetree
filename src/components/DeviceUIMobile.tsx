@@ -13,7 +13,7 @@ interface DeviceUIMobileProps {
     updatedNewAndDelete?: (update: { id?: string, name: string, url?: string }) => void
 }
 
-export default function DeviceUIMobile({ refresh, updatedNewAndDelete }: DeviceUIMobileProps) {
+const DeviceUIMobile = React.memo(({ refresh, updatedNewAndDelete }: DeviceUIMobileProps) => {
     const userContext = useContext(UserListContext) 
     const [showModal, setShowModal] = useState(false)
     const [showDeviceUI, setShowDeviceUI] = useState(false)
@@ -60,8 +60,8 @@ export default function DeviceUIMobile({ refresh, updatedNewAndDelete }: DeviceU
                         initial={{ opacity: 0, translateX: 1, translateY: 100 }}
                         animate={{ opacity: 1, translateY: 0 }}
                         exit={{ opacity: 0, translateY: 100 }}
-                        transition={{ duration: .5, ease: 'linear' }}
-                        className='fixed bottom-0 rounded-t-[2rem] bg-gray-400 h-[80vh] w-full z-[50] overflow-auto'
+                        transition={{ duration: .3, ease: 'linear' }}
+                        className='fixed bottom-0 size-full z-[50] overflow-auto'
                         onClick={() => setShowDeviceUI(false)}
                     >
                         <DeviceUI />
@@ -70,4 +70,6 @@ export default function DeviceUIMobile({ refresh, updatedNewAndDelete }: DeviceU
             </AnimatePresence>
         </>
     )
-}
+})
+
+export default DeviceUIMobile

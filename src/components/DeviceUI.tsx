@@ -3,19 +3,17 @@
 import { lazy, Suspense, useContext } from 'react'
 import { motion } from 'framer-motion'
 import { UserListContext } from '@/context/UserListProvider'
+import { useIsMobile } from './hooks/use-mobile'
 
 const LinkComponent = lazy(() => import('@/components/LinkComponent'))
 
 export default function DeviceUI({ ...props }) {
   const userContext = useContext(UserListContext)
-  const isMobile = window.innerWidth <= 768
+  const isMobile = useIsMobile()
 
   return (
-    <div className={isMobile ? 'h-screen w-full md:w-1/2 p-2 flex justify-center items-center' : 'h-screen w-full md:w-1/2 p-2 flex justify-center items-center'}>
-      <motion.div
-        initial={{ opacity: 0, translateX: isMobile ? 1 : 100 }}
-        animate={{ opacity: 1, translateX: 1 }}
-        transition={{ duration: 1, ease: 'linear' }}
+    <div className={isMobile ? 'fixed bottom-0 h-[80vh] w-full bg-gray-400 md:w-1/2 p-2 rounded-3xl flex justify-center items-center' : 'h-screen w-full md:w-1/2 p-2 flex justify-center items-center'}>
+      <div
         className={isMobile ? 'size-full p-4 flex flex-col justify-start items-center gap-1' : 'w-[19rem] h-[37rem] shadow-black shadow-[1px_1px_8px_8px_rgba(0,0,0)] overflow-auto bg-gray-400 rounded-[2rem] absolute flex flex-col justify-start items-center p-4'}
         {...props}
       >
@@ -24,7 +22,7 @@ export default function DeviceUI({ ...props }) {
         <Suspense fallback={<div className='size-full flex justify-center items-center'><div className='loader'></div></div>}>
           <LinkComponent listLinks={userContext?.listLinks || []} />
         </Suspense>
-      </motion.div>
+      </div>
     </div>
   )
 }

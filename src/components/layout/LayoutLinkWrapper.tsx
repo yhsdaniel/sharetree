@@ -22,14 +22,11 @@ const LayoutLinkWrapper: React.FC<ChildProps> = ({ children }) => {
     return (
         <main className='size-full'>
             <div className='size-full p-2 overflow-y-auto flex flex-col justify-center items-center'>
-                <motion.div
-                    initial={{ opacity: 0, translateY: -100 }}
-                    animate={{ opacity: 1, translateY: 1 }}
-                    transition={{ duration: 1 }}
+                <div
                     className='h-12 p-8 w-full bg-green-200 border border-green-700 text-[--sidebar-accent-foreground] flex flex-col justify-center items-start rounded-xl'>
                     <p className='text-xs md:text-sm leading-6 md:leading-7 font-bold'>Your sharetree link is: <button onClick={() => router.push(`/${userState?.userState}`)} className='underline italic hover:text-blue-500 transition duration-150'>Your sharetree link</button></p>
                     <p className='text-xs md:text-sm leading-6 md:leading-7'><button className='underline italic hover:text-blue-500 transition duration-150' onClick={handleCopy}>Copy your sharetree URL</button></p>
-                </motion.div>
+                </div>
                 <motion.div 
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}

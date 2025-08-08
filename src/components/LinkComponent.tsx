@@ -9,7 +9,7 @@ type ListLinksProps = {
     name: string,
 }
 
-const LinkDeviceComponent = ({ listLinks }: { listLinks: ListLinksProps[] }) => {
+const LinkComponent = React.memo(({ listLinks }: { listLinks: ListLinksProps[] }) => {
     const router = useRouter()
     const isAdminRoute = router?.asPath.startsWith('/admin')
 
@@ -25,6 +25,6 @@ const LinkDeviceComponent = ({ listLinks }: { listLinks: ListLinksProps[] }) => 
             ))}
         </>
     )
-}
+})
 
-export default LinkDeviceComponent
+export default LinkComponent

@@ -11,7 +11,7 @@ export async function middleware(req: NextRequest) {
 
     if(token){
         const username = token.username
-        const match = pathname.match(/^\/admin\/([^/]+)\/links/); //check if the path starts with /admin/username/links
+        const match = pathname.match(/^\/admin\/([^/]+)/); //check if the path starts with /admin/username/links
         const usernamePath = match ? match[1] : null; // Extract the username from the path
 
         // If the user is logged in and trying to access admin links, allow them
