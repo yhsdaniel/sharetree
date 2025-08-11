@@ -27,4 +27,6 @@ const LinkComponent = React.memo(({ listLinks }: { listLinks: ListLinksProps[] }
     )
 })
 
+LinkComponent.displayName = "LinkComponent"
+
 export default LinkComponent

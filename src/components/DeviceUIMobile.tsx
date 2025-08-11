@@ -72,4 +72,6 @@ const DeviceUIMobile = React.memo(({ refresh, updatedNewAndDelete }: DeviceUIMob
     )
 })
 
+DeviceUIMobile.displayName = "DeviceUIMobile";
+
 export default DeviceUIMobile
