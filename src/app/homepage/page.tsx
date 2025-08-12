@@ -55,21 +55,21 @@ export default function HomePage() {
               initial={{ opacity: 0, translateX: -100 }}
               animate={{ opacity: 1, translateX: 1 }}
               transition={{ duration: 1 }}
-              className="my-0 text-2xl md:text-4xl text-shadow-2xs text-shadow-sky-300 font-bold tracking-tight text-gray-200 sm:text-6xl uppercase">
+              className="my-0 text-2xl md:text-6xl text-shadow-2xs text-shadow-sky-300 font-bold tracking-tight text-white uppercase">
               Everything what you want. 
             </motion.h1>
             <motion.h1
               initial={{ opacity: 0, translateX: -100 }}
               animate={{ opacity: 1, translateX: 1 }}
               transition={{ duration: 1 }}
-              className="my-0 text-2xl md:text-4xl text-shadow-2xs text-shadow-sky-300 font-bold tracking-tight text-gray-200 sm:text-6xl uppercase">
+              className="my-0 text-2xl md:text-6xl text-shadow-2xs text-shadow-sky-300 font-bold tracking-tight text-white uppercase">
               All in one in simple link for bio
             </motion.h1>
             <motion.p 
               initial={{ opacity: 0, translateX: 100 }}
               animate={{ opacity: 1, translateX: 1 }}
               transition={{ duration: 1 }}
-              className="mt-4 lg:mt-10 text-md lg:text-xl text-yellow-200">
+              className="mt-4 lg:mt-10 text-xs md:text-xl font-bold text-yellow-200">
               Join people using Sharetree for their link in bio. One link to help you share everything you create and sell from your Instagram, TikTok, Twitter, YouTube and other social media profiles.
             </motion.p>
             <motion.a
@@ -77,7 +77,7 @@ export default function HomePage() {
               animate={{ opacity: 1, translateY: 1 }}
               transition={{ duration: 1 }}
               href='login'
-              className="rounded-3xl border border-transparent mt-10 bg-blue-600 px-8 py-3 text-center text-white hover:bg-blue-500 duration-150 ease-in-out shadow-sm shadow-white/50"
+              className="rounded-2xl border border-pink-400 mt-10 bg-pink-200 px-8 py-3 md:py-4 text-center text-xs md:text-base text-black/80 font-bold hover:bg-pink-300 duration-150 ease-in-out"
             >
               Get Started for free
             </motion.a>

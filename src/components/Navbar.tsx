@@ -35,11 +35,9 @@ export default function Navbar({ status }: StatusProps) {
   }
 
   return (
-    <header
-      className="bg-white sticky top-0 w-full z-50"
-    >
+    <header className="fixed top-0 w-full z-50">
       {/* Desktop Responsive */}
-      <nav aria-label="Global" className="mx-auto flex items-center justify-between p-4 lg:px-8">
+      <nav aria-label="Global" className="mx-0 md:mx-8 mt-2 md:mt-8 bg-white rounded-[50px] flex items-center justify-between p-5 lg:px-8">
         <div className="flex lg:flex-1 justify-start items-center">
           <a href="#home" className="-m-1.5 p-1.5">
             <Image

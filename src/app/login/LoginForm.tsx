@@ -22,7 +22,7 @@ export default function LoginForm() {
                         name='email'
                         autoComplete="off"
                         autoFocus={true}
-                        className="rounded-lg border-none h-12 bg-white p-4 shadow-sm"
+                        className="rounded-lg border-none h-12 bg-white p-4 shadow-lg"
                         value={formDataLogin.email}
                         placeholder="Enter email address"
                         onChange={handleChangeLogin}
@@ -34,7 +34,7 @@ export default function LoginForm() {
                         type='password'
                         name='password'
                         autoComplete="off"
-                        className="rounded-lg border-none h-12 bg-white p-4 shadow-sm"
+                        className="rounded-lg border-none h-12 bg-white p-4 shadow-lg"
                         value={formDataLogin.password}
                         placeholder="Password"
                         onChange={handleChangeLogin}

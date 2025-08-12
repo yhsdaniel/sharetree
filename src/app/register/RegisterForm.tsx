@@ -20,7 +20,7 @@ export default function RegisterForm() {
                         type='text'
                         name='username'
                         autoComplete="off"
-                        className="rounded-lg border-none h-12 bg-white p-4 shadow-sm"
+                        className="rounded-lg border-none h-12 bg-white p-4 shadow-lg"
                         value={formDataRegister?.username}
                         placeholder="Enter username"
                         onChange={handleChangeRegister}
@@ -32,7 +32,7 @@ export default function RegisterForm() {
                         type='email'
                         name='email'
                         autoComplete="off"
-                        className="rounded-lg border-none h-12 bg-white p-4 shadow-sm"
+                        className="rounded-lg border-none h-12 bg-white p-4 shadow-lg"
                         value={formDataRegister?.email}
                         placeholder="Enter email address"
                         onChange={handleChangeRegister}
@@ -45,7 +45,7 @@ export default function RegisterForm() {
                         name='password'
                         autoComplete="off"
                         autoCorrect="off"
-                        className="rounded-lg border-none h-12 bg-white p-4 shadow-sm"
+                        className="rounded-lg border-none h-12 bg-white p-4 shadow-lg"
                         value={formDataRegister?.password}
                         placeholder="Password"
                         onChange={handleChangeRegister}
