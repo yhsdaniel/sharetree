@@ -6,12 +6,11 @@ import { getUserLinks } from '@/lib/getuserlinks'
 import ListDeviceWrapper from '@/components/ListDeviceWrapper'
 
 interface Props {
-    params: Promise<{ username: string }>
+    params: { username: string }
 }
 
-const UserForPublic = async (props: Props) => {
-    const params = await props.params;
-    const username = params.username
+const UserForPublic = async ({ params }: Props) => {
+    const { username } = await params
     if (!username) notFound()
 
     const linkUser = await getUserLinks(username)
@@ -26,7 +25,7 @@ const UserForPublic = async (props: Props) => {
                         </div>
                         <h1 className='text-xl font-bold my-4'>{`@${username}`}</h1>
                     </div>
-                    <ListDeviceWrapper listLinks={linkUser}/>
+                    <ListDeviceWrapper listLinks={linkUser} />
                 </div>
 
                 {/* FOOTER */}
@@ -35,12 +34,12 @@ const UserForPublic = async (props: Props) => {
                         href={'/'}
                         className='md:relative bottom-0 m-8 p-2 text-sm bg-white w-7/12 md:w-2/12 rounded-2xl -translate-y-12 flex justify-center items-center animate-bounce'
                     >
-                        <Image 
-                            src={logo} 
+                        <Image
+                            src={logo}
                             alt='Logo'
-                            width={45} 
+                            width={45}
                             height={45}
-                            className='mx-2' 
+                            className='mx-2'
                         />
                         Join on Sharetree
                     </Link>

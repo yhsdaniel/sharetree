@@ -1,9 +1,9 @@
-const BASE_URL = process.env.NEXT_PUBLIC_NEXTAUTH_URL
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL
 
 export const getUserLinks = async (username: string) => {
     try {
         if(!BASE_URL) {
-            throw new Error('Missing NEXT_PUBLIC_NEXTAUTH_URL environment variable')
+            throw new Error('Missing NEXT_PUBLIC_SITE_URL environment variable')
         }
         const res = await fetch(`${BASE_URL}/api/linkuser?username=${username}`, {
             method: 'GET',

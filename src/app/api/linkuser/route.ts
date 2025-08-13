@@ -2,15 +2,18 @@ import { connect } from "@/lib/mongodb";
 import { NextRequest, NextResponse } from "next/server";
 import mongoose from "mongoose";
 import User from '@/utils/db/user';
-import Link from "@/utils/db/links";
+import Link from '@/utils/db/links';
 
 export const dynamic = "force-dynamic"
 
 export async function GET(req: NextRequest) {
     await connect()
+
     try {
         const { searchParams } = new URL(req.url);
         const username = searchParams.get('username');
+
+        console.log('Link model loaded:', !!Link);
 
         if (!username) {
             return NextResponse.json({ error: 'Username is required' }, { status: 400 });
