@@ -9,6 +9,13 @@ type ListLinksProps = {
     name: string,
 }
 
+const classNameStyle = {
+    linkAdmin: 'w-full border border-gray-300 bg-white shadow-lg rounded-2xl my-3 p-3 py-4 flex justify-center',
+    linkPublic: 'w-full border-2 shadow-black shadow-lg border-gray-800 bg-white rounded-2xl my-2 p-4 py-6 flex justify-center hover:scale-[1.02] hover:shadow-lg duration-200 ease-in-out',
+    spanAdmin: 'text-xs text-gray-500 font-bold',
+    spanPublic: 'text-sm text-gray-500 font-bold'
+}
+
 const LinkComponent = React.memo(({ listLinks }: { listLinks: ListLinksProps[] }) => {
     const router = useRouter()
     const isAdminRoute = router?.asPath.startsWith('/admin')
@@ -16,11 +23,9 @@ const LinkComponent = React.memo(({ listLinks }: { listLinks: ListLinksProps[] }
     return (
         <>
             {listLinks?.map((value, index) => (
-                <Link key={index} href={value.url} className={isAdminRoute
-                    ? 'w-full border border-gray-300 bg-white shadow-lg rounded-2xl my-3 p-3 py-4 flex justify-center'
-                    : 'w-full border-2 shadow-black shadow-lg border-gray-800 bg-white rounded-2xl my-2 p-4 py-4 md:py-6 flex justify-center hover:scale-[1.02] hover:shadow-lg duration-200 ease-in-out'
+                <Link key={index} href={value.url} className={isAdminRoute ? classNameStyle.linkAdmin : classNameStyle.linkPublic
                 }>
-                    <span className={isAdminRoute ? 'text-xs text-gray-500 font-bold' : 'text-xs md:text-sm text-gray-500 font-bold'}>{value.name}</span>
+                    <span className={isAdminRoute ? classNameStyle.spanAdmin : classNameStyle.spanPublic}>{value.name}</span>
                 </Link>
             ))}
         </>

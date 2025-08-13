@@ -57,10 +57,10 @@ const DeviceUIMobile = React.memo(({ refresh, updatedNewAndDelete }: DeviceUIMob
                 }
                 {showDeviceUI && (
                     <motion.div
-                        initial={{ opacity: 0, translateX: 1, translateY: 100 }}
-                        animate={{ opacity: 1, translateY: 0 }}
-                        exit={{ opacity: 0, translateY: 100 }}
-                        transition={{ duration: .3, ease: 'linear' }}
+                        initial={{ translateY: 100 }}
+                        animate={{ translateY: 0 }}
+                        exit={{ translateY: 100 }}
+                        transition={{ duration: .3, ease: 'easeInOut' }}
                         className='fixed bottom-0 size-full z-[50] overflow-auto'
                         onClick={() => setShowDeviceUI(false)}
                     >
