@@ -77,7 +77,7 @@ export default function HomePage() {
               animate={{ opacity: 1, translateY: 1 }}
               transition={{ duration: 1 }}
               href='login'
-              className="rounded-2xl mt-10 bg-pink-200 px-8 py-3 md:py-4 text-center text-xs md:text-base text-black/80 font-bold hover:bg-pink-300 duration-150 ease-in-out"
+              className="rounded-2xl border border-pink-400 mt-10 bg-pink-200 px-8 py-3 md:py-4 text-center text-xs md:text-base text-black/80 font-bold hover:bg-pink-300 duration-150 ease-in-out"
             >
               Get Started for free
             </motion.a>
