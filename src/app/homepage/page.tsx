@@ -1,6 +1,5 @@
 'use client'
 
-import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { useSession } from 'next-auth/react'
 import Image from 'next/image'
@@ -11,11 +10,6 @@ import Navbar from '@/components/Navbar'
 
 export default function HomePage() {
   const { data: session, status } = useSession()
-  // const user = session?.user
-  // const username = useMemo(() => {
-  //   if (!user) return null
-  //   return 'username' in user ? (user.username as string) : (user.name as string)
-  // }, [user])
 
   return (
     <div className='size-full relative overflow-y-auto overflow-x-hidden scroll-smooth'>
