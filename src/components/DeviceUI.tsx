@@ -1,7 +1,6 @@
 'use client'
 
 import { lazy, Suspense, useContext } from 'react'
-import { motion } from 'framer-motion'
 import { UserListContext } from '@/context/UserListProvider'
 import { useIsMobile } from './hooks/use-mobile'
 
@@ -12,7 +11,7 @@ export default function DeviceUI({ ...props }) {
   const isMobile = useIsMobile()
 
   return (
-    <div className={isMobile ? 'fixed bottom-0 h-[80vh] w-full bg-gray-400 md:w-1/2 p-2 rounded-3xl flex justify-center items-center' : 'h-screen w-full md:w-1/2 p-2 flex justify-center items-center'} onClick={(e) => e.stopPropagation()}>
+    <div className={isMobile ? 'fixed bottom-0 h-[80vh] w-full bg-gray-800 md:w-1/2 p-2 rounded-t-3xl flex justify-center items-center' : 'h-screen w-full md:w-1/2 p-2 flex justify-center items-center'} onClick={(e) => e.stopPropagation()}>
       <div
         className={isMobile ? 'size-full p-4 flex flex-col justify-start items-center gap-1' : 'w-[19rem] h-[37rem] shadow-black shadow-[1px_1px_8px_8px_rgba(0,0,0)] overflow-auto bg-gray-400 rounded-[2rem] absolute flex flex-col justify-start items-center p-4'}
         {...props}

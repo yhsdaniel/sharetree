@@ -1,21 +1,15 @@
 'use client'
 
-import { useState } from 'react'
 import {
   Button,
-  Dialog,
 } from '@headlessui/react'
-import {
-  Bars3Icon,
-  XMarkIcon,
-} from '@heroicons/react/24/outline'
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence } from 'framer-motion'
 import logo from '@/assets/images/logo.png'
 import Link from 'next/link'
 import Image from 'next/image'
 import { signOut, useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
-import { LogIn, LogOut, User } from 'lucide-react'
+import { LogOut, User } from 'lucide-react'
 import { SidebarFooter, SidebarMenu, SidebarMenuItem } from './ui/sidebar'
 import { DropdownMenuComponent } from './DropdownMenu'
 
@@ -24,7 +18,6 @@ type StatusProps = {
 }
 
 export default function Navbar({ status }: StatusProps) {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const router = useRouter()
   const { data: session } = useSession()
 
@@ -53,16 +46,6 @@ export default function Navbar({ status }: StatusProps) {
           </a>
           <span className='text-green-700 font-bold'>Sharetree</span>
         </div>
-        {/* <div className="flex lg:hidden">
-          <button
-            type="button"
-            onClick={() => setMobileMenuOpen(true)}
-            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
-          >
-            <span className="sr-only">Open main menu</span>
-            <Bars3Icon aria-hidden="true" className="h-6 w-6" />
-          </button>
-        </div> */}
         <div className='flex lg:hidden'>
           {status === 'authenticated'
             ?
