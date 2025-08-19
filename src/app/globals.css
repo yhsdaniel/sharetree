@@ -200,6 +200,24 @@ h6 {
   }
 }
 
+.animate-gradientx2 {
+  background: linear-gradient(320deg, #ffbbfb, #fff3fe, #ffbbfb);
+  background-position: center;
+  animation: gradientX 4s forwards ease;
+}
+
+@keyframes gradientX {
+  0% {
+    background-size: 200% 200%;
+    background-position: left center;
+  }
+
+  100% {
+    background-size: 100% 100%;
+    background-position: center;
+  }
+}
+
 .loader {
   width: 15px;
   aspect-ratio: 1;

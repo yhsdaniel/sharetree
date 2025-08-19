@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import logo from '@/assets/images/logo.png'
 import { getUserLinks } from '@/lib/getuserlinks'
-import ListDeviceWrapper from '@/components/ListDeviceWrapper'
+import LinkComponent from '@/components/LinkComponent'
 
 interface Props {
     params: { username: string }
@@ -25,7 +25,7 @@ const UserForPublic = async ({ params }: Props) => {
                         </div>
                         <h1 className='text-xl font-bold my-4'>{`@${username}`}</h1>
                     </div>
-                    <ListDeviceWrapper listLinks={linkUser} />
+                    <LinkComponent listLinks={linkUser} />
                 </div>
 
                 {/* FOOTER */}

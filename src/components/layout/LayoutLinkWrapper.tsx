@@ -10,7 +10,7 @@ type ChildProps = {
     children: ReactNode
 }
 
-const LayoutLinkWrapper: React.FC<ChildProps> = ({ children }) => {
+const LayoutLinkWrapper = ({ children }: ChildProps) => {
     const router = useRouter()
     const userState = useContext(UserListContext)
 
@@ -20,7 +20,7 @@ const LayoutLinkWrapper: React.FC<ChildProps> = ({ children }) => {
     }
 
     return (
-        <main className='size-full'>
+        <main className='size-full min-h-screen'>
             <div className='size-full p-2 overflow-y-auto flex flex-col justify-center items-center'>
                 <div
                     className='h-12 p-8 w-full bg-green-200 border border-green-700 text-[--sidebar-accent-foreground] flex flex-col justify-center items-start rounded-xl'>

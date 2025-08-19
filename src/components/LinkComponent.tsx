@@ -1,12 +1,18 @@
 'use client'
 
-import React from 'react'
+import React, { Suspense } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/compat/router'
 
 type ListLinksProps = {
     url: string,
     name: string,
+}
+
+const stylesLoader = {
+  left: '50%',
+  transform: 'translate(0px, 350px)',
+  color: '#fff'
 }
 
 const classNameStyle = {
@@ -21,14 +27,14 @@ const LinkComponent = React.memo(({ listLinks }: { listLinks: ListLinksProps[] }
     const isAdminRoute = router?.asPath.startsWith('/admin')
 
     return (
-        <>
-            {listLinks?.map((value, index) => (
+        <Suspense fallback={<div className='w-full h-full flex justify-center items-center'><div className='loader' style={stylesLoader}></div></div>}>
+            {...listLinks?.map((value, index) => (
                 <Link key={index} href={value.url} className={isAdminRoute ? classNameStyle.linkAdmin : classNameStyle.linkPublic
                 }>
                     <span className={isAdminRoute ? classNameStyle.spanAdmin : classNameStyle.spanPublic}>{value.name}</span>
                 </Link>
             ))}
-        </>
+        </Suspense>
     )
 })
 

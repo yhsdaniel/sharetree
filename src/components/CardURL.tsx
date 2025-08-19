@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from "react"
+import { useCallback, useState } from "react"
 import { AnimatePresence, motion } from 'framer-motion'
 import Modal from "./Modal"
 import { Input } from "./ui/input"
@@ -21,28 +21,15 @@ interface AppProps {
 export default function CardURL({ userId, id, name, url, onUpdate, onUpdateAddAndDelete, refresh }: AppProps) {
 
     const [showModal, setShowModal] = useState(false)
-    const [editName, setEditName] = useState(false)
-    const [editUrl, setEditUrl] = useState(false)
+    const [editField, setEditField] = useState<"name" | "url" | null>(null)
     const [type, setType] = useState('')
     const [isEdit, setIsEdit] = useState({ name, url })
+    
+    const handleEdit = (field: "name" | "url") => setEditField(field)
 
-    const handleEdit = {
-        EditName: () => {
-            setEditName(true)
-            setEditUrl(false)
-        },
-        EditUrl: () => {
-            setEditUrl(true)
-            setEditName(false)
-        }
-    }
-
-    const handleChange = (event: any) => {
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
-        setIsEdit(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
+        setIsEdit(prevState => ({ ...prevState, [name]: value }));
     }
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -50,26 +37,23 @@ export default function CardURL({ userId, id, name, url, onUpdate, onUpdateAddAn
             if (isEdit.name !== name || isEdit.url !== url) {
                 handleSave();
             } else {
-                setEditName(false)
-                setEditUrl(false)
+                setEditField(null)
             }
         }
     }
 
-    const handleLosesFocus = () => {
-        setEditName(false)
-        setEditUrl(false)
+    const handleBlur = () => {
+        setEditField(null)
         handleSave()
     }
 
-    const handleSave = async () => {
+    const handleSave = useCallback(async () => {
         try {
             await axios.put(`/api/linkadmin`, { id: id, name: isEdit.name, url: isEdit.url })
             if (isEdit.name !== name || isEdit.url !== name) {
                 toast.success('Updated successfully')
             }
-            setEditName(false)
-            setEditUrl(false)
+            setEditField(null)
 
             if (onUpdate) {
                 onUpdate({ id: id, name: isEdit.name, url: isEdit.url })
@@ -78,13 +62,13 @@ export default function CardURL({ userId, id, name, url, onUpdate, onUpdateAddAn
             toast.error('Error updating link')
             console.error(error)
         }
-    };
+    }, [isEdit, id, name, url, onUpdate])
 
     return (
         <div className='size-full flex border overflow-auto bg-white border-gray-300 shadow-lg rounded-3xl mt-4 py-4 md:py-6 px-6 md:px-16'>
             <div className="w-9/12 flex flex-col gap-4">
-                <div className="flex justify-between items-center cursor-pointer" onClick={handleEdit.EditName}>
-                    {editName ? (
+                <div className="flex justify-between items-center cursor-pointer" onClick={() => handleEdit("name")}>
+                    {editField === "name" ? (
                         <Input
                             type='text'
                             name='name'
@@ -93,8 +77,7 @@ export default function CardURL({ userId, id, name, url, onUpdate, onUpdateAddAn
                             value={isEdit.name}
                             autoFocus
                             onKeyDown={handleKeyDown}
-                            onBlur={handleLosesFocus}
-                            onSubmit={handleSave}
+                            onBlur={handleBlur}
                             onChange={handleChange}
                         />
                     ) : (
@@ -105,8 +88,8 @@ export default function CardURL({ userId, id, name, url, onUpdate, onUpdateAddAn
                     )}
                 </div>
 
-                <div className="w-full text-sm flex justify-between items-center cursor-pointer" onClick={handleEdit.EditUrl}>
-                    {editUrl ? (
+                <div className="w-full text-sm flex justify-between items-center cursor-pointer" onClick={() => handleEdit("url")}>
+                    {editField === "url" ? (
                         <Input
                             type='text'
                             name='url'
@@ -115,8 +98,7 @@ export default function CardURL({ userId, id, name, url, onUpdate, onUpdateAddAn
                             value={isEdit.url}
                             autoFocus
                             onKeyDown={handleKeyDown}
-                            onBlur={handleLosesFocus}
-                            onSubmit={handleSave}
+                            onBlur={handleBlur}
                             onChange={handleChange}
                         />
                     ) : (

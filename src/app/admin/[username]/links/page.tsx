@@ -14,41 +14,30 @@ const LinkWrapper = () => {
     const setListLinks = userListContext?.setListLinks;
     const idUser = userListContext?.idUser;
     const refresh = userListContext?.refresh
+    const updatedNewAndDelete = userListContext?.updatedNewAndDelete;
 
     const [isList, setIsList] = useState(listLinks)
     const [showModal, setShowModal] = useState(false)
     const [type, setType] = useState('')
 
+    useEffect(() => {
+        setIsList((listLinks ?? []).filter((item) => !!item && typeof item._id === 'string'))
+    }, [listLinks])
+
     const handleUpdate = (update: { id: string, name: string, url: string }) => {
-        if (setListLinks) {
-            setListLinks((prevLinks: any) =>
-                prevLinks?.map((link: any) => {
-                    if (link._id === update.id) {
-                        return { ...link, name: update.name, url: update.url }
-                    }
-                    return link
-                })
-            )
-        }
+        if(!setListLinks) return 
+        setListLinks((prevLinks: any[]) =>
+            prevLinks
+                ?.filter((link) => !!link && typeof link._id === 'string')
+                .map((link) =>
+                    link._id === update.id
+                        ? { ...link, name: update.name, url: update.url }
+                        : link
+                )
+        )
     }
 
-    const updatedNewAndDelete = (update: { id?: string, name: string, url?: string }) => {
-        if (setListLinks) {
-            setListLinks((prevLinks: any[]) => {
-                const exists = prevLinks.some((item: any) => item._id === update.id);
-                if (exists) {
-                    // Delete it
-                    const updateLinkAfterDelete = prevLinks.filter((item: any) => item._id !== update.id)
-                    return updateLinkAfterDelete
-                } else {
-                    // Add new
-                    return [...prevLinks, { name: update.name, url: update.url }];
-                }
-            })
-        }
-    }
-
-    if (!listLinks) return <div className='size-full flex justify-center items-center loader'></div>;
+    if (!Array.isArray(listLinks)) return <div className='size-full flex justify-center items-center loader'></div>;
 
     return (
         <div className='size-full relative'>
@@ -91,7 +80,7 @@ const LinkWrapper = () => {
                         id={idUser || ''}
                         name=''
                         onUpdate={updatedNewAndDelete}
-                        refresh={refresh ?? (() => { })}
+                        refresh={refresh ?? (() => {})}
                     />
                 }
             </AnimatePresence>

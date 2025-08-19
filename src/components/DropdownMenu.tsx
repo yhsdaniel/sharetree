@@ -9,9 +9,11 @@ import {
     DropdownMenuShortcut,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { useIsMobile } from "@/hooks/use-mobile"
 
-import { CircleUser, LogOut, Settings } from 'lucide-react'
+import { CircleUser, LogOut, Settings, User } from 'lucide-react'
 import Image from "next/image"
+import Link from "next/link"
 
 type DropDownProps = {
     username: string | undefined | null,
@@ -20,12 +22,13 @@ type DropDownProps = {
 }
 
 export function DropdownMenuComponent({ username, image, signout }: DropDownProps) {
+    const isMobile = useIsMobile()
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
                 <Button
                     variant="outline"
-                    className="w-full my-2 py-0 pr-6 pl-0 md:px-2 h-auto justify-start rounded-3xl focus-visible:shadow-none"
+                    className="w-full my-0 md:my-2 py-0 pr-6 pl-0 md:px-2 h-auto justify-start rounded-3xl focus-visible:shadow-none"
                 >
                     {image ? (
                         <>
@@ -37,7 +40,7 @@ export function DropdownMenuComponent({ username, image, signout }: DropDownProp
                                 referrerPolicy='no-referrer'
                                 className='rounded-full w-9 mr-3 my-1 ml-1'
                             />
-                            <span className='text-black/80 font-bold'>{`${username}`}</span>
+                            <span className='text-black/80 font-bold text-xs md:text-base'>{`${username}`}</span>
                         </>
                     ) : (
                         <>
@@ -52,6 +55,14 @@ export function DropdownMenuComponent({ username, image, signout }: DropDownProp
             <DropdownMenuContent className="w-56" align="start">
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuGroup>
+                    {isMobile &&
+                        <Link href={`/admin/${username}/links`}>
+                            <DropdownMenuItem>
+                                Admin
+                                <DropdownMenuShortcut><User /></DropdownMenuShortcut>
+                            </DropdownMenuItem>
+                        </Link>
+                    }
                     <DropdownMenuItem>
                         Profile
                         <DropdownMenuShortcut><CircleUser /></DropdownMenuShortcut>
