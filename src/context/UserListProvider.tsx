@@ -1,3 +1,5 @@
+'use client'
+
 import React, { createContext, ReactNode, useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react'
 import axios from 'axios'
@@ -19,6 +21,7 @@ type UserListContextType = {
     idUser: string | undefined,
     setListLinks?: React.Dispatch<React.SetStateAction<LinkType[]>>,
     refresh?: () => void
+    updatedNewAndDelete: (update: { id?: string, name: string, url?: string }) => void
 }
 
 export const UserListContext = createContext<UserListContextType | null>(null)
@@ -34,10 +37,22 @@ const UserListProvider = ({ children }: LayoutProps) => {
     const user = session?.user
     const idUser = user && 'id' in user ? user?.id : undefined
 
+    // --- Add updatedNewAndDelete function here ---
+    const updatedNewAndDelete = (update: { id?: string, name: string, url?: string }) => {
+        setListLinks((prevLinks) => {
+            const safeLinks = prevLinks.filter((item): item is LinkType => !!item && typeof item._id === 'string')
+            const exists = update.id && safeLinks.some((item) => item._id === update.id)
+            if (update.id && exists) {
+                // Delete it
+                return safeLinks.filter((item) => item._id !== update.id)
+            }
+            // Add new
+            return [...safeLinks, { _id: update.id || '', name: update.name, url: update.url || '' }]
+        })
+    }
     
     useEffect(() => {
         if(!idUser) return
-
         const fetchData = async () => {
             try {
                 if (idUser) {
@@ -55,7 +70,16 @@ const UserListProvider = ({ children }: LayoutProps) => {
 
     return (
         <div className='size-full'>
-            <UserListContext.Provider value={{ idUser, userState, userImage, listLinks, setListLinks, refresh: () => setRefreshFlag(prev => prev+1) }}>
+            <UserListContext.Provider 
+                value={{ 
+                    idUser, 
+                    userState, 
+                    userImage, 
+                    listLinks, 
+                    setListLinks, 
+                    refresh: () => setRefreshFlag((prev) => prev + 1), 
+                    updatedNewAndDelete
+                }}>
                 {children}
             </UserListContext.Provider>
         </div>

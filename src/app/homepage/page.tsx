@@ -9,7 +9,7 @@ import Navbar from '@/components/Navbar'
 import Link from 'next/link'
 
 export default function HomePage() {
-  const { data: session, status } = useSession()
+  const { status } = useSession()
 
   return (
     <div className='size-full relative overflow-y-auto overflow-x-hidden scroll-smooth'>
@@ -69,7 +69,7 @@ export default function HomePage() {
             >
               <Image
                 src={social}
-                alt=''
+                alt='Social Image 1'
                 width={500}
                 height={500}
                 className='size-full'
@@ -121,7 +121,7 @@ export default function HomePage() {
             className='hidden w-full md:flex justify-center items-center'>
             <Image
               src={social2}
-              alt='Social Media Icons'
+              alt='Social Image 2'
               width={500}
               height={500}
               className='mix-blend-multiply'
