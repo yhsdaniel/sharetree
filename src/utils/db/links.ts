@@ -10,10 +10,10 @@ const LinkSchema = new Schema({
         type: String,
         required: true
     },
-    owner: [{
+    owner: {
         type: Schema.Types.ObjectId,
         ref: 'user'
-    }]
+    }
 })
 
 const Link = mongoose.models.links || mongoose.model('links', LinkSchema)

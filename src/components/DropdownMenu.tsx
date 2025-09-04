@@ -9,7 +9,7 @@ import {
     DropdownMenuShortcut,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { useIsMobile } from "@/hooks/use-mobile"
+import { useIsMobile } from "@/components/hooks/use-mobile"
 
 import { CircleUser, LogOut, Settings, User } from 'lucide-react'
 import Image from "next/image"

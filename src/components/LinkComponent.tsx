@@ -3,10 +3,11 @@
 import React, { Suspense } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/compat/router'
+import { useQuery } from '@apollo/client'
+import { GET_USER_QUERY } from '@/graphql/accessQuery'
 
 type ListLinksProps = {
-    url: string,
-    name: string,
+    username: string
 }
 
 const stylesLoader = {
@@ -22,18 +23,29 @@ const classNameStyle = {
     spanPublic: 'text-xs text-gray-500 font-bold'
 }
 
-const LinkComponent = React.memo(({ listLinks }: { listLinks: ListLinksProps[] }) => {
+const LinkComponent = React.memo(({ username }: ListLinksProps) => {
     const router = useRouter()
     const isAdminRoute = router?.asPath.startsWith('/admin')
 
+    const { data, loading } = useQuery(GET_USER_QUERY, {
+        variables: { username: username },
+        pollInterval: 5000
+    })
+
+    if(loading) return <div className='w-full h-full flex justify-center items-center'><div className='loader' style={stylesLoader}></div></div>
+
     return (
-        <Suspense fallback={<div className='w-full h-full flex justify-center items-center'><div className='loader' style={stylesLoader}></div></div>}>
-            {...listLinks?.map((value, index) => (
-                <Link key={index} href={value.url} className={isAdminRoute ? classNameStyle.linkAdmin : classNameStyle.linkPublic}>
+        <>
+            {data?.user?.link?.map((value: any) => (
+                <Link 
+                    key={value._id} 
+                    href={value.url} 
+                    className={isAdminRoute ? classNameStyle.linkAdmin : classNameStyle.linkPublic}
+                >
                     <span className={isAdminRoute ? classNameStyle.spanAdmin : classNameStyle.spanPublic}>{value.name}</span>
                 </Link>
             ))}
-        </Suspense>
+        </>
     )
 })
 

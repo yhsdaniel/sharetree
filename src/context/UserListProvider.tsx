@@ -3,6 +3,8 @@
 import React, { createContext, ReactNode, useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react'
 import axios from 'axios'
+import { useMutation, useQuery } from '@apollo/client'
+import { CREATE_LINK_MUTATION, DELETE_LINK_MUTATION, GET_USER_QUERY, UPDATE_LINK_MUTATION } from '@/graphql/accessQuery'
 
 type LayoutProps = {
     children: ReactNode
@@ -21,7 +23,7 @@ type UserListContextType = {
     idUser: string | undefined,
     setListLinks?: React.Dispatch<React.SetStateAction<LinkType[]>>,
     refresh?: () => void
-    updatedNewAndDelete: (update: { id?: string, name: string, url?: string }) => void
+    // updatedNewAndDelete: (update: { id?: string, name: string, url?: string }) => void
 }
 
 export const UserListContext = createContext<UserListContextType | null>(null)
@@ -33,52 +35,52 @@ const UserListProvider = ({ children }: LayoutProps) => {
 
     const { data: session } = useSession()
     const userImage = session?.user?.image
-
     const user = session?.user
     const idUser = user && 'id' in user ? user?.id : undefined
+    const { data, refetch } = useQuery(GET_USER_QUERY, {
+        variables: { id: idUser },
+        skip: !idUser,
+        fetchPolicy: 'network-only'
+    })
 
     // --- Add updatedNewAndDelete function here ---
-    const updatedNewAndDelete = (update: { id?: string, name: string, url?: string }) => {
-        setListLinks((prevLinks) => {
-            const safeLinks = prevLinks.filter((item): item is LinkType => !!item && typeof item._id === 'string')
-            const exists = update.id && safeLinks.some((item) => item._id === update.id)
-            if (update.id && exists) {
-                // Delete it
-                return safeLinks.filter((item) => item._id !== update.id)
-            }
-            // Add new
-            return [...safeLinks, { _id: update.id || '', name: update.name, url: update.url || '' }]
-        })
-    }
-    
-    useEffect(() => {
-        if(!idUser) return
-        const fetchData = async () => {
-            try {
-                if (idUser) {
-                    const { data: response } = await axios.get(`/api/linkadmin`, { params: { id: idUser } })
-                    setUserState(response.username || response.name)
-                    setListLinks(response.link)
-                }
-            } catch (error) {
-                console.error(error)
-            }
-        }
+    // const updatedNewAndDelete = (update: { id?: string, name: string, url?: string }) => {
+    //     setListLinks((prevLinks) => {
+    //         const safeLinks = prevLinks.filter((item): item is LinkType => !!item && typeof item._id === 'string')
+    //         const exists = update.id && safeLinks.some((item) => item._id === update.id)
+    //         if (update.id && exists) {
+    //             // Delete it
+    //             return safeLinks.filter((item) => item._id !== update.id)
+    //         }
+    //         // Add new
+    //         return [...safeLinks, { _id: update.id || '', name: update.name, url: update.url || '' }]
+    //     })
+    // }
 
-        fetchData()
-    }, [idUser, refreshFlag])
+    useEffect(() => {
+        if(data?.user){
+            setUserState(data?.user?.username)
+            setListLinks(data?.user?.link)
+        }
+    }, [data])
+
+    useEffect(() => {
+        if(idUser){
+            refetch()
+        }
+    }, [idUser, refreshFlag, refetch])
 
     return (
         <div className='size-full'>
-            <UserListContext.Provider 
-                value={{ 
-                    idUser, 
-                    userState, 
-                    userImage, 
-                    listLinks, 
-                    setListLinks, 
-                    refresh: () => setRefreshFlag((prev) => prev + 1), 
-                    updatedNewAndDelete
+            <UserListContext.Provider
+                value={{
+                    idUser,
+                    userState,
+                    userImage,
+                    listLinks,
+                    setListLinks,
+                    refresh: () => setRefreshFlag((prev) => prev + 1),
+                    // updatedNewAndDelete
                 }}>
                 {children}
             </UserListContext.Provider>

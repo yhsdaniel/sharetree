@@ -2,7 +2,7 @@
 
 import GoogleButton from "@/components/GoogleButton";
 import { Input } from "@/components/ui/input";
-import { useFormHooks } from "../hooks/useFormHooks";
+import { useFormHooks } from "../../components/hooks/useFormHooks";
 
 export default function RegisterForm() {
     const { formDataRegister, handleChangeRegister, handleSubmitRegister } = useFormHooks()

@@ -9,7 +9,7 @@ import SidebarComponent from '@/components/SidebarComponent'
 import LayoutLinkWrapper from '@/components/layout/LayoutLinkWrapper'
 import DeviceUIMobile from '@/components/DeviceUIMobile'
 import DeviceUI from '@/components/DeviceUI'
-import { useIsMobile } from '@/hooks/use-mobile'
+import { useIsMobile } from '@/components/hooks/use-mobile'
 
 type LayoutProps = {
     children: ReactNode
@@ -17,21 +17,17 @@ type LayoutProps = {
 
 const Layout = ({ children }: LayoutProps) => {
     const isMobile = useIsMobile()
-    const userContext = useContext(UserListContext)
     const { status } = useSession()
-    const updatedNewAndDelete = userContext?.updatedNewAndDelete;
 
     return (
         <div className='size-full bg-white md:bg-gray-200'>
-            <UserListProvider>
-                <SidebarProvider>
-                    {isMobile ? <Navbar status={status} /> : <SidebarComponent />}
-                    <LayoutLinkWrapper>{children}</LayoutLinkWrapper>
-                    {isMobile
-                        ? <DeviceUIMobile updatedNewAndDelete={updatedNewAndDelete} />
-                        : <DeviceUI />}
-                </SidebarProvider>
-            </UserListProvider>
+            <SidebarProvider>
+                {isMobile ? <Navbar status={status} /> : <SidebarComponent />}
+                <LayoutLinkWrapper>{children}</LayoutLinkWrapper>
+                {isMobile
+                    ? <DeviceUIMobile />
+                    : <DeviceUI />}
+            </SidebarProvider>
         </div>
     )
 }

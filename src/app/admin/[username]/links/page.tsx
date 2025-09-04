@@ -3,41 +3,35 @@
 import { lazy, Suspense, useContext, useEffect, useState } from 'react'
 import Modal from '@/components/Modal'
 import { Button } from '@/components/ui/button'
-import { UserListContext } from '@/context/UserListProvider'
 import { AnimatePresence, Reorder } from 'framer-motion'
+import { GET_USER_QUERY, UPDATE_LINK_MUTATION } from '@/graphql/accessQuery'
+import { useQuery } from '@apollo/client'
+import { useSession } from 'next-auth/react'
 
 const CardUrl = lazy(() => import('@/components/CardURL'))
 
-const LinkWrapper = () => {
-    const userListContext = useContext(UserListContext);
-    const listLinks = userListContext?.listLinks;
-    const setListLinks = userListContext?.setListLinks;
-    const idUser = userListContext?.idUser;
-    const refresh = userListContext?.refresh
-    const updatedNewAndDelete = userListContext?.updatedNewAndDelete;
+type LinkType = {
+    _id: string
+    name: string
+    url: string
+}
 
-    const [isList, setIsList] = useState(listLinks)
+const LinkWrapper = () => {
+    const [selected, setSelected] = useState<{ id: string; name: string }>({ id: '', name: '' })
     const [showModal, setShowModal] = useState(false)
     const [type, setType] = useState('')
+    const session = useSession()
+    const id_user = session?.data?.user?.id
 
-    useEffect(() => {
-        setIsList((listLinks ?? []).filter((item) => !!item && typeof item._id === 'string'))
-    }, [listLinks])
+    const { data, loading } = useQuery(GET_USER_QUERY, {
+        variables: { id: id_user },
+        skip: !id_user,
+        fetchPolicy: 'cache-and-network',
+    })
 
-    const handleUpdate = (update: { id: string, name: string, url: string }) => {
-        if(!setListLinks) return 
-        setListLinks((prevLinks: any[]) =>
-            prevLinks
-                ?.filter((link) => !!link && typeof link._id === 'string')
-                .map((link) =>
-                    link._id === update.id
-                        ? { ...link, name: update.name, url: update.url }
-                        : link
-                )
-        )
-    }
+    const isList: LinkType[] = data?.user?.link ?? []
 
-    if (!Array.isArray(listLinks)) return <div className='size-full flex justify-center items-center loader'></div>;
+    if (loading) return <div className='size-full flex justify-center items-center loader'></div>;
 
     return (
         <div className='size-full relative'>
@@ -45,6 +39,7 @@ const LinkWrapper = () => {
                 <Button
                     className='w-full h-10 md:h-12 text-xs rounded-2xl bg-gray-800 text-primary-foreground hover:bg-primary/90 mt-4 md:mt-0'
                     onClick={() => {
+                        setSelected({ id: '', name: '' })
                         setShowModal(true);
                         setType('add')
                     }}
@@ -53,22 +48,18 @@ const LinkWrapper = () => {
                 </Button>
             </div>
             <section className='mt-6 md:mt-10'>
-                <Suspense fallback={<div className='loader'></div>}>
-                    <Reorder.Group axis='y' values={isList ?? []} onReorder={setIsList}>
-                        {listLinks?.map((value: any, index: any) => (
-                            <Reorder.Item key={index} value={value}>
-                                <CardUrl
-                                    userId={idUser || ''}
-                                    id={value._id}
-                                    name={value.name}
-                                    url={value.url}
-                                    onUpdate={handleUpdate}
-                                    onUpdateAddAndDelete={updatedNewAndDelete}
-                                />
-                            </Reorder.Item>
-                        ))}
-                    </Reorder.Group>
-                </Suspense>
+                <Reorder.Group axis='y' values={isList ?? []} onReorder={() => { }}>
+                    {isList.map((value: any, index: any) => (
+                        <Reorder.Item key={index} value={value}>
+                            <CardUrl
+                                userId={id_user || ''}
+                                id={value._id}
+                                name={value.name}
+                                url={value.url}
+                            />
+                        </Reorder.Item>
+                    ))}
+                </Reorder.Group>
             </section>
 
             {/* ADD MODAL */}
@@ -77,10 +68,9 @@ const LinkWrapper = () => {
                     <Modal
                         type={type}
                         setShowModal={setShowModal}
-                        id={idUser || ''}
-                        name=''
-                        onUpdate={updatedNewAndDelete}
-                        refresh={refresh ?? (() => {})}
+                        id={selected.id}
+                        name={selected.name}
+                        userId={id_user}
                     />
                 }
             </AnimatePresence>

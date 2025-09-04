@@ -1,19 +1,17 @@
 import React from 'react'
 import { Button } from './ui/button'
 import { motion } from 'framer-motion'
-import { useLinkModal } from '../app/hooks/useLinkModal'
+import { useLinkModal } from './hooks/useLinkModal'
 
-type Props = {
+type ModalDeleteProps = {
     userId?: string,
     id: string,
     name: string,
-    onClose: () => void,
-    onUpdate?: (update: { id?: string, name: string, url?: string }) => void,
-    refresh: () => void
+    onClose: () => void
 }
 
-export default function ModalDelete({ userId, id, name, onClose, onUpdate, refresh }: Props) {
-    const { handleSubmitDelete } = useLinkModal(onClose, onUpdate, refresh)
+export default function ModalDelete({ userId, id, name, onClose }: ModalDeleteProps) {
+    const { handleSubmitDelete } = useLinkModal(onClose)
     const isMobile = window.innerWidth <= 768
     return (
         <motion.div
@@ -26,7 +24,7 @@ export default function ModalDelete({ userId, id, name, onClose, onUpdate, refre
             <button onClick={onClose} className='relative inline float-right cursor-pointer hover:font-bold transition duration-150'>X</button>
             <p>Delete link</p>
             <p>Are you sure to delete {name}</p>
-            <Button className='my-4 float-right' onClick={() => userId && handleSubmitDelete(userId, id, name)}>Ok</Button>
+            <Button className='my-4 float-right' onClick={() => userId && handleSubmitDelete(userId, id)}>Ok</Button>
         </motion.div>
     )
 }

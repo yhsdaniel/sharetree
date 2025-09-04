@@ -10,11 +10,9 @@ interface ModalProps {
     type: string,
     name: string,
     setShowModal: (showModal: boolean) => void,
-    onUpdate?: (update: { id?: string, name: string, url?: string }) => void,
-    refresh: () => void
 }
 
-const Modal: React.FC<ModalProps> = ({ userId, type, name, id, setShowModal, onUpdate, refresh }) => {
+const Modal: React.FC<ModalProps> = ({ userId, type, name, id, setShowModal }) => {
     const closeModal = () => {
         setShowModal(false)
     }
@@ -23,8 +21,6 @@ const Modal: React.FC<ModalProps> = ({ userId, type, name, id, setShowModal, onU
             {type === 'add' && (
                 <ModalAdd
                     onClose={() => setShowModal(false)}
-                    onUpdate={onUpdate}
-                    refresh={refresh}
                 />
             )}
 
@@ -34,8 +30,6 @@ const Modal: React.FC<ModalProps> = ({ userId, type, name, id, setShowModal, onU
                     id={id}
                     name={name}
                     onClose={() => setShowModal(false)}
-                    onUpdate={onUpdate}
-                    refresh={refresh}
                 />
             )}
         </div>

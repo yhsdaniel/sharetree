@@ -2,7 +2,6 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import logo from '@/assets/images/logo.png'
-import { getUserLinks } from '@/lib/getuserlinks'
 import LinkComponent from '@/components/LinkComponent'
 
 interface Props {
@@ -12,8 +11,6 @@ interface Props {
 const UserForPublic = async ({ params }: Props) => {
     const { username } = await params
     if (!username) notFound()
-
-    const linkUser = await getUserLinks(username)
 
     return (
         <div className='size-full overflow-auto bg-gray-700 flex justify-center items-center'>
@@ -25,7 +22,7 @@ const UserForPublic = async ({ params }: Props) => {
                         </div>
                         <h1 className='text-xl font-bold my-4'>{`@${username}`}</h1>
                     </div>
-                    <LinkComponent listLinks={linkUser} />
+                    <LinkComponent username={username} />
                 </div>
 
                 {/* FOOTER */}

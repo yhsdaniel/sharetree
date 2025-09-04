@@ -1,23 +1,15 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Eye, Paintbrush, Plus } from "lucide-react"
 
 import Modal from './Modal'
-import { UserListContext } from '@/context/UserListProvider'
 import { Button } from './ui/button'
 import DeviceUI from './DeviceUI'
 
-interface DeviceUIMobileProps {
-    userContext?: any,
-    refresh?: () => void,
-    updatedNewAndDelete?: (update: { id?: string, name: string, url?: string }) => void
-}
-
-const DeviceUIMobile = React.memo(({ refresh, updatedNewAndDelete }: DeviceUIMobileProps) => {
-    const userContext = useContext(UserListContext) 
+const DeviceUIMobile = React.memo(() => {
     const [showModal, setShowModal] = useState(false)
     const [showDeviceUI, setShowDeviceUI] = useState(false)
-    const [type, setType] = useState('')
+    const [type, setType] = useState<'add' | 'delete' | ''>('')
 
     return (
         <>
@@ -49,10 +41,8 @@ const DeviceUIMobile = React.memo(({ refresh, updatedNewAndDelete }: DeviceUIMob
                     <Modal
                         type={type}
                         setShowModal={setShowModal}
-                        id={userContext?.idUser || ''}
+                        id={''}
                         name=''
-                        onUpdate={updatedNewAndDelete}
-                        refresh={refresh ?? (() => { })}
                     />
                 }
                 {showDeviceUI && (

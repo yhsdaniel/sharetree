@@ -13,8 +13,6 @@ export async function GET(req: NextRequest) {
         const { searchParams } = new URL(req.url);
         const username = searchParams.get('username');
 
-        console.log('Link model loaded:', !!Link);
-
         if (!username) {
             return NextResponse.json({ error: 'Username is required' }, { status: 400 });
         }

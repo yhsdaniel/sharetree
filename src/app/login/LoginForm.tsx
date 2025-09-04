@@ -3,7 +3,7 @@
 import GoogleButton from '@/components/GoogleButton'
 import { Input } from '@/components/ui/input'
 import Link from 'next/link'
-import { useFormHooks } from '../hooks/useFormHooks'
+import { useFormHooks } from '../../components/hooks/useFormHooks'
 
 export default function LoginForm() {
     const { formDataLogin, handleChangeLogin, handleSubmitLogin } = useFormHooks()

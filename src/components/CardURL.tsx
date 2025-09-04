@@ -4,27 +4,27 @@ import { useCallback, useState } from "react"
 import { AnimatePresence, motion } from 'framer-motion'
 import Modal from "./Modal"
 import { Input } from "./ui/input"
-import axios from "axios"
 import toast from "react-hot-toast"
 import { SquarePen, Trash } from "lucide-react"
+import { useMutation } from "@apollo/client"
+import { UPDATE_LINK_MUTATION } from "@/graphql/accessQuery"
 
 interface AppProps {
     userId: string,
     id: string,
     name: string,
     url: string,
-    onUpdate?: (update: { id: string, name: string, url: string }) => void,
-    onUpdateAddAndDelete?: (update: { id?: string, name: string, url?: string }) => void,
-    refresh?: () => void
 }
 
-export default function CardURL({ userId, id, name, url, onUpdate, onUpdateAddAndDelete, refresh }: AppProps) {
+export default function CardURL({ userId, id, name, url }: AppProps) {
 
     const [showModal, setShowModal] = useState(false)
     const [editField, setEditField] = useState<"name" | "url" | null>(null)
     const [type, setType] = useState('')
     const [isEdit, setIsEdit] = useState({ name, url })
-    
+
+    const [updateLink] = useMutation(UPDATE_LINK_MUTATION)
+
     const handleEdit = (field: "name" | "url") => setEditField(field)
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -47,22 +47,18 @@ export default function CardURL({ userId, id, name, url, onUpdate, onUpdateAddAn
         handleSave()
     }
 
-    const handleSave = useCallback(async () => {
+    const handleSave = async () => {
         try {
-            await axios.put(`/api/linkadmin`, { id: id, name: isEdit.name, url: isEdit.url })
-            if (isEdit.name !== name || isEdit.url !== name) {
-                toast.success('Updated successfully')
-            }
+            await updateLink({
+                variables: { id, name: isEdit.name, url: isEdit.url }
+            })
+            toast.success('Link updated successfully')
             setEditField(null)
-
-            if (onUpdate) {
-                onUpdate({ id: id, name: isEdit.name, url: isEdit.url })
-            }
         } catch (error) {
             toast.error('Error updating link')
             console.error(error)
         }
-    }, [isEdit, id, name, url, onUpdate])
+    }
 
     return (
         <div className='size-full flex border overflow-auto bg-white border-gray-300 shadow-lg rounded-3xl mt-4 py-4 md:py-6 px-6 md:px-16'>
@@ -120,22 +116,21 @@ export default function CardURL({ userId, id, name, url, onUpdate, onUpdateAddAn
                 >
                     <Trash className="md:w-4 w-3" />
                 </motion.button>
+                
+                {/* DELETE MODAL */}
+                <AnimatePresence>
+                    {showModal &&
+                        <Modal
+                            type={type}
+                            userId={userId}
+                            id={id}
+                            name={name}
+                            setShowModal={setShowModal}
+                        />
+                    }
+                </AnimatePresence>
             </div>
 
-            {/* DELETE MODAL */}
-            <AnimatePresence>
-                {showModal &&
-                    <Modal
-                        type={type}
-                        userId={userId}
-                        id={id}
-                        setShowModal={setShowModal}
-                        name={name}
-                        onUpdate={onUpdateAddAndDelete}
-                        refresh={refresh ?? (() => { })}
-                    />
-                }
-            </AnimatePresence>
         </div>
     )
 }

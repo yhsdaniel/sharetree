@@ -2,16 +2,14 @@ import React from 'react'
 import { Input } from './ui/input'
 import { Button } from './ui/button'
 import { motion } from 'framer-motion'
-import { useLinkModal } from '../app/hooks/useLinkModal'
+import { useLinkModal } from './hooks/useLinkModal'
 
 type Props = {
-    onClose: () => void,
-    onUpdate?: (update: { id?: string, name: string, url?: string }) => void,
-    refresh: () => void
+    onClose: () => void
 }
 
-export default function ModalAdd({ onClose, onUpdate, refresh }: Props) {
-    const { fillLink, handleChange, handleSubmitAdd } = useLinkModal(onClose, onUpdate, refresh)
+export default function ModalAdd({ onClose }: Props) {
+    const { fillLink, handleChange, handleSubmitAdd } = useLinkModal(onClose)
     const isMobile = window.innerWidth <= 768
     return (
         <motion.div
