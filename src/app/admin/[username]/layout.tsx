@@ -1,7 +1,6 @@
 'use client'
 
-import React, { lazy, ReactNode, useContext } from 'react'
-import UserListProvider, { UserListContext } from '@/context/UserListProvider'
+import React, { ReactNode } from 'react'
 import { useSession } from 'next-auth/react'
 import { SidebarProvider } from '@/components/ui/sidebar'
 import Navbar from '@/components/Navbar'
