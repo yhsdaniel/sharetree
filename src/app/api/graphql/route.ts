@@ -5,6 +5,7 @@ import { connect } from '@/lib/mongodb'
 import Link from '@/utils/db/links'
 import User from '@/utils/db/user'
 import mongoose from 'mongoose'
+import bcrypt from 'bcryptjs'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 
@@ -28,6 +29,8 @@ export const typeDefs = gql`
     }
 
     type Mutation {
+        createUser(username: String!, email: String!, password: String!): User
+
         createLink(name: String!, url: String!): Link
 
         updateLink(id: ID!, name: String!, url: String!): Link
@@ -76,6 +79,39 @@ export const resolvers = {
         }
     },
     Mutation: {
+        createUser: async (_parent: any, args: { username: string; email: string; password: string }) => {
+            await connect();
+
+            // Check if user exists by email
+            const existUser = await User.findOne({ email: args.email }).exec();
+            if (existUser) {
+                throw new Error('Email already exists');
+            }
+
+            // Hash password
+            const salt = await bcrypt.genSalt(10);
+            const hash = await bcrypt.hash(args.password, salt);
+
+            // Create new user
+            const newUser = new User({
+                username: args.username,
+                email: args.email,
+                password: hash,
+            });
+
+            try {
+                await newUser.save();
+                // Optionally, do not return password
+                return {
+                    _id: newUser._id,
+                    username: newUser.username,
+                    email: newUser.email,
+                    link: newUser.link,
+                };
+            } catch (error) {
+                throw new Error('Registration unsuccessful');
+            }
+        },
         createLink: async (_parent: any, args: { name: string, url: string }) => {
             await connect()
 

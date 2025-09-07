@@ -18,7 +18,7 @@ export default function Home() {
           }
         `}
       </style>
-      <main className="size-full">
+      <main className="size-full scroll-smooth overflow-x-hidden">
         <HomePage />
       </main>
     </>

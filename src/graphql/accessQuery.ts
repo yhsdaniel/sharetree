@@ -14,6 +14,16 @@ export const GET_USER_QUERY = gql`
   }
 `;
 
+export const CREATE_USER_NEW = gql`
+  mutation CreateUser($username: String!, $email: String!, $password: String!) {
+    createUser(username: $username, email: $email, password: $password) {
+      _id
+      username
+      email
+    }
+  }
+`;
+
 export const CREATE_LINK_MUTATION = gql`
   mutation CreateLink($name: String!, $url: String!) {
     createLink(name: $name, url: $url) {

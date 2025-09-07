@@ -12,18 +12,18 @@ export default function HomePage() {
   const { status } = useSession()
 
   return (
-    <div className='size-full relative overflow-y-auto overflow-x-hidden scroll-smooth'>
+    <>
       <Navbar status={status} />
 
       {/* First Banner */}
-      <div id='home' className="sm:p-10 min-h-screen size-full animate-gradientx flex justify-center items-center">
-        <div className="relative size-full mx-[5%] px-4 flex items-start justify-center flex-col md:flex-row">
+      <div id='home' className="min-h-screen h-[calc(100%-(-5rem))] size-full animate-gradientx flex justify-center items-center">
+        <div className="relative size-full mx-14 my-10 flex items-start justify-center flex-col md:flex-row">
           <div className="size-full md:w-1/2 text-left flex flex-col justify-center items-start">
             <motion.h1
               initial={{ opacity: 0, translateX: -100 }}
               animate={{ opacity: 1.2, translateX: 1 }}
               transition={{ duration: 1 }}
-              className="my-0 text-4xl lg:text-6xl text-shadow-2xs text-shadow-sky-300 font-bold tracking-wide text-gray-800 uppercase">
+              className="my-0 text-4xl text-shadow-2xs text-shadow-sky-300 font-bold tracking-wide text-gray-800 uppercase">
               Everything what you want.
             </motion.h1>
             <motion.hr
@@ -35,7 +35,7 @@ export default function HomePage() {
               initial={{ opacity: 0, translateX: -100 }}
               animate={{ opacity: 1, translateX: 1 }}
               transition={{ duration: 1.2, delay: .8 }}
-              className="my-0 text-right text-4xl lg:text-6xl text-shadow-2xs text-shadow-sky-300 font-bold tracking-wide text-white uppercase">
+              className="my-0 text-right text-4xl text-shadow-2xs text-shadow-sky-300 font-bold tracking-wide text-white uppercase">
               All in one in simple link for bio
             </motion.h1>
             <motion.hr
@@ -47,7 +47,7 @@ export default function HomePage() {
               initial={{ opacity: 0, translateX: 100 }}
               animate={{ opacity: 1, translateX: 1 }}
               transition={{ duration: 1, delay: 1.6 }}
-              className="mt-4 lg:mt-10 text-sm lg:text-xl font-bold text-yellow-200">
+              className="mt-4 lg:mt-10 text-sm lg:text-base font-bold text-yellow-200">
               Join people using Sharetree for their link in bio. One link to help you share everything you create and sell from your Instagram, TikTok, Twitter, YouTube and other social media profiles.
             </motion.p>
             <motion.a
@@ -80,19 +80,19 @@ export default function HomePage() {
       </div>
 
       {/* Second Banner */}
-      <div id='features' className="sm:p-10 animate-gradientx2 min-h-screen flex justify-center items-center md:pt-[6rem] xl:pt-[8rem]">
+      <div id='features' className="animate-gradientx2 min-h-screen size-full animate-gradientx flex justify-center items-center">
         <div className="text-center mx-[5%] flex flex-col md:flex-row justify-evenly items-center">
           <div className='w-full text-left'>
             <motion.h1
               initial={{ opacity: 0, translateX: 100 }}
               whileInView={{ opacity: 1, translateX: 1 }}
               transition={{ duration: 1 }}
-              className='text-3xl lg:text-6xl font-bold uppercase tracking-wide'>
+              className='text-3xl lg:text-4xl font-bold uppercase tracking-wide'>
               Create, Customize and Share your Sharetree in bio</motion.h1>
             <motion.hr
               initial={{ opacity: 0, translateX: 100 }}
               whileInView={{ opacity: 1, translateX: 1 }}
-              transition={{ duration: 1.2, delay: .5 }}
+              transition={{ duration: 1, delay: .5 }}
               className='border-[1px] w-full my-4 border-b-blue-700'></motion.hr>
             <motion.h1
               initial={{ opacity: 0, translateX: -100 }}
@@ -129,6 +129,6 @@ export default function HomePage() {
           </motion.div>
         </div>
       </div>
-    </div>
+    </>
   )
 }

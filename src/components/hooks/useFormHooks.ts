@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
 import { getSession, signIn } from 'next-auth/react'
 import axios from 'axios'
+import { useMutation } from '@apollo/client'
+import { CREATE_USER_NEW, GET_USER_QUERY } from '@/graphql/accessQuery'
 
 export const useFormHooks = () => {
     const router = useRouter()
@@ -17,6 +19,8 @@ export const useFormHooks = () => {
         email: '',
         password: '',
     })
+    
+    const [createUser] = useMutation(CREATE_USER_NEW)
     
     const handleChangeLogin = (e: ChangeEvent<HTMLInputElement>) => {
         setFormDataLogin({ ...formDataLogin, [e.target.name]: e.target.value })
@@ -50,14 +54,17 @@ export const useFormHooks = () => {
     const handleSubmitRegister = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         try {
-            await axios.post('/api/users/register', formDataRegister).then((response) => {
-                if (response.status === 200) {
-                    toast.success('Registered successfully')
-                    router.push('/login')
-                }
+            await createUser({
+                variables: {
+                    username: formDataRegister.username,
+                    email: formDataRegister.email,
+                    password: formDataRegister.password,
+                },
             })
-        } catch (error) {
-            toast.error('Username or email already registered')
+            toast.success('Registered successfully')
+            router.push('/login')
+        } catch (error: any) {
+            toast.error(error?.message || 'Username or email already registered')
             console.log(error)
         }
     }
