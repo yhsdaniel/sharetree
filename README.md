@@ -2,7 +2,7 @@ This is a **Sharetree**
 https://sharetree.vercel.app
 
 ## Tech Stack
-First, run the development server:
+
 1. NextJs, Typescript, MongoDB
 2. API: GraphQL, ApolloClient
 3. Framework:
