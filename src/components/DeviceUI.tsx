@@ -8,7 +8,7 @@ import { GET_USER_QUERY } from '@/graphql/accessQuery'
 const LinkComponent = lazy(() => import('@/components/LinkComponent'))
 
 export default function DeviceUI() {
-  const {data} = useQuery(GET_USER_QUERY)
+  const { data } = useQuery(GET_USER_QUERY)
   const isMobile = useIsMobile()
 
   return (
@@ -17,7 +17,7 @@ export default function DeviceUI() {
         <div className='text-white'><h1>Sharetree</h1></div>
         <div className='text-white font-bold my-4'>@{data?.user?.username}</div>
         <Suspense fallback={<div className='size-full flex justify-center items-center'><div className='loader'></div></div>}>
-          <LinkComponent username={data?.user?.username}/>
+          <LinkComponent username={data?.user?.username} />
         </Suspense>
       </div>
     </div>
