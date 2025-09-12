@@ -52,11 +52,6 @@ const SidebarComponent = () => {
             title: 'Source code'
         },
         {
-            url: 'https://instagram.com/yhskris',
-            icon: <Instagram />,
-            title: 'Our Instagram'
-        },
-        {
             url: 'https://wa.me/+6281212633852',
             icon: <Headset />,
             title: 'Customer Service'

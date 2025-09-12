@@ -31,8 +31,6 @@ const LinkWrapper = () => {
 
     const isList: LinkType[] = data?.user?.link ?? []
 
-    if (loading) return <div className='size-full flex justify-center items-center loader'></div>;
-
     return (
         <div className='size-full relative'>
             <div className='md:px-16'>
@@ -48,6 +46,7 @@ const LinkWrapper = () => {
                 </Button>
             </div>
             <section className='mt-6 md:mt-10'>
+                {loading && <div className='flex justify-center items-center loader'></div>}
                 <Reorder.Group axis='y' values={isList ?? []} onReorder={() => { }}>
                     {isList.map((value: any, index: any) => (
                         <Reorder.Item key={index} value={value}>
