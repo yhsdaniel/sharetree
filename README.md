@@ -1,16 +1,18 @@
-This is a **Sharetree**
-https://sharetree.vercel.app
+# 🌱 Sharetree
+https://sharetree.vercel.app  
 
-## Tech Stack
+📌 A single page to manage and share multiple links with ease.
+✨ Clean, responsive, and minimal design.
 
-1. NextJs, Typescript, MongoDB
-2. API: GraphQL, ApolloClient
-3. Framework:
-   - Tailwindcss (https://tailwindcss.com/)
-   - headlessui (https://headlessui.com/)
-   - framer-motion (https://motion.dev/)
-   - mongoose
-4. Versioning: Git
-5. Deployment: Vercel
+## ⚙️ Tech Stack
+1. ⚛️ Next.js, TypeScript, MongoDB  
+2. 🔗 API: GraphQL, Apollo Client  
+3. 🎨 Frameworks & Libraries:  
+   - [Tailwind CSS](https://tailwindcss.com/)  
+   - [Headless UI](https://headlessui.com/)  
+   - [Framer Motion](https://motion.dev/)  
+   - [Mongoose](https://mongoosejs.com/)  
+4. 📂 Version Control: Git  
+5. ☁️ Deployment: Vercel 
 
-Open [https://sharetree.vercel.app] with your browser to see the result.
+Open [https://sharetree.vercel.app](https://sharetree.vercel.app) in your browser to see the result.  
