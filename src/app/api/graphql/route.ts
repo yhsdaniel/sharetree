@@ -23,6 +23,11 @@ export const typeDefs = gql`
         name: String
     }
 
+    type UpdateLinkOrderResponse {
+        success: Boolean!
+        links: [Link!]!
+    }
+
     type Query {
         user(id: ID, username: String): User
         link(id: ID!): [Link]
@@ -34,6 +39,8 @@ export const typeDefs = gql`
         createLink(name: String!, url: String!): Link
 
         updateLink(id: ID!, name: String!, url: String!): Link
+
+        updateLinkOrder(userId: ID!, orderedIds: [ID!]!): UpdateLinkOrderResponse
 
         deleteLink(userId: ID!, id: ID!): Boolean
     }
@@ -146,6 +153,30 @@ export const resolvers = {
             )
             if (!updateLink) throw new Error('Link not found')
             return updateLink
+        },
+        updateLinkOrder: async (_parent: any, args: { userId: string, orderedIds: string[] }) => {
+            await connect()
+
+            if (!mongoose.isValidObjectId(args.userId)) {
+                throw new Error('Invalid User ID format')
+            }
+            const user = await User.findById(args.userId)
+            if (!user) throw new Error('User not found');
+
+            // Update the order
+            const newLinkOrder = args.orderedIds
+                .map(id => user.link.find((l: any) => l._id.toString() === id))
+                .filter(Boolean)
+            user.link = newLinkOrder
+            await user.save()
+
+            // Populate the links to return
+            await user.populate('link', 'name url')
+
+            return {
+                success: true,
+                links: user.link
+            }
         },
         deleteLink: async (_parent: any, args: { userId: string, id: string }) => {
             await connect()

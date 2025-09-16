@@ -29,14 +29,16 @@ const LinkComponent = React.memo(({ username }: ListLinksProps) => {
 
     const { data, loading } = useQuery(GET_USER_QUERY, {
         variables: { username: username },
-        pollInterval: 5000
     })
+    const links = data?.user?.link || []
 
     if(loading) return <div className='w-full h-full flex justify-center items-center'><div className='loader' style={stylesLoader}></div></div>
 
     return (
         <>
-            {data?.user?.link?.map((value: any) => (
+            {links
+                .filter((value: any) => value.url !== null && value.url !== undefined)
+                .map((value: any) => (
                 <Link 
                     key={value._id} 
                     href={value.url} 

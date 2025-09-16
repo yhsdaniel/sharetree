@@ -44,6 +44,19 @@ export const UPDATE_LINK_MUTATION = gql`
   }
 `;
 
+export const UPDATE_LINK_ORDER_MUTATION = gql`
+  mutation UpdateLinkOrder($userId: ID!, $orderedIds: [ID!]!) {
+    updateLinkOrder(userId: $userId, orderedIds: $orderedIds) {
+      success
+      links{
+        _id
+        name
+        url
+      }
+    }
+  }
+`;
+
 export const DELETE_LINK_MUTATION = gql`
   mutation DeleteLink($userId: ID!, $id: ID!) {
     deleteLink(userId: $userId, id: $id)

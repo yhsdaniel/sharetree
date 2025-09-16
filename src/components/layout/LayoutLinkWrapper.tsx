@@ -1,8 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import React, { ReactNode, useContext } from 'react'
-import { UserListContext } from '@/context/UserListProvider'
+import React, { ReactNode } from 'react'
 import { motion } from 'framer-motion'
 import toast from 'react-hot-toast'
 import { useQuery } from '@apollo/client'

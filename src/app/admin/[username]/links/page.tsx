@@ -1,11 +1,11 @@
 'use client'
 
-import { lazy, Suspense, useContext, useEffect, useState } from 'react'
+import { lazy, useEffect, useState } from 'react'
 import Modal from '@/components/Modal'
 import { Button } from '@/components/ui/button'
 import { AnimatePresence, Reorder } from 'framer-motion'
-import { GET_USER_QUERY, UPDATE_LINK_MUTATION } from '@/graphql/accessQuery'
-import { useQuery } from '@apollo/client'
+import { GET_USER_QUERY, UPDATE_LINK_ORDER_MUTATION } from '@/graphql/accessQuery'
+import { useMutation, useQuery } from '@apollo/client'
 import { useSession } from 'next-auth/react'
 
 const CardUrl = lazy(() => import('@/components/CardURL'))
@@ -20,6 +20,9 @@ const LinkWrapper = () => {
     const [selected, setSelected] = useState<{ id: string; name: string }>({ id: '', name: '' })
     const [showModal, setShowModal] = useState(false)
     const [type, setType] = useState('')
+    const [list, setList] = useState<LinkType[]>([]);
+    const [updateLinkOrder] = useMutation(UPDATE_LINK_ORDER_MUTATION);
+
     const session = useSession()
     const id_user = session?.data?.user?.id
 
@@ -28,8 +31,33 @@ const LinkWrapper = () => {
         skip: !id_user,
         fetchPolicy: 'cache-and-network',
     })
+    
+    const handleUpdateOrder = async (newOrder: LinkType[]) => {
+        setList(newOrder);
+        const orderedIds = newOrder.map(link => link._id)
+        try{
+            await updateLinkOrder({
+                variables: {
+                    userId: id_user,
+                    orderedIds: orderedIds
+                },
+                refetchQueries: [
+                    {
+                        query: GET_USER_QUERY,
+                        variables: { id: id_user }
+                    }
+                ]
+            });
+        } catch (error) {
+            console.error("Error updating link order:", error);
+        }
+    }
 
-    const isList: LinkType[] = data?.user?.link ?? []
+    useEffect(() => { 
+        if (data?.user?.link) {
+            setList(data.user.link);
+        }
+    }, [data])
 
     return (
         <div className='size-full relative'>
@@ -47,9 +75,14 @@ const LinkWrapper = () => {
             </div>
             <section className='mt-6 md:mt-10'>
                 {loading && <div className='flex justify-center items-center loader'></div>}
-                <Reorder.Group axis='y' values={isList ?? []} onReorder={() => { }}>
-                    {isList.map((value: any, index: any) => (
-                        <Reorder.Item key={index} value={value}>
+                <Reorder.Group axis='y' values={list} onReorder={handleUpdateOrder}>
+                    {list.map((value: any) => (
+                        <Reorder.Item 
+                            key={value._id}
+                            value={value}
+                            dragListener={true} // Enable drag by default
+                            style={{ touchAction: 'pan-y', minHeight: 48 }} // Improves touch drag
+                        >
                             <CardUrl
                                 userId={id_user || ''}
                                 id={value._id}

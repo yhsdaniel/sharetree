@@ -1,11 +1,11 @@
 'use client'
 
-import { useCallback, useState } from "react"
+import { useState } from "react"
 import { AnimatePresence, motion } from 'framer-motion'
 import Modal from "./Modal"
 import { Input } from "./ui/input"
 import toast from "react-hot-toast"
-import { SquarePen, Trash } from "lucide-react"
+import { SquarePen, Trash, GripVertical } from "lucide-react"
 import { useMutation } from "@apollo/client"
 import { UPDATE_LINK_MUTATION } from "@/graphql/accessQuery"
 
@@ -61,7 +61,7 @@ export default function CardURL({ userId, id, name, url }: AppProps) {
     }
 
     return (
-        <div className='size-full flex border overflow-auto bg-white border-gray-300 shadow-lg rounded-3xl mt-4 py-4 md:py-6 px-6 md:px-16'>
+        <div className='size-full flex border overflow-auto bg-white border-gray-300 shadow-lg rounded-3xl mt-4 py-4 pr-0 md:py-6 md:pr-0 px-6 md:px-16'>
             <div className="w-9/12 flex flex-col gap-4">
                 <div className="flex justify-between items-center cursor-pointer" onClick={() => handleEdit("name")}>
                     {editField === "name" ? (
@@ -106,15 +106,24 @@ export default function CardURL({ userId, id, name, url }: AppProps) {
                 </div>
             </div>
 
-            <div className="w-3/12 flex justify-end items-center">
+            <div className="w-3/12 flex justify-center items-center gap-4">
                 {/* Modal for Delete */}
                 <motion.button
                     whileHover={{ scale: 1 }}
                     whileTap={{ scale: 0.9 }}
-                    className='size-6 cursor-pointer hover:text-red-600 duration-150 ease-in'
+                    className='size-6 cursor-pointer flex justify-center items-center hover:text-red-600 duration-150 ease-in'
                     onClick={() => { setShowModal(true); setType('delete') }}
                 >
-                    <Trash className="md:w-4 w-3" />
+                    <Trash className="md:w-5 w-4" />
+                </motion.button>
+                {/* Modal for Delete */}
+                <motion.button
+                    whileHover={{ scale: 1 }}
+                    whileTap={{ scale: 0.9 }}
+                    className='size-6 cursor-grab flex justify-center items-center'
+                    onClick={() => { setShowModal(true); setType('delete') }}
+                >
+                    <GripVertical className="md:w-5 w-4" />
                 </motion.button>
                 
                 {/* DELETE MODAL */}
