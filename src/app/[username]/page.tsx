@@ -1,21 +1,29 @@
+'use client'
+
 import Link from 'next/link'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import logo from '@/assets/images/logo.png'
 import LinkComponent from '@/components/LinkComponent'
+import { useQuery } from '@apollo/client'
+import { GET_USER_QUERY } from '@/graphql/accessQuery'
+import React, { use, useEffect } from 'react'
 
 interface Props {
-    params: { username: string }
+    params: Promise<{ username: string }>
 }
 
-const UserForPublic = async ({ params }: Props) => {
-    const { username } = await params
-    if (!username) notFound()
+const UserForPublic = ({ params }: Props) => {
+    const { username } = React.use(params)
+    const { data } = useQuery(GET_USER_QUERY, {
+        variables: { username },
+        fetchPolicy: 'cache-and-network',
+    })
 
     return (
         <div className='size-full overflow-auto bg-gray-700 flex justify-center items-center'>
             <div className='h-full w-full md:w-[30%] md:mt-12 flex flex-col justify-center items-center'>
-                <div className='size-full relative flex flex-col justify-start items-center p-4 bg-gray-800 md:rounded-3xl shadow-lg shadow-gray-500'>
+                <div className={`size-full relative flex flex-col justify-start items-center p-4 ${data?.user?.theme} md:rounded-3xl shadow-lg shadow-gray-500`}>
                     <div className='text-white p-4 flex flex-col justify-center items-center'>
                         <div className='rounded-full bg-white w-20 h-20 flex justify-center items-center'>
                             <h1 className='text-black'>{username.charAt(0).toUpperCase()}</h1>

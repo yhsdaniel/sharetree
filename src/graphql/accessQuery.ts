@@ -5,11 +5,21 @@ export const GET_USER_QUERY = gql`
     user(id: $id, username: $username) {
       _id
       username
+      theme
       link {
         _id
         name
         url
       }
+    }
+  }
+`;
+
+export const UPDATE_USER_THEME = gql`
+  mutation UpdateTheme($id: ID!, $theme: String!) {
+    updateTheme(id: $id, theme: $theme) {
+      _id
+      theme
     }
   }
 `;

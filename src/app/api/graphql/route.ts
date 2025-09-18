@@ -14,6 +14,7 @@ export const typeDefs = gql`
         _id: ID
         username: String
         email: String
+        theme: String
         link: [Link]
     }
 
@@ -35,6 +36,8 @@ export const typeDefs = gql`
 
     type Mutation {
         createUser(username: String!, email: String!, password: String!): User
+
+        updateTheme(id: ID!, theme: String): User
 
         createLink(name: String!, url: String!): Link
 
@@ -59,14 +62,14 @@ export const resolvers = {
                     throw new Error("Invalid ID format");
                 }
                 user = await User.findById(args.id)
-                    .select("username link")
+                    .select("username theme link")
                     .populate("link", "name url");
             }
 
             // 🔹 Search by username
             if (!user && args.username) {
                 user = await User.findOne({ username: args.username })
-                    .select("username link")
+                    .select("username theme link")
                     .populate("link", "name url");
             }
 
@@ -76,13 +79,13 @@ export const resolvers = {
                 if (!session?.user?.username) throw new Error("Unauthorized");
 
                 user = await User.findOne({ username: session.user.username })
-                    .select("username link")
+                    .select("username theme link")
                     .populate("link", "name url");
             }
 
             if (!user) throw new Error("User not found");
 
-            return user;
+            return { ...user.toObject(), theme: user.theme || "bg-gray-400" };
         }
     },
     Mutation: {
@@ -118,6 +121,19 @@ export const resolvers = {
             } catch (error) {
                 throw new Error('Registration unsuccessful');
             }
+        },
+        updateTheme: async (_parent: any, args: { id: string, theme: string }) => {
+            await connect()
+            if (!mongoose.isValidObjectId(args.id)) {
+                throw new Error('Invalid ID format')
+            }  
+            const updateUser = await User.findByIdAndUpdate(
+                { _id: args.id },
+                { theme: args.theme },
+                { new: true }
+            )
+            if (!updateUser) throw new Error('User not found')
+            return updateUser
         },
         createLink: async (_parent: any, args: { name: string, url: string }) => {
             await connect()

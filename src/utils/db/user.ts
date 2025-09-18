@@ -23,6 +23,10 @@ const UserSchema = new Schema({
     active: {
         type: Boolean,
     },
+    theme: {
+        type: String,
+        default: 'bg-gray-400'
+    },
     link: [{
         type: Schema.Types.ObjectId,
         ref: 'links'

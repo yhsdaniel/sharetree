@@ -31,11 +31,11 @@ const LinkWrapper = () => {
         skip: !id_user,
         fetchPolicy: 'cache-and-network',
     })
-    
+
     const handleUpdateOrder = async (newOrder: LinkType[]) => {
         setList(newOrder);
         const orderedIds = newOrder.map(link => link._id)
-        try{
+        try {
             await updateLinkOrder({
                 variables: {
                     userId: id_user,
@@ -53,7 +53,7 @@ const LinkWrapper = () => {
         }
     }
 
-    useEffect(() => { 
+    useEffect(() => {
         if (data?.user?.link) {
             setList(data.user.link);
         }
@@ -77,7 +77,7 @@ const LinkWrapper = () => {
                 {loading && <div className='flex justify-center items-center loader'></div>}
                 <Reorder.Group axis='y' values={list} onReorder={handleUpdateOrder}>
                     {list.map((value: any) => (
-                        <Reorder.Item 
+                        <Reorder.Item
                             key={value._id}
                             value={value}
                             dragListener={true} // Enable drag by default

@@ -22,7 +22,7 @@ const LayoutLinkWrapper = ({ children }: ChildProps) => {
 
     return (
         <main className='w-full min-h-screen mt-16 lg:mt-0'>
-            <div className='size-full p-2 overflow-y-auto flex flex-col justify-center items-center'>
+            <div className='size-full p-2 overflow-auto md:overflow-hidden flex flex-col justify-center items-center'>
                 <div
                     className='h-12 p-8 w-full bg-green-200 border border-green-700 text-[--sidebar-accent-foreground] flex flex-col justify-center items-start rounded-xl'>
                     <p className='text-xs md:text-sm leading-6 md:leading-7 font-bold'>Your sharetree link is: <button onClick={() => router.push(`/${data?.user?.username}`)} className='underline italic hover:text-blue-500 transition duration-150'>Your sharetree link</button></p>
@@ -32,7 +32,7 @@ const LayoutLinkWrapper = ({ children }: ChildProps) => {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 1 }}
-                    className='h-[calc(100%-4rem)] w-full md:w-3/4 overflow-auto mt-2 pt-4 rounded-2xl relative'>
+                    className='h-[calc(100vh-4rem)] w-full md:w-4/5 md:mt-2 md:py-4 rounded-2xl relative'>
                     {children}
                 </motion.div>
             </div>

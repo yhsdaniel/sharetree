@@ -1,6 +1,6 @@
 'use client'
 
-import React, { Suspense } from 'react'
+import React from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/compat/router'
 import { useQuery } from '@apollo/client'
