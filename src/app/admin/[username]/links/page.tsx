@@ -79,7 +79,7 @@ const LinkWrapper = () => {
             <section className='mt-6 md:mt-10'>
                 <Reorder.Group axis='y' values={list} onReorder={handleUpdateOrder}>
                     {list.map((value: any) => (
-                        <Suspense fallback={<LoadingLinks />}>
+                        <Suspense key={value._id} fallback={<LoadingLinks />}>
                             <Reorder.Item
                                 key={value._id}
                                 value={value}
