@@ -233,6 +233,14 @@ h6 {
   animation: l19 1s infinite linear;
 }
 
+@media only screen and (max-width: 768px) {
+  .loader {
+    left: 0;
+    transform: translate(165px, 200px);
+    width: 10px;
+  }
+}
+
 @keyframes l19 {
   16.67% {
     box-shadow: -60px 15px, -60px 15px, 19px 15px

@@ -1,12 +1,13 @@
 'use client'
 
-import { lazy, useEffect, useState } from 'react'
+import { lazy, Suspense, useEffect, useState } from 'react'
 import Modal from '@/components/Modal'
 import { Button } from '@/components/ui/button'
 import { AnimatePresence, Reorder } from 'framer-motion'
 import { GET_USER_QUERY, UPDATE_LINK_ORDER_MUTATION } from '@/graphql/accessQuery'
 import { useMutation, useQuery } from '@apollo/client'
 import { useSession } from 'next-auth/react'
+import LoadingLinks from './LoadingLinks'
 
 const CardUrl = lazy(() => import('@/components/CardURL'))
 
@@ -59,6 +60,8 @@ const LinkWrapper = () => {
         }
     }, [data])
 
+    // if (loading) return <div className='flex justify-center items-center loader'></div>
+
     return (
         <div className='size-full relative'>
             <div className='md:px-16'>
@@ -74,22 +77,23 @@ const LinkWrapper = () => {
                 </Button>
             </div>
             <section className='mt-6 md:mt-10'>
-                {loading && <div className='flex justify-center items-center loader'></div>}
                 <Reorder.Group axis='y' values={list} onReorder={handleUpdateOrder}>
                     {list.map((value: any) => (
-                        <Reorder.Item
-                            key={value._id}
-                            value={value}
-                            dragListener={true} // Enable drag by default
-                            style={{ touchAction: 'pan-y', minHeight: 48 }} // Improves touch drag
-                        >
-                            <CardUrl
-                                userId={id_user || ''}
-                                id={value._id}
-                                name={value.name}
-                                url={value.url}
-                            />
-                        </Reorder.Item>
+                        <Suspense fallback={<LoadingLinks />}>
+                            <Reorder.Item
+                                key={value._id}
+                                value={value}
+                                dragListener={true}
+                                style={{ touchAction: 'pan-y', minHeight: 48 }}
+                            >
+                                <CardUrl
+                                    userId={id_user || ''}
+                                    id={value._id}
+                                    name={value.name}
+                                    url={value.url}
+                                />
+                            </Reorder.Item>
+                        </Suspense>
                     ))}
                 </Reorder.Group>
             </section>

@@ -1,21 +1,12 @@
 'use client'
 
+import { Button } from "@/components/ui/button";
 import { useState } from "react";
-
-const deviceThemes = [
-    { background: 'bg-gray-400' },
-    { background: 'bg-red-500' },
-    { background: 'bg-blue-500' },
-    { background: 'bg-yellow-500' },
-    { background: 'bg-green-500' },
-    { background: 'bg-purple-500' },
-    { background: 'bg-gray-500' },
-    { background: 'bg-pink-500' },
-]
+import { ThemeProps } from "./page";
 
 const checkChecked = 'peer-checked:border-green-500 peer-checked:border-2 peer-checked:after:content-["✔"] after:absolute after:top-1/3 after:left-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:w-3 after:h-3 after:text-green-300 duration-150 ease-in-out'
 
-export default function ForegroundDesign() {
+export default function ForegroundDesign({deviceThemes, handleThemeUpdate}: ThemeProps) {
     const [selectedTheme, setSelectedTheme] = useState(0);
     const handleChangeChecked = (index: number) => {
         setSelectedTheme(index);
@@ -24,7 +15,14 @@ export default function ForegroundDesign() {
         <>
             <p className='px-4 md:py-4 mt-8 font-bold text-xs md:text-sm text-gray-700'>Accent color:</p>
             <div className="grid grid-flow-col md:grid-flow-row auto-cols-[5rem] md:grid-cols-[repeat(auto-fit,minmax(30px,1fr))] gap-4 md:gap-3 p-4 overflow-auto">
-                {deviceThemes.map((theme, index) => (
+                <Button
+                    size={'sm'}
+                    className='rounded-xl px-6 md:px-8 text-xs bg-green-300 text-gray-700 hover:bg-green-500 hover:font-bold duration-100 ease-in-out'
+                    onClick={() => handleThemeUpdate(selectedTheme)}
+                >
+                    Save
+                </Button>
+                {deviceThemes.map((theme: any, index: any) => (
                     <label
                         key={index}
                         htmlFor={`accent-${index}`}

@@ -16,8 +16,8 @@ export default function HomePage() {
       <Navbar status={status} />
 
       {/* First Banner */}
-      <div id='home' className="min-h-screen h-[calc(100%-(-5rem))] size-full animate-gradientx flex justify-center items-center">
-        <div className="relative size-full mx-10 lg:mx-14 my-10 flex items-start justify-center flex-col md:flex-row">
+      <div id='home' className="min-h-screen h-[calc(100%-(-5rem))] animate-gradientx flex justify-center items-center">
+        <div className="relative h-full my-10 md:mx-[10%] flex items-start justify-center flex-col md:flex-row">
           <div className="size-full md:w-1/2 text-left flex flex-col justify-center items-start">
             <motion.h1
               initial={{ opacity: 0, translateX: -100 }}
