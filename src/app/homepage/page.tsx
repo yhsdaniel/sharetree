@@ -3,10 +3,8 @@
 import { motion } from 'framer-motion'
 import { useSession } from 'next-auth/react'
 import Image from 'next/image'
-import social from '@/assets/images/social.png'
-import social2 from '@/assets/images/social2.png'
+import banner1 from '@/assets/images/banner-1.png'
 import Navbar from '@/components/Navbar'
-import Link from 'next/link'
 
 export default function HomePage() {
   const { status } = useSession()
@@ -17,13 +15,13 @@ export default function HomePage() {
 
       {/* First Banner */}
       <div id='home' className="min-h-screen h-[calc(100%-(-5rem))] animate-gradientx flex justify-center items-center">
-        <div className="relative h-full my-10 md:mx-[10%] flex items-start justify-center flex-col md:flex-row">
-          <div className="size-full md:w-1/2 text-left flex flex-col justify-center items-start">
+        <div className="relative h-full my-10 mx-[10%] flex items-start justify-center flex-col md:flex-row gap-6">
+          <div className="size-full md:w-1/2 mx-[5  %] text-left flex flex-col justify-center items-start">
             <motion.h1
               initial={{ opacity: 0, translateX: -100 }}
               animate={{ opacity: 1.2, translateX: 1 }}
               transition={{ duration: 1 }}
-              className="my-0 text-4xl text-shadow-2xs text-shadow-sky-300 font-bold tracking-wide text-gray-800 uppercase">
+              className="my-0 text-4xl md:text-6xl text-shadow-2xs text-shadow-sky-300 font-bold tracking-wide text-gray-800 uppercase">
               Everything what you want.
             </motion.h1>
             <motion.hr
@@ -35,7 +33,7 @@ export default function HomePage() {
               initial={{ opacity: 0, translateX: -100 }}
               animate={{ opacity: 1, translateX: 1 }}
               transition={{ duration: 1.2, delay: .8 }}
-              className="my-0 text-right text-4xl text-shadow-2xs text-shadow-sky-300 font-bold tracking-wide text-white uppercase">
+              className="my-0 text-4xl md:text-6xl text-shadow-2xs text-shadow-sky-300 font-bold tracking-wide text-white uppercase text-right">
               All in one in simple link for bio
             </motion.h1>
             <motion.hr
@@ -65,14 +63,12 @@ export default function HomePage() {
               initial={{ opacity: 0, translateX: 100 }}
               animate={{ opacity: 1, translateX: 1 }}
               transition={{ duration: 1, delay: 1 }}
-              className='w-8/12'
             >
               <Image
-                src={social}
+                src={banner1}
                 alt='Social Image 1'
-                width={500}
-                height={500}
-                className='size-full'
+                width={700}
+                height={700}
               />
             </motion.div>
           </div>
@@ -80,7 +76,7 @@ export default function HomePage() {
       </div>
 
       {/* Second Banner */}
-      <div id='features' className="animate-gradientx2 min-h-screen size-full animate-gradientx flex justify-center items-center">
+      {/* <div id='features' className="animate-gradientx2 min-h-screen size-full animate-gradientx flex justify-center items-center">
         <div className="text-center mx-[5%] flex flex-col md:flex-row justify-evenly items-center">
           <div className='w-full text-left'>
             <motion.h1
@@ -128,7 +124,7 @@ export default function HomePage() {
             />
           </motion.div>
         </div>
-      </div>
+      </div> */}
     </>
   )
 }

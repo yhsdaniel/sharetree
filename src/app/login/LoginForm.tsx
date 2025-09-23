@@ -8,7 +8,7 @@ import { useFormHooks } from '../../components/hooks/useFormHooks'
 export default function LoginForm() {
     const { formDataLogin, handleChangeLogin, handleSubmitLogin } = useFormHooks()
     return (
-        <div className="lg:flex-col lg:flex w-full">
+        <div className="lg:flex-col lg:flex mx-0 md:mx-[10%]">
             <div className='text-[#393646] text-center'>
                 <h1 className="text-4xl font-bold">Welcome Back!</h1>
                 <span className="text-md">Log in to your Sharetree</span>
