@@ -8,7 +8,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { signOut, useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
-import { LogOut, User } from 'lucide-react'
+import { ArrowBigRight, LogOut, User } from 'lucide-react'
 import { SidebarFooter, SidebarMenu, SidebarMenuItem } from './ui/sidebar'
 import { DropdownMenuComponent } from './DropdownMenu'
 
@@ -61,8 +61,8 @@ export default function Navbar({ status }: StatusProps) {
               </SidebarMenu>
             </SidebarFooter>
             :
-            <Link href="/login" className="text-xs font-semibold leading-6 text-gray-900 bg-blue-300 hover:bg-blue-400 transition-all rounded-full px-4 py-2 my-2">
-              Sign In <span aria-hidden="true">&rarr;</span>
+            <Link href="/login" className="flex justify-center items-center text-xs font-semibold leading-6 text-gray-900 bg-blue-300 hover:bg-blue-400 shadow-[2px_2px_10px_0px_#3b82f6] hover:shadow-none transition-all rounded-full px-4 py-2 my-2">
+              Sign In <ArrowBigRight />
             </Link>
           }
         </div>
@@ -85,8 +85,8 @@ export default function Navbar({ status }: StatusProps) {
           )
           :
           (
-            <Link href="/login" className="text-sm font-semibold leading-6 text-gray-900 bg-blue-300 hover:bg-blue-400 transition-all rounded-full px-5 py-3">
-              Sign In <span aria-hidden="true">&rarr;</span>
+            <Link href="/login" className="flex justify-center items-center text-sm font-semibold leading-6 text-gray-900 bg-blue-300 hover:bg-blue-400 transition-all rounded-full px-5 py-3">
+              Sign In <ArrowBigRight />
             </Link>
           )
           }

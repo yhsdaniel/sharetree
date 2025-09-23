@@ -4,7 +4,9 @@ import { motion } from 'framer-motion'
 import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import banner1 from '@/assets/images/banner-1.png'
+import social2 from '@/assets/images/social.png'
 import Navbar from '@/components/Navbar'
+import Link from 'next/link'
 
 export default function HomePage() {
   const { status } = useSession()
@@ -16,7 +18,7 @@ export default function HomePage() {
       {/* First Banner */}
       <div id='home' className="min-h-screen h-[calc(100%-(-5rem))] animate-gradientx flex justify-center items-center">
         <div className="relative h-full my-10 mx-[10%] flex items-start justify-center flex-col md:flex-row gap-6">
-          <div className="size-full md:w-1/2 mx-[5  %] text-left flex flex-col justify-center items-start">
+          <div className="size-full md:w-1/2 text-left flex flex-col justify-center items-start">
             <motion.h1
               initial={{ opacity: 0, translateX: -100 }}
               animate={{ opacity: 1.2, translateX: 1 }}
@@ -53,7 +55,7 @@ export default function HomePage() {
               animate={{ opacity: 1, translateY: 1 }}
               transition={{ duration: 1.2, delay: 1 }}
               href='login'
-              className="rounded-2xl mt-10 bg-pink-200 px-8 py-3 md:py-4 text-left text-xs lg:text-base text-black/80 font-bold hover:bg-pink-300 duration-150 ease-in-out"
+              className="rounded-2xl mt-10 bg-pink-200 hover:bg-pink-300 shadow-pink-400 shadow-[5px_5px_10px_0px_#f9a8d4] px-8 py-3 md:py-4 text-left text-xs lg:text-base text-black/80 font-bold duration-150 ease-in-out"
             >
               Get Started for free
             </motion.a>
@@ -67,8 +69,7 @@ export default function HomePage() {
               <Image
                 src={banner1}
                 alt='Social Image 1'
-                width={700}
-                height={700}
+                className='size-auto'
               />
             </motion.div>
           </div>
@@ -76,9 +77,9 @@ export default function HomePage() {
       </div>
 
       {/* Second Banner */}
-      {/* <div id='features' className="animate-gradientx2 min-h-screen size-full animate-gradientx flex justify-center items-center">
-        <div className="text-center mx-[5%] flex flex-col md:flex-row justify-evenly items-center">
-          <div className='w-full text-left'>
+      <div id='features' className="animate-gradientx2 min-h-screen size-full animate-gradientx flex justify-center items-center">
+        <div className="relative h-full my-10 mx-[10%] flex items-start justify-center flex-col md:flex-row gap-6">
+          <div className='size-full md:w-1/2 text-left flex flex-col justify-center items-start'>
             <motion.h1
               initial={{ opacity: 0, translateX: 100 }}
               whileInView={{ opacity: 1, translateX: 1 }}
@@ -104,7 +105,7 @@ export default function HomePage() {
             >
               <Link
                 href='/login'
-                className="rounded-2xl bg-green-300 px-8 py-3 md:py-4 text-left text-xs md:text-base text-black/80 font-bold hover:bg-green-400 duration-150 ease-in-out"
+                className="rounded-2xl bg-green-300 px-8 py-3 md:py-4 text-left text-xs md:text-base text-black/80 font-bold hover:bg-green-400 shadow-[5px_5px_10px_0px_#4ade80] transition-all"
               >
                 Get Started for free
               </Link>
@@ -114,17 +115,15 @@ export default function HomePage() {
             initial={{ opacity: 0, translateX: 100 }}
             whileInView={{ opacity: 1, translateX: 1 }}
             transition={{ duration: 1, delay: 1 }}
-            className='hidden w-full md:flex justify-center items-center'>
+            className='hidden h-full md:w-1/2 text-center md:flex flex-col justify-center items-center'>
             <Image
               src={social2}
               alt='Social Image 2'
-              width={500}
-              height={500}
-              className='mix-blend-multiply'
+              className='size-auto'
             />
           </motion.div>
         </div>
-      </div> */}
+      </div>
     </>
   )
 }
