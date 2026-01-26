@@ -23,7 +23,7 @@ export default function HomePage() {
               initial={{ opacity: 0, translateX: -100 }}
               animate={{ opacity: 1.2, translateX: 1 }}
               transition={{ duration: 1 }}
-              className="my-0 text-4xl md:text-6xl text-shadow-2xs text-shadow-sky-300 font-bold tracking-wide text-gray-800 uppercase">
+              className="my-0 text-4xl xl:text-6xl text-shadow-2xs text-shadow-sky-300 font-bold tracking-wide text-gray-800 uppercase">
               Everything what you want.
             </motion.h1>
             <motion.hr
@@ -35,7 +35,7 @@ export default function HomePage() {
               initial={{ opacity: 0, translateX: -100 }}
               animate={{ opacity: 1, translateX: 1 }}
               transition={{ duration: 1.2, delay: .8 }}
-              className="my-0 text-4xl md:text-6xl text-shadow-2xs text-shadow-sky-300 font-bold tracking-wide text-white uppercase text-right">
+              className="my-0 text-4xl xl:text-6xl text-shadow-2xs text-shadow-sky-300 font-bold tracking-wide text-white uppercase text-right">
               All in one in simple link for bio
             </motion.h1>
             <motion.hr

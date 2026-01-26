@@ -1,8 +1,7 @@
+import { NextConfig } from "next";
+
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-    experimental: {
-        instrumentationHook: true
-    },
+const nextConfig: NextConfig = {
     reactStrictMode: true,
     images: {
         remotePatterns: [
