@@ -3,10 +3,8 @@ import CredentialsProvider from 'next-auth/providers/credentials'
 import User from '../utils/db/user'
 import { compare } from 'bcryptjs'
 import { NextAuthOptions } from "next-auth";
-import { connect } from './mongodb';
+import { connectDB } from './mongodb';
 import { ObjectId } from 'mongodb'
-
-await connect()
 
 export const authOptions: NextAuthOptions = {
     secret: process.env.NEXTAUTH_SECRET,
@@ -31,7 +29,7 @@ export const authOptions: NextAuthOptions = {
                 password: { label: 'Password', type: 'password' },
             },
             async authorize(crendentials) {
-                await connect()
+                await connectDB()
 
                 if (!crendentials?.email || !crendentials?.password) {
                     return null
@@ -55,6 +53,8 @@ export const authOptions: NextAuthOptions = {
     ],
     callbacks: {
         async jwt({ token, account, profile, user }) {
+            await connectDB()
+
             if (!token.username) {
                 const user = await User.findOne({ email: token.email });
                 if (user) {
@@ -75,6 +75,8 @@ export const authOptions: NextAuthOptions = {
             return token;
         },
         async session({ session, token }) {
+            await connectDB()
+            
             const existingUser = await User.findOne({ email: token.email })
             return {
                 ...session,

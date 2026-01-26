@@ -1,7 +1,7 @@
 import { ApolloServer } from '@apollo/server'
 import { startServerAndCreateNextHandler } from '@as-integrations/next'
 import { gql } from 'graphql-tag'
-import { connect } from '@/lib/mongodb'
+import { connectDB } from '@/lib/mongodb'
 import Link from '@/utils/db/links'
 import User from '@/utils/db/user'
 import mongoose from 'mongoose'
@@ -53,7 +53,7 @@ export const typeDefs = gql`
 export const resolvers = {
     Query: {
         user: async (_parent: any, args: { id?: string; username?: string }, context: any) => {
-            await connect();
+            await connectDB();
 
             let user = null;
 
@@ -91,7 +91,7 @@ export const resolvers = {
     },
     Mutation: {
         createUser: async (_parent: any, args: { username: string; email: string; password: string }) => {
-            await connect();
+            await connectDB();
 
             // Check if user exists by email
             const existUser = await User.findOne({ email: args.email }).exec();
@@ -124,7 +124,7 @@ export const resolvers = {
             }
         },
         updateTheme: async (_parent: any, args: { id: string, theme: string }) => {
-            await connect()
+            await connectDB()
             if (!mongoose.isValidObjectId(args.id)) {
                 throw new Error('Invalid ID format')
             }
@@ -137,7 +137,7 @@ export const resolvers = {
             return updateUser
         },
         createLink: async (_parent: any, args: { name: string, url: string }) => {
-            await connect()
+            await connectDB()
 
             const session = await getServerSession(authOptions)
             if (!session?.user?.username) throw new Error("Unauthorized")
@@ -157,7 +157,7 @@ export const resolvers = {
 
         },
         updateLink: async (_parent: any, args: { id: string, name: string, url: string }) => {
-            await connect()
+            await connectDB()
 
             if (!mongoose.isValidObjectId(args.id)) {
                 throw new Error('Invalid ID format')
@@ -172,7 +172,7 @@ export const resolvers = {
             return updateLink
         },
         updateLinkOrder: async (_parent: any, args: { userId: string, orderedIds: string[] }) => {
-            await connect()
+            await connectDB()
 
             if (!mongoose.isValidObjectId(args.userId)) {
                 throw new Error('Invalid User ID format')
@@ -196,7 +196,7 @@ export const resolvers = {
             }
         },
         deleteLink: async (_parent: any, args: { userId: string, id: string }) => {
-            await connect()
+            await connectDB()
 
             if (!mongoose.isValidObjectId(args.userId) || !mongoose.isValidObjectId(args.id)) {
                 throw new Error('Invalid ID format')
