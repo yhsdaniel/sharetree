@@ -8,6 +8,7 @@ import mongoose from 'mongoose'
 import bcrypt from 'bcryptjs'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
+import { NextRequest } from 'next/server'
 
 export const typeDefs = gql`
     type User {
@@ -126,7 +127,7 @@ export const resolvers = {
             await connect()
             if (!mongoose.isValidObjectId(args.id)) {
                 throw new Error('Invalid ID format')
-            }  
+            }
             const updateUser = await User.findByIdAndUpdate(
                 { _id: args.id },
                 { theme: args.theme },
@@ -218,6 +219,21 @@ const apolloServer = new ApolloServer({
     introspection: true
 })
 
-const handler = startServerAndCreateNextHandler(apolloServer)
+const handler = startServerAndCreateNextHandler<NextRequest>(
+    apolloServer,
+    {
+        context: async (req) => {
+            return {
+                headers: req.headers,
+            }
+        },
+    }
+)
 
-export { handler as GET, handler as POST }
+export async function GET(request: NextRequest) {
+  return handler(request)
+}
+
+export async function POST(request: NextRequest) {
+  return handler(request)
+}

@@ -1,7 +1,5 @@
-import { NextConfig } from "next";
-
 /** @type {import('next').NextConfig} */
-const nextConfig: NextConfig = {
+const nextConfig = {
     reactStrictMode: true,
     images: {
         remotePatterns: [
@@ -22,7 +20,7 @@ const nextConfig: NextConfig = {
         },
         resolveExtensions: ['.mdx', '.tsx', '.ts', '.jsx', '.js', '.json'],
     },
-    output: "standalone"
+    output: "standalone",
 };
 
 export default nextConfig;

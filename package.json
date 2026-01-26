@@ -2,15 +2,18 @@
   "name": "sharetree",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build --turbopack",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
     "@apollo/client": "^3.13.8",
-    "@apollo/server": "^5.0.0",
+    "@apollo/server": "^5.3.0",
     "@as-integrations/next": "^4.1.0",
     "@headlessui/react": "^2.2.0",
     "@heroicons/react": "^2.1.5",
@@ -22,7 +25,6 @@
     "@radix-ui/react-slot": "^1.2.3",
     "@radix-ui/react-tooltip": "^1.2.7",
     "@radix-ui/themes": "^3.2.1",
-    "apollo-server-micro": "^3.13.0",
     "axios": "^1.7.2",
     "bcryptjs": "^2.4.3",
     "class-variance-authority": "^0.7.1",
@@ -35,7 +37,7 @@
     "lucide-react": "^0.525.0",
     "mongodb": "^6.8.0",
     "mongoose": "^8.5.0",
-    "next": "^16.1.4",
+    "next": "^15.4.5",
     "next-auth": "^4.24.13",
     "nodemailer": "^7.0.12",
     "react": "^19.2.3",
